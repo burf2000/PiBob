@@ -3,10 +3,17 @@ import json
 import os
 import time
 import threading
-from flask import Flask, render_template_string, request, jsonify
+from flask import Flask, render_template_string, request, jsonify, Response
 from adafruit_servokit import ServoKit
+import cv2
 
 kit = ServoKit(channels=16)
+
+# Webcam setup
+camera = cv2.VideoCapture(0)
+camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+camera_lock = threading.Lock()
 
 PRESETS_FILE = "/home/burf2000/servo-control/presets.json"
 
@@ -153,6 +160,11 @@ HTML = r"""<!DOCTYPE html>
 <body>
 <h1>PiBob Servo Control</h1>
 
+<div style="max-width:640px; margin:0 auto 16px; text-align:center;">
+  <img id="webcam" src="/video_feed" style="width:100%; border-radius:10px; border:1px solid #0f3460; background:#000;">
+  <div style="font-size:11px; color:#888; margin-top:4px;">Live Camera Feed</div>
+</div>
+
 <div class="top-bar">
   <div class="top-section">
     <label>PWM Freq</label>
@@ -183,6 +195,8 @@ HTML = r"""<!DOCTYPE html>
     <button class="btn btn-sm btn-blue" id="celebrate-btn" onclick="runGesture('celebrate')">Celebrate</button>
     <button class="btn btn-sm btn-blue" id="shrug-btn" onclick="runGesture('shrug')">Shrug</button>
     <button class="btn btn-sm btn-blue" id="dab-btn" onclick="runGesture('dab')">Dab</button>
+    <button class="btn btn-sm btn-blue" id="fight-btn" onclick="runGesture('fight')">Fight</button>
+    <button class="btn btn-sm btn-blue" id="dance-btn" onclick="runGesture('dance')">Dance</button>
   </div>
 </div>
 
@@ -465,11 +479,11 @@ function pollState() {
 
 function runDemo() { runGesture('demo'); }
 
-const gestureLabels = {demo:'Demo', run:'Run', point:'Point', scared:'Scared', wave:'Wave', angry:'Angry', celebrate:'Celebrate', shrug:'Shrug', dab:'Dab'};
+const gestureLabels = {demo:'Demo', run:'Run', point:'Point', scared:'Scared', wave:'Wave', angry:'Angry', celebrate:'Celebrate', shrug:'Shrug', dab:'Dab', fight:'Fight', dance:'Dance'};
 
 function runGesture(name) {
   // Disable all gesture buttons
-  const btns = ['demo-btn','run-btn','point-btn','scared-btn','wave-btn','angry-btn','celebrate-btn','shrug-btn','dab-btn'];
+  const btns = ['demo-btn','run-btn','point-btn','scared-btn','wave-btn','angry-btn','celebrate-btn','shrug-btn','dab-btn','fight-btn','dance-btn'];
   btns.forEach(id => { const b = document.getElementById(id); if (b) { b.disabled = true; } });
   const btn = document.getElementById(name + '-btn');
   if (btn) { btn.textContent = 'Running...'; btn.className = 'btn btn-sm btn-danger'; }
@@ -904,6 +918,69 @@ def gesture_dab():
     move_to_center(ALL_ARM_CHS)
 
 
+def gesture_fight():
+    """Fight: alternating punches, uppercuts, and combos (~5 seconds)."""
+    # Guard stance - arms up, biceps bent
+    move_to({7: 115, 11: 115, 4: 150, 8: 150}, steps=15)
+    time.sleep(0.2)
+    # Right jab
+    move_to({7: 135, 4: 100}, steps=8, delay=0.02)
+    move_to({7: 115, 4: 150}, steps=8, delay=0.02)
+    # Left jab
+    move_to({11: 135, 8: 100}, steps=8, delay=0.02)
+    move_to({11: 115, 8: 150}, steps=8, delay=0.02)
+    # Right-left combo (fast)
+    move_to({7: 140, 4: 95}, steps=6, delay=0.02)
+    move_to({7: 115, 4: 150}, steps=6, delay=0.02)
+    move_to({11: 140, 8: 95}, steps=6, delay=0.02)
+    move_to({11: 115, 8: 150}, steps=6, delay=0.02)
+    # Right uppercut - shoulder rotation up with bicep extend
+    move_to({7: 145, 4: 100, 6: 80}, steps=8, delay=0.02)
+    move_to({7: 115, 4: 150, 6: 90}, steps=10, delay=0.02)
+    # Left uppercut
+    move_to({11: 145, 8: 100, 10: 80}, steps=8, delay=0.02)
+    move_to({11: 115, 8: 150, 10: 90}, steps=10, delay=0.02)
+    # Flurry - rapid alternating punches
+    for _ in range(4):
+        move_to({7: 135, 4: 100, 11: 110, 8: 160}, steps=5, delay=0.02)
+        move_to({7: 110, 4: 160, 11: 135, 8: 100}, steps=5, delay=0.02)
+    # Final big right hook - arm rotation + shoulder
+    move_to({5: 75, 7: 140, 4: 100}, steps=10, delay=0.02)
+    time.sleep(0.3)
+    move_to_center(ALL_ARM_CHS)
+
+
+def gesture_dance():
+    """Dance: rhythmic arm movements, shimmies, and grooves (~10 seconds)."""
+    # Warm up - arms out to sides
+    move_to({6: 105, 10: 105, 7: 110, 11: 110}, steps=15)
+    # Disco point - right arm up, left down, alternate
+    for _ in range(3):
+        move_to({7: 140, 4: 100, 11: 80, 8: 150}, steps=10, delay=0.02)
+        move_to({7: 80, 4: 150, 11: 140, 8: 100}, steps=10, delay=0.02)
+    # Shoulder shimmy - alternate shoulder lifts
+    for _ in range(4):
+        move_to({6: 75, 10: 105}, steps=6, delay=0.02)
+        move_to({6: 105, 10: 75}, steps=6, delay=0.02)
+    # Arm wave - both arms sweep side to side
+    for _ in range(3):
+        move_to({5: 75, 9: 75, 7: 120, 11: 120}, steps=10, delay=0.02)
+        move_to({5: 105, 9: 105, 7: 120, 11: 120}, steps=10, delay=0.02)
+    # Robot groove - arms bent, pump up and down
+    move_to({4: 150, 8: 150}, steps=10)
+    for _ in range(4):
+        move_to({7: 130, 11: 130}, steps=8, delay=0.02)
+        move_to({7: 100, 11: 100}, steps=8, delay=0.02)
+    # Funky chicken - shoulder lifts with arm rotation
+    for _ in range(3):
+        move_to({6: 105, 10: 105, 5: 80, 9: 100, 4: 170, 8: 170}, steps=8, delay=0.02)
+        move_to({6: 80, 10: 80, 5: 100, 9: 80, 4: 130, 8: 130}, steps=8, delay=0.02)
+    # Finish with a dab
+    move_to({8: 150, 11: 120, 10: 100, 4: 90, 7: 90, 6: 105}, steps=15)
+    time.sleep(0.5)
+    move_to_center(ALL_ARM_CHS)
+
+
 GESTURES = {
     "demo": gesture_demo,
     "run": gesture_run,
@@ -914,6 +991,8 @@ GESTURES = {
     "celebrate": gesture_celebrate,
     "shrug": gesture_shrug,
     "dab": gesture_dab,
+    "fight": gesture_fight,
+    "dance": gesture_dance,
 }
 
 
@@ -961,5 +1040,26 @@ def get_state():
     return jsonify({"state": {str(k): v for k, v in channels.items()}, "sweeping": sweep_active, "demo_running": gesture_active})
 
 
+def generate_frames():
+    while True:
+        with camera_lock:
+            success, frame = camera.read()
+        if not success:
+            continue
+        ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
+        if not ret:
+            continue
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+
+
+@app.route("/video_feed")
+def video_feed():
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    try:
+        app.run(host="0.0.0.0", port=80)
+    finally:
+        camera.release()
