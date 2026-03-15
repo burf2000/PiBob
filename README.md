@@ -6,12 +6,14 @@ A Raspberry Pi-powered robot with dual arms controlled via a web interface. PiBo
 
 - Raspberry Pi (accessible at `pibob.local`)
 - Adafruit PCA9685 16-channel servo hat
-- 8 servos for dual robot arms
+- 10 servos (2 head + 8 arm)
 
 ### Arm Channel Mapping
 
 | Channel | Joint | Notes |
 |---------|-------|-------|
+| CH2 | Head Rotation | Left/right, full range (0°–180°) |
+| CH3 | Head Tilt | Up/down (50°–140°) |
 | CH4 | Right Bicep | 90° = straight, 180° = fully bent |
 | CH5 | Right Arm Rotation | Reversed, side-to-side |
 | CH6 | Right Shoulder Lift | Reversed, chicken wing style |
@@ -28,7 +30,7 @@ A Raspberry Pi-powered robot with dual arms controlled via a web interface. PiBo
 - **Safe limits** — configurable min/max per channel, persisted to `config.json`
 - **Presets** — save and load servo positions
 - **Gestures** — pre-programmed movements with smooth interpolation:
-  Demo, Wave, Point, Run, Scared, Angry, Celebrate, Shrug, Dab
+  Demo, Wave, Point, Run, Scared, Angry, Celebrate, Shrug, Dab, Fight, Dance
 - **Sweep test** — automatically sweep all servos through their range
 - **PWM frequency** — adjustable from 24–1526 Hz
 

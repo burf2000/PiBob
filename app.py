@@ -19,8 +19,10 @@ PRESETS_FILE = "/home/burf2000/servo-control/presets.json"
 
 CONFIG_FILE = "/home/burf2000/servo-control/config.json"
 
-# Joint names and default safe limits for robot arm channels
+# Joint names and default safe limits for robot channels
 CHANNEL_DEFAULTS = {
+    2:  {"name": "Head Rotation",    "safe_min": 0,   "safe_max": 180, "reversed": False},
+    3:  {"name": "Head Tilt",        "safe_min": 50,  "safe_max": 140, "reversed": False},
     4:  {"name": "R Bicep",          "safe_min": 90,  "safe_max": 180, "reversed": False},
     5:  {"name": "R Arm Rotation",   "safe_min": 70,  "safe_max": 110, "reversed": True},
     6:  {"name": "R Shoulder Lift",  "safe_min": 70,  "safe_max": 110, "reversed": True},
@@ -197,6 +199,7 @@ HTML = r"""<!DOCTYPE html>
     <button class="btn btn-sm btn-blue" id="dab-btn" onclick="runGesture('dab')">Dab</button>
     <button class="btn btn-sm btn-blue" id="fight-btn" onclick="runGesture('fight')">Fight</button>
     <button class="btn btn-sm btn-blue" id="dance-btn" onclick="runGesture('dance')">Dance</button>
+    <button class="btn btn-sm btn-green" id="runall-btn" onclick="runGesture('run_all')">Run All</button>
   </div>
 </div>
 
@@ -479,11 +482,11 @@ function pollState() {
 
 function runDemo() { runGesture('demo'); }
 
-const gestureLabels = {demo:'Demo', run:'Run', point:'Point', scared:'Scared', wave:'Wave', angry:'Angry', celebrate:'Celebrate', shrug:'Shrug', dab:'Dab', fight:'Fight', dance:'Dance'};
+const gestureLabels = {demo:'Demo', run:'Run', point:'Point', scared:'Scared', wave:'Wave', angry:'Angry', celebrate:'Celebrate', shrug:'Shrug', dab:'Dab', fight:'Fight', dance:'Dance', run_all:'Run All'};
 
 function runGesture(name) {
   // Disable all gesture buttons
-  const btns = ['demo-btn','run-btn','point-btn','scared-btn','wave-btn','angry-btn','celebrate-btn','shrug-btn','dab-btn','fight-btn','dance-btn'];
+  const btns = ['demo-btn','run-btn','point-btn','scared-btn','wave-btn','angry-btn','celebrate-btn','shrug-btn','dab-btn','fight-btn','dance-btn','runall-btn'];
   btns.forEach(id => { const b = document.getElementById(id); if (b) { b.disabled = true; } });
   const btn = document.getElementById(name + '-btn');
   if (btn) { btn.textContent = 'Running...'; btn.className = 'btn btn-sm btn-danger'; }
@@ -806,11 +809,22 @@ def move_to_center(chs):
     move_to(targets)
 
 
+HEAD_CHS = [2, 3]
 ALL_ARM_CHS = [4, 5, 6, 7, 8, 9, 10, 11]
+ALL_BODY_CHS = HEAD_CHS + ALL_ARM_CHS
 
 
 def gesture_demo():
     """Demo: test each joint pair through its range."""
+    # Head rotation left-right
+    move_to({2: 30})
+    move_to({2: 150})
+    move_to_center(HEAD_CHS)
+    # Head tilt up-down
+    move_to({3: 50})
+    move_to({3: 140})
+    move_to_center(HEAD_CHS)
+    # Arms
     biceps = [4, 8]
     arm_rot = [5, 9]
     shoulder_lift = [6, 10]
@@ -836,149 +850,166 @@ def gesture_demo():
 
 
 def gesture_run():
-    """Running: arms swing alternately with slight bicep bend."""
+    """Running: arms swing alternately with slight bicep bend, head bobs."""
     for _ in range(6):
-        # Right arm forward, left arm back
-        move_to({7: 120, 11: 70, 4: 120, 8: 100}, steps=15, delay=0.02)
-        # Left arm forward, right arm back
-        move_to({7: 70, 11: 120, 4: 100, 8: 120}, steps=15, delay=0.02)
-    move_to_center(ALL_ARM_CHS)
+        # Right arm forward, left arm back, head bobs down
+        move_to({7: 120, 11: 70, 4: 120, 8: 100, 3: 100}, steps=15, delay=0.02)
+        # Left arm forward, right arm back, head bobs up
+        move_to({7: 70, 11: 120, 4: 100, 8: 120, 3: 80}, steps=15, delay=0.02)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_point():
-    """Point with right arm: raise shoulder, extend arm forward."""
-    # Raise right arm forward and straighten bicep
-    move_to({7: 140, 4: 90, 5: 90, 6: 90}, steps=25)
+    """Point with right arm: raise shoulder, extend arm forward, head looks at target."""
+    # Raise right arm forward and straighten bicep, head looks right
+    move_to({7: 140, 4: 90, 5: 90, 6: 90, 2: 40}, steps=25)
     time.sleep(1.0)
-    move_to_center([4, 5, 6, 7])
+    move_to_center([2, 3, 4, 5, 6, 7])
 
 
 def gesture_scared():
-    """Scared: bring both arms up to face level, biceps bent."""
-    # Arms up in front, bent at bicep, rotated inward
-    move_to({7: 130, 11: 130, 4: 180, 8: 180, 6: 70, 10: 70, 5: 100, 9: 80}, steps=10, delay=0.02)
-    # Shake with arm rotation trembling inward
+    """Scared: bring both arms up to face level, biceps bent, head ducks."""
+    # Arms up in front, bent at bicep, rotated inward, head tilts down and trembles
+    move_to({7: 130, 11: 130, 4: 180, 8: 180, 6: 70, 10: 70, 5: 100, 9: 80, 3: 130}, steps=10, delay=0.02)
+    # Shake with arm rotation trembling inward, head shakes
     for _ in range(3):
-        move_to({5: 105, 9: 75}, steps=5, delay=0.02)
-        move_to({5: 95, 9: 85}, steps=5, delay=0.02)
+        move_to({5: 105, 9: 75, 2: 80}, steps=5, delay=0.02)
+        move_to({5: 95, 9: 85, 2: 100}, steps=5, delay=0.02)
     time.sleep(0.3)
-    move_to_center(ALL_ARM_CHS)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_wave():
-    """Wave: raise right arm and wave side to side."""
+    """Wave: raise right arm and wave side to side, head follows hand."""
     # Raise right arm up
     move_to({7: 140, 4: 130}, steps=25)
-    # Wave by rotating arm side to side with forearm twist
+    # Wave by rotating arm side to side, head tracks the wave
     for _ in range(4):
-        move_to({5: 75, 6: 80}, steps=10, delay=0.02)
-        move_to({5: 105, 6: 100}, steps=10, delay=0.02)
-    move_to_center([4, 5, 6, 7])
+        move_to({5: 75, 6: 80, 2: 70}, steps=10, delay=0.02)
+        move_to({5: 105, 6: 100, 2: 110}, steps=10, delay=0.02)
+    move_to_center([2, 3, 4, 5, 6, 7])
 
 
 def gesture_angry():
-    """Angry: punch forward aggressively with bicep, several times."""
-    # Raise arm slightly
-    move_to({7: 115}, steps=15)
+    """Angry: punch forward aggressively, head thrusts forward."""
+    # Head tilts down aggressively, raise arm slightly
+    move_to({7: 115, 3: 120}, steps=15)
     for _ in range(3):
-        # Punch: extend bicep fast
-        move_to({4: 155}, steps=8, delay=0.02)
+        # Punch: extend bicep fast, head jabs forward
+        move_to({4: 155, 3: 135}, steps=8, delay=0.02)
         time.sleep(0.15)
         # Pull back
-        move_to({4: 100}, steps=8, delay=0.02)
+        move_to({4: 100, 3: 115}, steps=8, delay=0.02)
         time.sleep(0.1)
-    move_to_center([4, 7])
+    move_to_center([2, 3, 4, 7])
 
 
 def gesture_celebrate():
-    """Celebrate: both arms up, shake them."""
-    # Both arms up
-    move_to({7: 145, 11: 145, 4: 130, 8: 130}, steps=20)
-    # Shake arms
+    """Celebrate: both arms up, shake them, head looks up and around."""
+    # Both arms up, head tilts up
+    move_to({7: 145, 11: 145, 4: 130, 8: 130, 3: 55}, steps=20)
+    # Shake arms, head sways side to side
     for _ in range(4):
-        move_to({5: 80, 9: 100}, steps=6, delay=0.02)
-        move_to({5: 100, 9: 80}, steps=6, delay=0.02)
-    move_to_center(ALL_ARM_CHS)
+        move_to({5: 80, 9: 100, 2: 70}, steps=6, delay=0.02)
+        move_to({5: 100, 9: 80, 2: 110}, steps=6, delay=0.02)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_shrug():
-    """Shrug: lift shoulders up, bend arms out, hold, drop."""
-    # Shoulders up, arms out to sides, biceps bent
-    move_to({6: 105, 10: 105, 7: 110, 11: 110, 4: 130, 8: 130}, steps=15)
+    """Shrug: lift shoulders up, bend arms out, head tilts to side."""
+    # Shoulders up, arms out to sides, biceps bent, head tilts
+    move_to({6: 105, 10: 105, 7: 110, 11: 110, 4: 130, 8: 130, 2: 120, 3: 70}, steps=15)
     time.sleep(0.8)
-    move_to_center(ALL_ARM_CHS)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_dab():
-    """Dab: right arm out to side, left arm bent across face."""
-    # Left arm up across face (bent bicep, shoulder forward)
-    # Right arm extended out to side (straight, shoulder lift)
-    move_to({8: 150, 11: 120, 10: 100, 4: 90, 7: 90, 6: 105}, steps=20)
+    """Dab: right arm out to side, left arm bent across face, head dips into elbow."""
+    # Left arm up across face, right arm extended, head dips down and right
+    move_to({8: 150, 11: 120, 10: 100, 4: 90, 7: 90, 6: 105, 2: 40, 3: 120}, steps=20)
     time.sleep(1.0)
-    move_to_center(ALL_ARM_CHS)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_fight():
     """Fight: alternating punches, uppercuts, and combos (~5 seconds)."""
-    # Guard stance - arms up, biceps bent
-    move_to({7: 115, 11: 115, 4: 150, 8: 150}, steps=15)
+    # Guard stance - arms up, biceps bent, head down ready
+    move_to({7: 115, 11: 115, 4: 150, 8: 150, 3: 115}, steps=15)
     time.sleep(0.2)
-    # Right jab
-    move_to({7: 135, 4: 100}, steps=8, delay=0.02)
-    move_to({7: 115, 4: 150}, steps=8, delay=0.02)
-    # Left jab
-    move_to({11: 135, 8: 100}, steps=8, delay=0.02)
-    move_to({11: 115, 8: 150}, steps=8, delay=0.02)
+    # Right jab - head tracks right
+    move_to({7: 135, 4: 100, 2: 70}, steps=8, delay=0.02)
+    move_to({7: 115, 4: 150, 2: 90}, steps=8, delay=0.02)
+    # Left jab - head tracks left
+    move_to({11: 135, 8: 100, 2: 110}, steps=8, delay=0.02)
+    move_to({11: 115, 8: 150, 2: 90}, steps=8, delay=0.02)
     # Right-left combo (fast)
-    move_to({7: 140, 4: 95}, steps=6, delay=0.02)
+    move_to({7: 140, 4: 95, 2: 70}, steps=6, delay=0.02)
     move_to({7: 115, 4: 150}, steps=6, delay=0.02)
-    move_to({11: 140, 8: 95}, steps=6, delay=0.02)
-    move_to({11: 115, 8: 150}, steps=6, delay=0.02)
+    move_to({11: 140, 8: 95, 2: 110}, steps=6, delay=0.02)
+    move_to({11: 115, 8: 150, 2: 90}, steps=6, delay=0.02)
     # Right uppercut - shoulder rotation up with bicep extend
-    move_to({7: 145, 4: 100, 6: 80}, steps=8, delay=0.02)
-    move_to({7: 115, 4: 150, 6: 90}, steps=10, delay=0.02)
+    move_to({7: 145, 4: 100, 6: 80, 3: 130}, steps=8, delay=0.02)
+    move_to({7: 115, 4: 150, 6: 90, 3: 115}, steps=10, delay=0.02)
     # Left uppercut
-    move_to({11: 145, 8: 100, 10: 80}, steps=8, delay=0.02)
-    move_to({11: 115, 8: 150, 10: 90}, steps=10, delay=0.02)
-    # Flurry - rapid alternating punches
+    move_to({11: 145, 8: 100, 10: 80, 3: 130}, steps=8, delay=0.02)
+    move_to({11: 115, 8: 150, 10: 90, 3: 115}, steps=10, delay=0.02)
+    # Flurry - rapid alternating punches, head bobs
     for _ in range(4):
-        move_to({7: 135, 4: 100, 11: 110, 8: 160}, steps=5, delay=0.02)
-        move_to({7: 110, 4: 160, 11: 135, 8: 100}, steps=5, delay=0.02)
-    # Final big right hook - arm rotation + shoulder
-    move_to({5: 75, 7: 140, 4: 100}, steps=10, delay=0.02)
+        move_to({7: 135, 4: 100, 11: 110, 8: 160, 2: 75}, steps=5, delay=0.02)
+        move_to({7: 110, 4: 160, 11: 135, 8: 100, 2: 105}, steps=5, delay=0.02)
+    # Final big right hook - arm rotation + shoulder, head follows
+    move_to({5: 75, 7: 140, 4: 100, 2: 50}, steps=10, delay=0.02)
     time.sleep(0.3)
-    move_to_center(ALL_ARM_CHS)
+    move_to_center(ALL_BODY_CHS)
 
 
 def gesture_dance():
     """Dance: rhythmic arm movements, shimmies, and grooves (~10 seconds)."""
-    # Warm up - arms out to sides
-    move_to({6: 105, 10: 105, 7: 110, 11: 110}, steps=15)
-    # Disco point - right arm up, left down, alternate
+    # Warm up - arms out to sides, head bobs
+    move_to({6: 105, 10: 105, 7: 110, 11: 110, 3: 70}, steps=15)
+    # Disco point - right arm up, left down, head follows pointing arm
     for _ in range(3):
-        move_to({7: 140, 4: 100, 11: 80, 8: 150}, steps=10, delay=0.02)
-        move_to({7: 80, 4: 150, 11: 140, 8: 100}, steps=10, delay=0.02)
-    # Shoulder shimmy - alternate shoulder lifts
+        move_to({7: 140, 4: 100, 11: 80, 8: 150, 2: 60, 3: 55}, steps=10, delay=0.02)
+        move_to({7: 80, 4: 150, 11: 140, 8: 100, 2: 120, 3: 55}, steps=10, delay=0.02)
+    # Shoulder shimmy - alternate shoulder lifts, head bobs
     for _ in range(4):
-        move_to({6: 75, 10: 105}, steps=6, delay=0.02)
-        move_to({6: 105, 10: 75}, steps=6, delay=0.02)
-    # Arm wave - both arms sweep side to side
+        move_to({6: 75, 10: 105, 3: 75}, steps=6, delay=0.02)
+        move_to({6: 105, 10: 75, 3: 65}, steps=6, delay=0.02)
+    # Arm wave - both arms sweep side to side, head sways
     for _ in range(3):
-        move_to({5: 75, 9: 75, 7: 120, 11: 120}, steps=10, delay=0.02)
-        move_to({5: 105, 9: 105, 7: 120, 11: 120}, steps=10, delay=0.02)
-    # Robot groove - arms bent, pump up and down
+        move_to({5: 75, 9: 75, 7: 120, 11: 120, 2: 60}, steps=10, delay=0.02)
+        move_to({5: 105, 9: 105, 7: 120, 11: 120, 2: 120}, steps=10, delay=0.02)
+    # Robot groove - arms bent, pump up and down, head nods
     move_to({4: 150, 8: 150}, steps=10)
     for _ in range(4):
-        move_to({7: 130, 11: 130}, steps=8, delay=0.02)
-        move_to({7: 100, 11: 100}, steps=8, delay=0.02)
-    # Funky chicken - shoulder lifts with arm rotation
+        move_to({7: 130, 11: 130, 3: 75}, steps=8, delay=0.02)
+        move_to({7: 100, 11: 100, 3: 60}, steps=8, delay=0.02)
+    # Funky chicken - shoulder lifts with arm rotation, head bobs
     for _ in range(3):
-        move_to({6: 105, 10: 105, 5: 80, 9: 100, 4: 170, 8: 170}, steps=8, delay=0.02)
-        move_to({6: 80, 10: 80, 5: 100, 9: 80, 4: 130, 8: 130}, steps=8, delay=0.02)
+        move_to({6: 105, 10: 105, 5: 80, 9: 100, 4: 170, 8: 170, 3: 80}, steps=8, delay=0.02)
+        move_to({6: 80, 10: 80, 5: 100, 9: 80, 4: 130, 8: 130, 3: 60}, steps=8, delay=0.02)
     # Finish with a dab
-    move_to({8: 150, 11: 120, 10: 100, 4: 90, 7: 90, 6: 105}, steps=15)
+    move_to({8: 150, 11: 120, 10: 100, 4: 90, 7: 90, 6: 105, 2: 40, 3: 120}, steps=15)
     time.sleep(0.5)
-    move_to_center(ALL_ARM_CHS)
+    move_to_center(ALL_BODY_CHS)
+
+
+def gesture_run_all():
+    """Run all gestures in sequence with delays."""
+    time.sleep(5)
+    all_gestures = [
+        gesture_run, gesture_point, gesture_scared, gesture_wave,
+        gesture_angry, gesture_celebrate, gesture_shrug, gesture_dab,
+        gesture_fight, gesture_dance,
+    ]
+    for i, func in enumerate(all_gestures):
+        with gesture_lock:
+            if not gesture_active:
+                return
+        func()
+        move_to_center(ALL_BODY_CHS)
+        if i < len(all_gestures) - 1:
+            time.sleep(1)
 
 
 GESTURES = {
@@ -993,6 +1024,7 @@ GESTURES = {
     "dab": gesture_dab,
     "fight": gesture_fight,
     "dance": gesture_dance,
+    "run_all": gesture_run_all,
 }
 
 
@@ -1003,7 +1035,7 @@ def gesture_worker(name):
         if func:
             func()
     finally:
-        move_to_center(ALL_ARM_CHS)
+        move_to_center(ALL_BODY_CHS)
         with gesture_lock:
             gesture_active = False
 
