@@ -1,0 +1,3 @@
+flask
+adafruit-circuitpython-servokit
+opencv-python-headless

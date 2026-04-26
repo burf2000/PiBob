@@ -11,13 +11,16 @@ kit = ServoKit(channels=16)
 
 # Webcam setup
 camera = cv2.VideoCapture(0)
-camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+if camera.isOpened():
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+else:
+    print("Warning: No camera detected. Video feed will be unavailable.")
 camera_lock = threading.Lock()
 
-PRESETS_FILE = "/home/burf2000/servo-control/presets.json"
-
-CONFIG_FILE = "/home/burf2000/servo-control/config.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PRESETS_FILE = os.path.join(BASE_DIR, "presets.json")
+CONFIG_FILE = os.path.join(BASE_DIR, "config.json")
 
 # Joint names and default safe limits for robot channels
 CHANNEL_DEFAULTS = {
@@ -1092,6 +1095,6 @@ def video_feed():
 
 if __name__ == "__main__":
     try:
-        app.run(host="0.0.0.0", port=80)
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
     finally:
         camera.release()

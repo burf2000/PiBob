@@ -8,7 +8,7 @@
 | 6 | Miuzei DS3218MG 20KG Digital Servo | High torque, full metal gear, waterproof, 270° control angle — used for arm joints |
 | 1 | 1MP USB Camera Module (OV9732) | USB 2.0, 1/4" sensor, manual focus — used for live video feed |
 | 10 | Servo Extension Cables | Connecting servos to the PCA9685 HAT |
-| 1 | Power Supply | For Pi and servos |
+| 1 | 6V Universal Power Supply | Powers the servos via the PCA9685 HAT screw terminal |
 | - | 3D Printed Parts | Designed in TinkerCAD |
 
 **Target build cost: under £100**
