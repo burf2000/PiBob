@@ -30,19 +30,6 @@ See [BOM.md](BOM.md) for the full bill of materials. Key components:
 - 1x USB camera module
 - 3D printed parts (STL files included)
 
-### Head Assembly
-
-![Head with camera module](Images/Head.JPG)
-
-### Arm Assembly
-
-![Arm detail](Images/Arm.JPG)
-![Arm detail 2](Images/Arm2.JPG)
-
-### Electronics
-
-![Raspberry Pi with PCA9685 servo HAT](Images/Pi.JPG)
-
 ### Channel Mapping
 
 | Channel | Joint | Notes |
