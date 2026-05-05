@@ -1,0 +1,29 @@
+# PiBob joint -> servo mapping.
+#
+# Each entry maps a URDF joint name to a PCA9685 channel on the Pi servo hat.
+#   channel:    PCA9685 channel index
+#   sign:       +1 or -1; flip if positive joint motion drives the servo the wrong way
+#   home_deg:   servo angle (deg) corresponding to ROS joint angle 0 (default 90)
+#   min_deg:    safe minimum servo angle (deg), enforced before POST
+#   max_deg:    safe maximum servo angle (deg)
+#
+# Note: the Flask `/set` endpoint already applies its own `reversed` flag from
+# config.json. Keep `sign` here at +1 unless you want ROS-side inversion on top.
+
+servo_bridge:
+  ros__parameters:
+    base_url: "http://pibob.local"
+    request_timeout_s: 0.5
+    rate_limit_hz: 30.0      # max POSTs per joint per second
+    deadband_deg: 1.0        # don't POST if change is below this
+    joints:
+      head_pan_joint:        { channel: 2,  sign:  1, home_deg: 90, min_deg:  0, max_deg: 180 }
+      head_tilt_joint:       { channel: 3,  sign:  1, home_deg: 90, min_deg: 50, max_deg: 140 }
+      r_bicep_joint:         { channel: 4,  sign:  1, home_deg: 90, min_deg: 90, max_deg: 180 }
+      r_arm_rot_joint:       { channel: 5,  sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
+      r_shoulder_lift_joint: { channel: 6,  sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
+      r_shoulder_rot_joint:  { channel: 7,  sign:  1, home_deg: 90, min_deg: 70, max_deg: 150 }
+      l_bicep_joint:         { channel: 8,  sign:  1, home_deg: 90, min_deg: 90, max_deg: 180 }
+      l_arm_rot_joint:       { channel: 9,  sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
+      l_shoulder_lift_joint: { channel: 10, sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
+      l_shoulder_rot_joint:  { channel: 11, sign:  1, home_deg: 90, min_deg: 70, max_deg: 150 }

@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<robot name="pibob" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    PiBob URDF.
+
+    Conventions (REP-103): x forward, y left, z up. All joint angles are radians,
+    with 0 = home pose (servo at 90 deg). Mesh files are the project's STLs.
+    Link offsets are approximate and intended to be tuned against the physical
+    build; servo channel mapping and direction live in pibob_driver/config/joint_map.yaml.
+  -->
+
+  <xacro:property name="mesh_pkg" value="package://pibob_description/meshes"/>
+  <xacro:property name="pi"       value="3.14159265359"/>
+
+  <!-- ============ Materials ============ -->
+  <material name="white"><color rgba="0.95 0.95 0.95 1"/></material>
+  <material name="grey"><color rgba="0.4 0.4 0.4 1"/></material>
+
+  <!-- ============ Base + torso ============ -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${mesh_pkg}/Desktop-Base.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_beam" type="fixed">
+    <parent link="base_link"/>
+    <child  link="shoulder_beam"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <link name="shoulder_beam">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${mesh_pkg}/Shoulder-Beam.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <!-- ============ Head ============ -->
+  <joint name="head_pan_joint" type="revolute">
+    <parent link="shoulder_beam"/>
+    <child  link="head_pan_link"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <!-- safe range CH2: 0..180 deg => -pi/2..+pi/2 about home (90 deg) -->
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="3.14"/>
+  </joint>
+
+  <link name="head_pan_link">
+    <visual>
+      <geometry><mesh filename="${mesh_pkg}/Head-BottomServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="head_tilt_joint" type="revolute">
+    <parent link="head_pan_link"/>
+    <child  link="head_tilt_link"/>
+    <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <!-- safe range CH3: 50..140 deg => -40..+50 deg around home -->
+    <limit lower="-0.6981" upper="0.8727" effort="1.0" velocity="3.14"/>
+  </joint>
+
+  <link name="head_tilt_link">
+    <visual>
+      <geometry><mesh filename="${mesh_pkg}/Head-MiddleServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="head_to_camera" type="fixed">
+    <parent link="head_tilt_link"/>
+    <child  link="camera_link"/>
+    <origin xyz="0.04 0 0.02" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_link">
+    <visual>
+      <geometry><mesh filename="${mesh_pkg}/Head-CameraHolder.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <!-- ============ Arm macro ============ -->
+  <!--
+    side: "r" or "l"; reflect: +1 (left) or -1 (right) for y-axis mirroring.
+    Joint chain (proximal -> distal):
+      shoulder_rot   (about Y) – arm up/down in front (CH7 / CH11)
+      shoulder_lift  (about X) – chicken-wing out to side (CH6 / CH10)
+      arm_rot        (about Z) – rotation along arm axis (CH5 / CH9)
+      bicep          (about Y) – elbow bend (CH4 / CH8)
+  -->
+  <xacro:macro name="arm" params="side reflect bracket_mesh holder_mesh">
+
+    <joint name="${side}_shoulder_rot_joint" type="revolute">
+      <parent link="shoulder_beam"/>
+      <child  link="${side}_shoulder_rot_link"/>
+      <origin xyz="0 ${0.09*reflect} 0.0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <!-- CH7/CH11 safe 70..150 -->
+      <limit lower="-0.3491" upper="1.0472" effort="1.0" velocity="3.14"/>
+    </joint>
+    <link name="${side}_shoulder_rot_link">
+      <visual>
+        <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+    <joint name="${side}_shoulder_lift_joint" type="revolute">
+      <parent link="${side}_shoulder_rot_link"/>
+      <child  link="${side}_shoulder_lift_link"/>
+      <origin xyz="0 0 -0.03" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <!-- CH6/CH10 safe 70..110 -->
+      <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
+    </joint>
+    <link name="${side}_shoulder_lift_link">
+      <visual>
+        <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+
+    <joint name="${side}_arm_rot_joint" type="revolute">
+      <parent link="${side}_shoulder_lift_link"/>
+      <child  link="${side}_upper_arm_link"/>
+      <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <!-- CH5/CH9 safe 70..110 -->
+      <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
+    </joint>
+    <link name="${side}_upper_arm_link">
+      <visual>
+        <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+    <joint name="${side}_bicep_joint" type="revolute">
+      <parent link="${side}_upper_arm_link"/>
+      <child  link="${side}_forearm_link"/>
+      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <!-- CH4/CH8 safe 90..180 => 0..+pi/2 (cannot go below straight) -->
+      <limit lower="0.0" upper="1.5708" effort="1.0" velocity="3.14"/>
+    </joint>
+    <link name="${side}_forearm_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="grey"/>
+      </visual>
+      <visual>
+        <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+        <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+  </xacro:macro>
+
+  <xacro:arm side="r" reflect="-1"
+             bracket_mesh="Shoulder-Right-Bracket.stl"
+             holder_mesh="Shoulder-Right-ServoHolder.stl"/>
+  <xacro:arm side="l" reflect="1"
+             bracket_mesh="Shoulder-Left-Bracket.stl"
+             holder_mesh="Shoulder-Left-ServoHolder.stl"/>
+
+</robot>
