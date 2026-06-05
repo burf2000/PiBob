@@ -14,7 +14,8 @@ Visualization Manager:
         Value: /robot_description
     - Class: rviz_default_plugins/TF
       Name: TF
-      Enabled: true
+      Enabled: false
+      Marker Scale: 0.12
   Global Options:
     Fixed Frame: base_link
     Background Color: 48; 48; 48
