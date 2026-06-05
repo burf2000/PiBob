@@ -50,6 +50,27 @@ CONTROL_REAL=true BASE_URL=http://192.168.20.227 docker compose up
 > lease. Make sure the robot's Flask UI is reachable first (open
 > `http://pibob.local` in a browser).
 
+## Live-edit the URDF (hot reload)
+
+Tuning the model? Run in dev mode and edits to the xacro auto-reload in RViz —
+no rebuild:
+
+```bash
+chmod +x ros2/docker/dev.sh   # first time
+./ros2/docker/dev.sh          # add --build after Dockerfile changes
+```
+
+Then open **http://localhost:6080/vnc.html**, edit
+`ros2/pibob_description/urdf/pibob.urdf.xacro` on your Mac, and **save** — RViz
+redraws in ~12 s (the container re-runs xacro and bounces the launch; a syntax
+error is logged and the last good model is kept). This is why the Docker route
+beats native Mac viewers: the container has ROS + xacro + the package, so
+`package://` meshes and the xacro macro just work.
+
+Under the hood it's the same image with two extras: the `urdf/` dir is
+volume-mounted from the host, and `WATCH=1` turns on the file-watcher (see
+`entrypoint.sh`). `docker logs -f pibob-rviz` shows reloads and any xacro errors.
+
 ## How it works
 
 - `robot_state_publisher` loads the URDF from `pibob_description`.

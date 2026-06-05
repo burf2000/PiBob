@@ -125,7 +125,9 @@
     </joint>
     <link name="${side}_shoulder_lift_link">
       <visual>
-        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+        <!-- bracket spans outward (long 115mm side along the span) so it bridges
+             from the shoulder to the arm sitting further out -->
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
@@ -134,14 +136,16 @@
     <joint name="${side}_arm_rot_joint" type="revolute">
       <parent link="${side}_shoulder_lift_link"/>
       <child  link="${side}_upper_arm_link"/>
-      <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+      <!-- arm sits further out along the bracket (outward in Y), then drops -->
+      <origin xyz="0 ${0.10*reflect} -0.04" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <!-- CH5/CH9 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_upper_arm_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+        <!-- bicep rotated 90 deg -->
+        <origin xyz="0 0 0" rpy="0 1.5708 1.5708"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
