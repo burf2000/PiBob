@@ -4,6 +4,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
+from launch_ros.descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -13,7 +14,7 @@ def generate_launch_description():
     rviz_config = PathJoinSubstitution([pkg, 'rviz', 'pibob.rviz'])
 
     robot_description = {
-        'robot_description': Command(['xacro ', xacro_path])
+        'robot_description': ParameterValue(Command(['xacro ', xacro_path]), value_type=str)
     }
 
     return LaunchDescription([

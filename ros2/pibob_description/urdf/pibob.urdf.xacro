@@ -11,7 +11,6 @@
   -->
 
   <xacro:property name="mesh_pkg" value="package://pibob_description/meshes"/>
-  <xacro:property name="pi"       value="3.14159265359"/>
 
   <!-- ============ Materials ============ -->
   <material name="white"><color rgba="0.95 0.95 0.95 1"/></material>
@@ -29,12 +28,12 @@
   <joint name="base_to_beam" type="fixed">
     <parent link="base_link"/>
     <child  link="shoulder_beam"/>
-    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <origin xyz="0 0 0.30" rpy="0 0 0"/>
   </joint>
 
   <link name="shoulder_beam">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry><mesh filename="${mesh_pkg}/Shoulder-Beam.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="grey"/>
     </visual>
@@ -44,7 +43,7 @@
   <joint name="head_pan_joint" type="revolute">
     <parent link="shoulder_beam"/>
     <child  link="head_pan_link"/>
-    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    <origin xyz="0 0 0.10" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <!-- safe range CH2: 0..180 deg => -pi/2..+pi/2 about home (90 deg) -->
     <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="3.14"/>
@@ -52,6 +51,7 @@
 
   <link name="head_pan_link">
     <visual>
+      <origin xyz="0 0 0" rpy="0 -1.5708 0"/>
       <geometry><mesh filename="${mesh_pkg}/Head-BottomServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="white"/>
     </visual>
@@ -68,6 +68,7 @@
 
   <link name="head_tilt_link">
     <visual>
+      <origin xyz="0 0 0" rpy="0 -1.5708 0"/>
       <geometry><mesh filename="${mesh_pkg}/Head-MiddleServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="white"/>
     </visual>
@@ -81,6 +82,7 @@
 
   <link name="camera_link">
     <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 1.5708"/>
       <geometry><mesh filename="${mesh_pkg}/Head-CameraHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="grey"/>
     </visual>
@@ -100,13 +102,14 @@
     <joint name="${side}_shoulder_rot_joint" type="revolute">
       <parent link="shoulder_beam"/>
       <child  link="${side}_shoulder_rot_link"/>
-      <origin xyz="0 ${0.09*reflect} 0.0" rpy="0 0 0"/>
+      <origin xyz="0 ${0.09*reflect} 0.09" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <!-- CH7/CH11 safe 70..150 -->
       <limit lower="-0.3491" upper="1.0472" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_shoulder_rot_link">
       <visual>
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -122,6 +125,7 @@
     </joint>
     <link name="${side}_shoulder_lift_link">
       <visual>
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
@@ -137,6 +141,7 @@
     </joint>
     <link name="${side}_upper_arm_link">
       <visual>
+        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -152,12 +157,12 @@
     </joint>
     <link name="${side}_forearm_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
       <visual>
-        <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.04" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
