@@ -1,0 +1,22 @@
+# PiBob ROS 2 + RViz in the browser.
+#
+#   cd ros2/docker
+#   docker compose up --build           # sim only: RViz + sliders
+#   CONTROL_REAL=true docker compose up  # also drive the real PiBob
+#
+# Then open http://localhost:6080/vnc.html  (just click Connect).
+services:
+  pibob-rviz:
+    build:
+      context: ..                 # the ros2/ workspace dir
+      dockerfile: docker/Dockerfile
+    image: pibob-ros2-rviz:humble
+    container_name: pibob-rviz
+    ports:
+      - "6080:6080"               # noVNC web UI
+    environment:
+      # false = move only the RViz model; true = also POST to the real robot.
+      - CONTROL_REAL=${CONTROL_REAL:-false}
+      # Use the PiBob IP (mDNS .local does not resolve inside the container).
+      - BASE_URL=${BASE_URL:-http://192.168.20.227}
+    shm_size: "512m"              # RViz/OGRE likes a bit of shared memory
