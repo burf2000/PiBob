@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ros-humble-joint-state-publisher-gui \
         ros-humble-xacro \
         python3-requests \
-        xvfb x11vnc openbox novnc websockify \
+        xvfb x11vnc openbox tint2 novnc websockify \
         libgl1-mesa-dri mesa-utils \
         net-tools \
     && rm -rf /var/lib/apt/lists/*

@@ -4,7 +4,7 @@
 set -e
 
 export DISPLAY="${DISPLAY:-:1}"
-GEOMETRY="${GEOMETRY:-1440x900x24}"
+GEOMETRY="${GEOMETRY:-1920x1080x24}"
 
 echo "[entrypoint] starting Xvfb on ${DISPLAY} (${GEOMETRY})"
 Xvfb "${DISPLAY}" -screen 0 "${GEOMETRY}" +extension GLX +render -noreset >/tmp/xvfb.log 2>&1 &
@@ -12,6 +12,12 @@ sleep 1
 
 echo "[entrypoint] starting window manager (openbox)"
 openbox >/tmp/openbox.log 2>&1 &
+sleep 0.5
+
+echo "[entrypoint] starting taskbar (tint2)"
+# tint2 gives a bottom panel listing every window, so minimised windows are one
+# click away (openbox alone has no taskbar).
+tint2 >/tmp/tint2.log 2>&1 &
 
 echo "[entrypoint] starting x11vnc on :5900"
 x11vnc -display "${DISPLAY}" -nopw -forever -shared -rfbport 5900 -bg -quiet >/tmp/x11vnc.log 2>&1

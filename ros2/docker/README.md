@@ -15,7 +15,15 @@ docker compose up --build
 
 Then open **http://localhost:6080/vnc.html** and click **Connect**. You'll see a
 Linux desktop with **RViz** showing the PiBob model and a **Joint State
-Publisher** window of sliders. Drag a slider → the model moves in RViz.
+Publisher** window of sliders. Drag a slider → the model moves in RViz. A
+**taskbar** along the bottom lists every window — click it to restore a
+minimised RViz or slider window.
+
+> **If it looks small / has scrollbars:** open the noVNC settings (the little
+> toolbar tab on the left edge) → **Settings → Scaling Mode → Local Scaling**,
+> or just open **http://localhost:6080/vnc.html?resize=scale** so the desktop
+> scales to fill your browser window. The desktop is 1920×1080 by default;
+> override with `GEOMETRY` (e.g. `GEOMETRY=2560x1440x24`).
 
 First build takes a few minutes (pulls `ros:humble-desktop`); later runs are
 instant.
