@@ -43,7 +43,7 @@
   <joint name="head_pan_joint" type="revolute">
     <parent link="shoulder_beam"/>
     <child  link="head_pan_link"/>
-    <origin xyz="0 0 0.10" rpy="0 0 0"/>
+    <origin xyz="0 0 0.045" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <!-- safe range CH2: 0..180 deg => -pi/2..+pi/2 about home (90 deg) -->
     <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="3.14"/>
@@ -99,19 +99,33 @@
   -->
   <xacro:macro name="arm" params="side reflect bracket_mesh holder_mesh">
 
-    <joint name="${side}_shoulder_rot_joint" type="revolute">
+    <!-- Top servo holder: FIXED into the Shoulder-Beam end (houses the CH7/CH11 servo) -->
+    <joint name="${side}_shoulder_top_joint" type="fixed">
       <parent link="shoulder_beam"/>
-      <child  link="${side}_shoulder_rot_link"/>
+      <child  link="${side}_shoulder_top_link"/>
       <origin xyz="0 ${0.09*reflect} 0.09" rpy="0 0 0"/>
-      <axis xyz="0 1 0"/>
-      <!-- CH7/CH11 safe 70..150 -->
+    </joint>
+    <link name="${side}_shoulder_top_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+        <geometry><mesh filename="${mesh_pkg}/Shoulder-Top-ServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+    <!-- CH7/CH11 shoulder_rot: top holder rotates the BRACKET (arm up/down front) -->
+    <joint name="${side}_shoulder_rot_joint" type="revolute">
+      <parent link="${side}_shoulder_top_link"/>
+      <child  link="${side}_shoulder_rot_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 ${reflect} 0"/>
       <limit lower="-0.3491" upper="1.0472" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_shoulder_rot_link">
       <visual>
-        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
-        <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
-        <material name="white"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
+        <material name="grey"/>
       </visual>
     </link>
 
@@ -119,17 +133,15 @@
       <parent link="${side}_shoulder_rot_link"/>
       <child  link="${side}_shoulder_lift_link"/>
       <origin xyz="0 0 -0.03" rpy="0 0 0"/>
-      <axis xyz="1 0 0"/>
+      <axis xyz="${reflect} 0 0"/>   <!-- mirror per side so both arms wing out symmetrically -->
       <!-- CH6/CH10 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_shoulder_lift_link">
       <visual>
-        <!-- bracket spans outward (long 115mm side along the span) so it bridges
-             from the shoulder to the arm sitting further out -->
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
-        <material name="grey"/>
+        <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
+        <material name="white"/>
       </visual>
     </link>
 
