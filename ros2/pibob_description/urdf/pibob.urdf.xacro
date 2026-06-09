@@ -12,6 +12,13 @@
 
   <xacro:property name="mesh_pkg" value="package://pibob_description/meshes"/>
 
+  <!-- ===== arm-part debug toggles: show one mesh at a time while seating it ===== -->
+  <xacro:property name="show_top"     value="true"/>
+  <xacro:property name="show_bracket" value="false"/>
+  <xacro:property name="show_holder"  value="false"/>
+  <xacro:property name="show_bicep"   value="false"/>
+  <xacro:property name="show_forearm" value="false"/>
+
   <!-- ============ Materials ============ -->
   <material name="white"><color rgba="0.95 0.95 0.95 1"/></material>
   <material name="grey"><color rgba="0.4 0.4 0.4 1"/></material>
@@ -106,11 +113,13 @@
       <origin xyz="0 ${0.09*reflect} 0.09" rpy="0 0 0"/>
     </joint>
     <link name="${side}_shoulder_top_link">
+      <xacro:if value="${show_top}">
       <visual>
         <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/Shoulder-Top-ServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
+      </xacro:if>
     </link>
 
     <!-- CH7/CH11 shoulder_rot: top holder rotates the BRACKET (arm up/down front) -->
@@ -122,11 +131,13 @@
       <limit lower="-0.3491" upper="1.0472" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_shoulder_rot_link">
+      <xacro:if value="${show_bracket}">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
+      </xacro:if>
     </link>
 
     <joint name="${side}_shoulder_lift_joint" type="revolute">
@@ -138,11 +149,13 @@
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_shoulder_lift_link">
+      <xacro:if value="${show_holder}">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
+      </xacro:if>
     </link>
 
     <joint name="${side}_arm_rot_joint" type="revolute">
@@ -155,12 +168,14 @@
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_upper_arm_link">
+      <xacro:if value="${show_bicep}">
       <visual>
         <!-- bicep rotated 90 deg -->
         <origin xyz="0 0 0" rpy="0 1.5708 1.5708"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
+      </xacro:if>
     </link>
 
     <joint name="${side}_bicep_joint" type="revolute">
@@ -172,6 +187,7 @@
       <limit lower="0.0" upper="1.5708" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_forearm_link">
+      <xacro:if value="${show_forearm}">
       <visual>
         <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
@@ -182,6 +198,7 @@
         <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
+      </xacro:if>
     </link>
 
   </xacro:macro>
