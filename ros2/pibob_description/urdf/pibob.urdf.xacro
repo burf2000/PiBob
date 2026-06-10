@@ -14,9 +14,9 @@
 
   <!-- ===== arm-part debug toggles: show one mesh at a time while seating it ===== -->
   <xacro:property name="show_top"     value="true"/>
-  <xacro:property name="show_bracket" value="false"/>
-  <xacro:property name="show_holder"  value="false"/>
-  <xacro:property name="show_bicep"   value="false"/>
+  <xacro:property name="show_bracket" value="true"/>
+  <xacro:property name="show_holder"  value="true"/>
+  <xacro:property name="show_bicep"   value="true"/>
   <xacro:property name="show_forearm" value="false"/>
 
   <!-- ============ Materials ============ -->
@@ -84,12 +84,12 @@
   <joint name="head_to_camera" type="fixed">
     <parent link="head_tilt_link"/>
     <child  link="camera_link"/>
-    <origin xyz="0.04 0 0.02" rpy="0 0 0"/>
+    <origin xyz="0.00 0 0.03" rpy="0 0 0"/>
   </joint>
 
   <link name="camera_link">
     <visual>
-      <origin xyz="0 0 0" rpy="1.5708 0 1.5708"/>
+      <origin xyz="0 0 0" rpy="1.5708 1.5708 1.5708"/>
       <geometry><mesh filename="${mesh_pkg}/Head-CameraHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="grey"/>
     </visual>
@@ -110,12 +110,13 @@
     <joint name="${side}_shoulder_top_joint" type="fixed">
       <parent link="shoulder_beam"/>
       <child  link="${side}_shoulder_top_link"/>
-      <origin xyz="0 ${0.09*reflect} 0.09" rpy="0 0 0"/>
+      <origin xyz="0 ${0.085*reflect} 0.065" rpy="0 0 0"/>
     </joint>
     <link name="${side}_shoulder_top_link">
       <xacro:if value="${show_top}">
       <visual>
-        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+        <!-- roll 180 = small end down; per-side yaw flips the pin to mirror the two holders -->
+        <origin xyz="0 0 0" rpy="3.14159 0 ${(1+reflect)/2*3.14159}"/>
         <geometry><mesh filename="${mesh_pkg}/Shoulder-Top-ServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -133,7 +134,8 @@
     <link name="${side}_shoulder_rot_link">
       <xacro:if value="${show_bracket}">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <!-- per-side yaw: invert the our-left (reflect=-1) bracket 180 to mirror -->
+        <origin xyz="0.0 ${0.02*reflect} 0.018" rpy="0 0 ${(1-reflect)/2*3.14159}"/>
         <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
@@ -151,7 +153,7 @@
     <link name="${side}_shoulder_lift_link">
       <xacro:if value="${show_holder}">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 ${0.097*reflect} 0.035" rpy="0 -1.5708 3.14159"/>
         <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -162,7 +164,7 @@
       <parent link="${side}_shoulder_lift_link"/>
       <child  link="${side}_upper_arm_link"/>
       <!-- arm sits further out along the bracket (outward in Y), then drops -->
-      <origin xyz="0 ${0.10*reflect} -0.04" rpy="0 0 0"/>
+      <origin xyz="0.004 ${0.14*reflect} 0.005" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <!-- CH5/CH9 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
@@ -170,8 +172,8 @@
     <link name="${side}_upper_arm_link">
       <xacro:if value="${show_bicep}">
       <visual>
-        <!-- bicep rotated 90 deg -->
-        <origin xyz="0 0 0" rpy="0 1.5708 1.5708"/>
+        <!-- bicep: right (reflect=+1) = pi; left gets -180 to mirror -->
+        <origin xyz="0 0 0" rpy="0 1.5708 ${3.14159 - (1-reflect)/2*3.14159}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
