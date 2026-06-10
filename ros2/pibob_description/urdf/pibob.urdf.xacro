@@ -174,8 +174,8 @@
       <!-- arm sits further out along the bracket (outward in Y), then drops -->
       <origin xyz="0.004 ${(0.14+lift_pivot_in)*reflect} ${0.005-lift_pivot_up}" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <!-- CH5/CH9 safe 70..110 -->
-      <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
+      <!-- CH5/CH9: opened to ~+/-51deg (was +/-20 "safe 70..110") — widen/narrow as needed -->
+      <limit lower="-0.9" upper="0.9" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_upper_arm_link">
       <xacro:if value="${show_bicep}">
