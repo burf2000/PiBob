@@ -12,6 +12,12 @@
 
   <xacro:property name="mesh_pkg" value="package://pibob_description/meshes"/>
 
+  <!-- move the shoulder-lift PIVOT without moving the arm (holder + arm auto-compensated).
+       lift_pivot_in: POSITIVE = toward body centre, NEGATIVE = OUTWARD toward the connector/red dot.
+       lift_pivot_up: upward to the connector. -->
+  <xacro:property name="lift_pivot_in" value="-0.06"/>
+  <xacro:property name="lift_pivot_up" value="0.05"/>
+
   <!-- ===== arm-part debug toggles: show one mesh at a time while seating it ===== -->
   <xacro:property name="show_top"     value="true"/>
   <xacro:property name="show_bracket" value="true"/>
@@ -146,7 +152,8 @@
     <joint name="${side}_shoulder_lift_joint" type="revolute">
       <parent link="${side}_shoulder_rot_link"/>
       <child  link="${side}_shoulder_lift_link"/>
-      <origin xyz="0 0 -0.03" rpy="0 0 0"/>
+      <!-- this origin IS the lift pivot: move Y toward the head to pivot from the inner edge -->
+      <origin xyz="0 ${-lift_pivot_in*reflect} ${-0.03+lift_pivot_up}" rpy="0 0 0"/>
       <axis xyz="${reflect} 0 0"/>   <!-- mirror per side so both arms wing out symmetrically -->
       <!-- CH6/CH10 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
@@ -154,7 +161,7 @@
     <link name="${side}_shoulder_lift_link">
       <xacro:if value="${show_holder}">
       <visual>
-        <origin xyz="0 ${0.097*reflect} 0.035" rpy="0 -1.5708 3.14159"/>
+        <origin xyz="0 ${(0.097+lift_pivot_in)*reflect} ${0.035-lift_pivot_up}" rpy="0 -1.5708 3.14159"/>
         <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -165,7 +172,7 @@
       <parent link="${side}_shoulder_lift_link"/>
       <child  link="${side}_upper_arm_link"/>
       <!-- arm sits further out along the bracket (outward in Y), then drops -->
-      <origin xyz="0.004 ${0.14*reflect} 0.005" rpy="0 0 0"/>
+      <origin xyz="0.004 ${(0.14+lift_pivot_in)*reflect} ${0.005-lift_pivot_up}" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <!-- CH5/CH9 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
