@@ -17,7 +17,8 @@
   <xacro:property name="show_bracket" value="true"/>
   <xacro:property name="show_holder"  value="true"/>
   <xacro:property name="show_bicep"   value="true"/>
-  <xacro:property name="show_forearm" value="false"/>
+  <xacro:property name="show_forearm" value="true"/>   <!-- the elbow piece -->
+  <xacro:property name="show_forearm_mesh" value="true"/>  <!-- the swinging forearm -->
 
   <!-- ============ Materials ============ -->
   <material name="white"><color rgba="0.95 0.95 0.95 1"/></material>
@@ -178,25 +179,29 @@
         <material name="white"/>
       </visual>
       </xacro:if>
+      <!-- elbow: FIXED to the bicep (houses CH4 servo) — does NOT move with the joint. Tune xyz to seat it. -->
+      <xacro:if value="${show_forearm}">
+      <visual>
+        <origin xyz="0 ${-0.014*reflect} -0.076" rpy="-1.5708 0 ${1.5708*reflect}"/>
+        <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="grey"/>
+      </visual>
+      </xacro:if>
     </link>
 
     <joint name="${side}_bicep_joint" type="revolute">
       <parent link="${side}_upper_arm_link"/>
       <child  link="${side}_forearm_link"/>
       <origin xyz="0 0 -0.08" rpy="0 0 0"/>
-      <axis xyz="0 1 0"/>
+      <axis xyz="0 -1 0"/>   <!-- flipped: elbow bends forward, not back -->
       <!-- CH4/CH8 safe 90..180 => 0..+pi/2 (cannot go below straight) -->
       <limit lower="0.0" upper="1.5708" effort="1.0" velocity="3.14"/>
     </joint>
     <link name="${side}_forearm_link">
-      <xacro:if value="${show_forearm}">
+      <xacro:if value="${show_forearm_mesh}">
+      <!-- only the FOREARM swings with the elbow joint; left gets 90 yaw to mirror -->
       <visual>
-        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
-        <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
-        <material name="grey"/>
-      </visual>
-      <visual>
-        <origin xyz="0 0 -0.04" rpy="-1.5708 0 0"/>
+        <origin xyz="0 ${-0.02*reflect} -0.0425" rpy="-1.5708 0 ${1.5708*reflect}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
