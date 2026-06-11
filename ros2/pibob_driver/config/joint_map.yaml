@@ -8,7 +8,13 @@
 #   max_deg:    safe maximum servo angle (deg)
 #
 # Note: the Flask `/set` endpoint already applies its own `reversed` flag from
-# config.json. Keep `sign` here at +1 unless you want ROS-side inversion on top.
+# config.json; `sign` here is the ROS-side inversion on top of that.
+#
+# Verified end-to-end against the real PiBob (2026-06-11): these three moved
+# opposite to the RViz model and were flipped to sign: -1 ->
+#   head_tilt (CH3), r_arm_rot (CH5), l_shoulder_rot (CH11)
+# Every other channel was correct at sign: +1. Re-check if the URDF joint axes
+# or the Flask `reversed` flags change.
 
 servo_bridge:
   ros__parameters:

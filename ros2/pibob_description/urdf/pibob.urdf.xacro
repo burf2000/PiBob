@@ -18,7 +18,8 @@
   <xacro:property name="lift_pivot_in" value="-0.06"/>
   <xacro:property name="lift_pivot_up" value="0.05"/>
 
-  <!-- ===== arm-part debug toggles: show one mesh at a time while seating it ===== -->
+  <!-- ===== arm-part debug toggles: flip a part to false to hide it while seating another.
+       All default true, so the full arm renders normally. ===== -->
   <xacro:property name="show_top"     value="true"/>
   <xacro:property name="show_bracket" value="true"/>
   <xacro:property name="show_holder"  value="true"/>
@@ -206,7 +207,7 @@
     </joint>
     <link name="${side}_forearm_link">
       <xacro:if value="${show_forearm_mesh}">
-      <!-- only the FOREARM swings with the elbow joint; left gets 90 yaw to mirror -->
+      <!-- only the FOREARM swings with the elbow joint; per-side +/-90 yaw mirrors the single mesh -->
       <visual>
         <origin xyz="0 ${-0.02*reflect} -0.0425" rpy="-1.5708 0 ${1.5708*reflect}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
