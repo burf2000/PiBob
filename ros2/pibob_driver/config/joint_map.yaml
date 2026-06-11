@@ -26,4 +26,4 @@ servo_bridge:
       l_bicep_joint:         { channel: 8,  sign:  1, home_deg: 90, min_deg: 90, max_deg: 180 }
       l_arm_rot_joint:       { channel: 9,  sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
       l_shoulder_lift_joint: { channel: 10, sign:  1, home_deg: 90, min_deg: 70, max_deg: 110 }
-      l_shoulder_rot_joint:  { channel: 11, sign:  1, home_deg: 90, min_deg: 70, max_deg: 150 }
+      l_shoulder_rot_joint:  { channel: 11, sign: -1, home_deg: 90, min_deg: 70, max_deg: 150 }
