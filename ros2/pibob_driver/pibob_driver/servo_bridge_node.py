@@ -29,13 +29,13 @@ class JointCfg:
 
 class ServoBridge(Node):
     def __init__(self):
-        super().__init__('servo_bridge')
+        # The joints.* params are nested in the YAML and not explicitly declared;
+        # auto-declaring from overrides makes them (and the scalars below) readable
+        # via get_parameter / get_parameters_by_prefix. Without this the bridge loads
+        # zero joints ("No joints configured") even with a valid --params-file.
+        super().__init__('servo_bridge',
+                         automatically_declare_parameters_from_overrides=True)
 
-        self.declare_parameter('base_url', 'http://pibob.local')
-        self.declare_parameter('request_timeout_s', 0.5)
-        self.declare_parameter('rate_limit_hz', 30.0)
-        self.declare_parameter('deadband_deg', 1.0)
-        # joints param is read as a nested dict via get_parameters_by_prefix
         self.base_url = self.get_parameter('base_url').get_parameter_value().string_value
         self.timeout = float(self.get_parameter('request_timeout_s').value)
         self.rate_limit_hz = float(self.get_parameter('rate_limit_hz').value)
