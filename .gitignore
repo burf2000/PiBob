@@ -11,3 +11,6 @@ build/
 .venv/
 venv/
 *.stl.orig
+
+# Claude Code local config
+.claude/
