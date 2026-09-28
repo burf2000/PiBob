@@ -1,0 +1,991 @@
+{
+ "poses": {
+  "zero": {
+   "angles": {},
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9945,
+    "front_right": 0.9953
+   }
+  },
+  "head_pan_joint_45deg": {
+   "angles": {
+    "head_pan_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9947,
+    "front_right": 0.9957
+   }
+  },
+  "head_tilt_joint_45deg": {
+   "angles": {
+    "head_tilt_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9948,
+    "front_right": 0.9956
+   }
+  },
+  "r_shoulder_rot_joint_45deg": {
+   "angles": {
+    "r_shoulder_rot_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.994,
+    "front_right": 0.9959
+   }
+  },
+  "l_shoulder_rot_joint_45deg": {
+   "angles": {
+    "l_shoulder_rot_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9951,
+    "front_right": 0.9959
+   }
+  },
+  "r_shoulder_lift_joint_20deg": {
+   "angles": {
+    "r_shoulder_lift_joint": 0.3491
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9943,
+    "front_right": 0.9934
+   }
+  },
+  "l_shoulder_lift_joint_20deg": {
+   "angles": {
+    "l_shoulder_lift_joint": 0.3491
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9959,
+    "front_right": 0.9955
+   }
+  },
+  "r_arm_rot_joint_45deg": {
+   "angles": {
+    "r_arm_rot_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9942,
+    "front_right": 0.9955
+   }
+  },
+  "l_arm_rot_joint_45deg": {
+   "angles": {
+    "l_arm_rot_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9946,
+    "front_right": 0.9953
+   }
+  },
+  "r_bicep_joint_45deg": {
+   "angles": {
+    "r_bicep_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9943,
+    "front_right": 0.9954
+   }
+  },
+  "l_bicep_joint_45deg": {
+   "angles": {
+    "l_bicep_joint": 0.7853981633974483
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9942,
+    "front_right": 0.9955
+   }
+  },
+  "combined": {
+   "angles": {
+    "head_pan_joint": 0.6,
+    "head_tilt_joint": -0.4,
+    "r_shoulder_rot_joint": 0.8,
+    "r_shoulder_lift_joint": 0.3,
+    "r_arm_rot_joint": -0.6,
+    "r_bicep_joint": 1.2,
+    "l_shoulder_rot_joint": -0.3,
+    "l_shoulder_lift_joint": -0.3,
+    "l_arm_rot_joint": 0.7,
+    "l_bicep_joint": 0.9
+   },
+   "tf_max_pos_err_mm": 0.0,
+   "tf_max_rot_err_deg": 0.0,
+   "per_link": {
+    "shoulder_beam": [
+     0.0,
+     0.0
+    ],
+    "head_pan_link": [
+     0.0,
+     0.0
+    ],
+    "head_tilt_link": [
+     0.0,
+     0.0
+    ],
+    "camera_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "r_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "r_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "r_forearm_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_top_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_rot_link": [
+     0.0,
+     0.0
+    ],
+    "l_shoulder_lift_link": [
+     0.0,
+     0.0
+    ],
+    "l_upper_arm_link": [
+     0.0,
+     0.0
+    ],
+    "l_forearm_link": [
+     0.0,
+     0.0
+    ]
+   },
+   "silhouette_iou": {
+    "front_left": 0.9922,
+    "front_right": 0.9961
+   }
+  }
+ },
+ "pivot_check": [
+  {
+   "joint": "head_pan_joint",
+   "parent": {
+    "link": "shoulder_beam",
+    "surface_mm": 13.79,
+    "inside_material": false,
+    "outside_envelope_mm": 9.5
+   },
+   "child": {
+    "link": "head_pan_link",
+    "surface_mm": 4.37,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "head_tilt_joint",
+   "parent": {
+    "link": "head_pan_link",
+    "surface_mm": 5.75,
+    "inside_material": false,
+    "outside_envelope_mm": 5.75
+   },
+   "child": {
+    "link": "head_tilt_link",
+    "surface_mm": 5.83,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "r_shoulder_rot_joint",
+   "parent": {
+    "link": "r_shoulder_top_link",
+    "surface_mm": 8.45,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "r_shoulder_rot_link",
+    "surface_mm": 17.65,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "l_shoulder_rot_joint",
+   "parent": {
+    "link": "l_shoulder_top_link",
+    "surface_mm": 8.45,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "l_shoulder_rot_link",
+    "surface_mm": 17.65,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "r_shoulder_lift_joint",
+   "parent": {
+    "link": "r_shoulder_rot_link",
+    "surface_mm": 25.48,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "r_shoulder_lift_link",
+    "surface_mm": 0.95,
+    "inside_material": true,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "l_shoulder_lift_joint",
+   "parent": {
+    "link": "l_shoulder_rot_link",
+    "surface_mm": 25.48,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "l_shoulder_lift_link",
+    "surface_mm": 0.95,
+    "inside_material": true,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "r_arm_rot_joint",
+   "parent": {
+    "link": "r_shoulder_lift_link",
+    "surface_mm": 21.45,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "r_upper_arm_link",
+    "surface_mm": 4.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "l_arm_rot_joint",
+   "parent": {
+    "link": "l_shoulder_lift_link",
+    "surface_mm": 21.45,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "l_upper_arm_link",
+    "surface_mm": 4.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "r_bicep_joint",
+   "parent": {
+    "link": "r_upper_arm_link",
+    "surface_mm": 1.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "r_forearm_link",
+    "surface_mm": 1.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  },
+  {
+   "joint": "l_bicep_joint",
+   "parent": {
+    "link": "l_upper_arm_link",
+    "surface_mm": 1.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   },
+   "child": {
+    "link": "l_forearm_link",
+    "surface_mm": 1.5,
+    "inside_material": false,
+    "outside_envelope_mm": 0.0
+   }
+  }
+ ]
+}
