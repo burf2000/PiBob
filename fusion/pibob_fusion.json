@@ -1,0 +1,2136 @@
+{
+ "robot": "pibob",
+ "units": {
+  "length": "m",
+  "angle": "rad"
+ },
+ "source": "ros2/pibob_description/urdf/pibob.urdf.xacro",
+ "root_link": "base_link",
+ "links": [
+  {
+   "name": "base_link",
+   "parent_joint": null,
+   "parent_link": null,
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Desktop-Base.stl",
+     "stl": "../ros2/pibob_description/meshes/Desktop-Base.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "shoulder_beam",
+   "parent_joint": "base_to_beam",
+   "parent_link": "base_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Beam.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Beam.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       -3.673205e-06,
+       -0.999999999993,
+       0.0
+      ],
+      [
+       0.0,
+       0.999999999993,
+       -3.673205e-06,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "head_base_link",
+   "parent_joint": "beam_to_head_base",
+   "parent_link": "shoulder_beam",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3355
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
+     "origin": [
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       1.0,
+       0.0,
+       0.0,
+       -0.0041
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0075
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.0
+      ],
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0267
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "head_pan_link",
+   "parent_joint": "head_pan_joint",
+   "parent_link": "shoulder_beam",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3622
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0005
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.01
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       -0.00315
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0172
+      ],
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.01105
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "r_shoulder_top_link",
+   "parent_joint": "r_shoulder_top_joint",
+   "parent_link": "shoulder_beam",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.365
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Top-ServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Top-ServoHolder.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       -0.999999999996,
+       -2.65359e-06,
+       0.0
+      ],
+      [
+       0.0,
+       2.65359e-06,
+       -0.999999999996,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "l_shoulder_top_link",
+   "parent_joint": "l_shoulder_top_joint",
+   "parent_link": "shoulder_beam",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.365
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Top-ServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Top-ServoHolder.stl",
+     "origin": [
+      [
+       -0.999999999996,
+       2.65359e-06,
+       7e-12,
+       0.0
+      ],
+      [
+       2.65359e-06,
+       0.999999999993,
+       2.65359e-06,
+       0.0
+      ],
+      [
+       0.0,
+       2.65359e-06,
+       -0.999999999996,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "head_tilt_link",
+   "parent_joint": "head_tilt_joint",
+   "parent_link": "head_pan_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.00315
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0172
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.37325
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Head-CameraHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-CameraHolder.stl",
+     "origin": [
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       -0.01775
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0,
+       0.02867
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "r_shoulder_rot_link",
+   "parent_joint": "r_shoulder_rot_joint",
+   "parent_link": "r_shoulder_top_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.09845
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3699
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Right-Bracket.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Right-Bracket.stl",
+     "origin": [
+      [
+       -0.999999999996,
+       -2.65359e-06,
+       0.0,
+       0.0
+      ],
+      [
+       2.65359e-06,
+       -0.999999999996,
+       0.0,
+       -0.00655
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0131
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "l_shoulder_rot_link",
+   "parent_joint": "l_shoulder_rot_joint",
+   "parent_link": "l_shoulder_top_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.09845
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3699
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Left-Bracket.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Left-Bracket.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.00655
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0131
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "camera_link",
+   "parent_joint": "head_to_camera",
+   "parent_link": "head_tilt_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.0094
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.0023
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.41792
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": []
+  },
+  {
+   "name": "r_shoulder_lift_link",
+   "parent_joint": "r_shoulder_lift_joint",
+   "parent_link": "r_shoulder_rot_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.01345
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.1545
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.37455
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Right-ServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Right-ServoHolder.stl",
+     "origin": [
+      [
+       3.673205e-06,
+       -2.65359e-06,
+       0.99999999999,
+       0.01345
+      ],
+      [
+       -1e-11,
+       -0.999999999996,
+       -2.65359e-06,
+       -0.0275
+      ],
+      [
+       0.999999999993,
+       0.0,
+       -3.673205e-06,
+       -0.00455
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "l_shoulder_lift_link",
+   "parent_joint": "l_shoulder_lift_joint",
+   "parent_link": "l_shoulder_rot_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.01345
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.1545
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.37455
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Shoulder-Left-ServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Shoulder-Left-ServoHolder.stl",
+     "origin": [
+      [
+       3.673205e-06,
+       -2.65359e-06,
+       0.99999999999,
+       0.01345
+      ],
+      [
+       -1e-11,
+       -0.999999999996,
+       -2.65359e-06,
+       0.0275
+      ],
+      [
+       0.999999999993,
+       0.0,
+       -3.673205e-06,
+       -0.00455
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "r_upper_arm_link",
+   "parent_joint": "r_arm_rot_joint",
+   "parent_link": "r_shoulder_lift_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.00355
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.2056
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.39445
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Bicep.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Bicep.stl",
+     "origin": [
+      [
+       -3.673205e-06,
+       0.0,
+       0.999999999993,
+       0.00045
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       -0.0194
+      ],
+      [
+       -0.999999999993,
+       0.0,
+       -3.673205e-06,
+       -0.05445
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Elbow.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Elbow.stl",
+     "origin": [
+      [
+       -3.673205e-06,
+       -3.673205e-06,
+       0.999999999987,
+       0.00045
+      ],
+      [
+       -0.999999999993,
+       1.3e-11,
+       -3.673205e-06,
+       -0.0054
+      ],
+      [
+       0.0,
+       -0.999999999993,
+       -3.673205e-06,
+       -0.13045
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.00045
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0138
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0,
+       -0.13455
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "l_upper_arm_link",
+   "parent_joint": "l_arm_rot_joint",
+   "parent_link": "l_shoulder_lift_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.00355
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.2056
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.39445
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Bicep.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Bicep.stl",
+     "origin": [
+      [
+       3.673205e-06,
+       -2.65359e-06,
+       -0.99999999999,
+       0.00045
+      ],
+      [
+       -1e-11,
+       -0.999999999996,
+       2.65359e-06,
+       0.0194
+      ],
+      [
+       -0.999999999993,
+       0.0,
+       -3.673205e-06,
+       -0.05445
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Elbow.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Elbow.stl",
+     "origin": [
+      [
+       -3.673205e-06,
+       3.673205e-06,
+       -0.999999999987,
+       0.00045
+      ],
+      [
+       0.999999999993,
+       1.3e-11,
+       -3.673205e-06,
+       0.0054
+      ],
+      [
+       0.0,
+       -0.999999999993,
+       -3.673205e-06,
+       -0.13045
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.4,
+      0.4,
+      0.4,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.00045
+      ],
+      [
+       0.0,
+       0.0,
+       -1.0,
+       -0.0138
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0,
+       -0.13455
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "r_forearm_link",
+   "parent_joint": "r_bicep_joint",
+   "parent_link": "r_upper_arm_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.004
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.2185
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.2599
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Forearm.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Forearm.stl",
+     "origin": [
+      [
+       -3.673205e-06,
+       -3.673205e-06,
+       0.999999999987,
+       0.0
+      ],
+      [
+       -0.999999999993,
+       1.3e-11,
+       -3.673205e-06,
+       0.0135
+      ],
+      [
+       0.0,
+       -0.999999999993,
+       -3.673205e-06,
+       -0.0424
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "l_forearm_link",
+   "parent_joint": "l_bicep_joint",
+   "parent_link": "l_upper_arm_link",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.004
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.2185
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.2599
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Arm-Forearm.stl",
+     "stl": "../ros2/pibob_description/meshes/Arm-Forearm.stl",
+     "origin": [
+      [
+       -3.673205e-06,
+       3.673205e-06,
+       -0.999999999987,
+       0.0
+      ],
+      [
+       0.999999999993,
+       1.3e-11,
+       -3.673205e-06,
+       -0.0135
+      ],
+      [
+       0.0,
+       -0.999999999993,
+       -3.673205e-06,
+       -0.0424
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    }
+   ]
+  }
+ ],
+ "joints": [
+  {
+   "name": "base_to_beam",
+   "type": "fixed",
+   "parent": "base_link",
+   "child": "shoulder_beam",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
+   "name": "beam_to_head_base",
+   "type": "fixed",
+   "parent": "shoulder_beam",
+   "child": "head_base_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0355
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.0,
+    0.3355
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
+   "name": "head_pan_joint",
+   "type": "revolute",
+   "parent": "shoulder_beam",
+   "child": "head_pan_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0622
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.0,
+    0.3622
+   ],
+   "axis_local": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "axis_world": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "lower": -1.5708,
+   "upper": 1.5708
+  },
+  {
+   "name": "r_shoulder_top_joint",
+   "type": "fixed",
+   "parent": "shoulder_beam",
+   "child": "r_shoulder_top_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.065
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    -0.085,
+    0.365
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
+   "name": "l_shoulder_top_joint",
+   "type": "fixed",
+   "parent": "shoulder_beam",
+   "child": "l_shoulder_top_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.085
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.065
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.085,
+    0.365
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
+   "name": "head_tilt_joint",
+   "type": "revolute",
+   "parent": "head_pan_link",
+   "child": "head_tilt_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.00315
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0172
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.01105
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    -0.00315,
+    0.0172,
+    0.37325
+   ],
+   "axis_local": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "axis_world": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "lower": -0.6981,
+   "upper": 0.8727
+  },
+  {
+   "name": "r_shoulder_rot_joint",
+   "type": "revolute",
+   "parent": "r_shoulder_top_link",
+   "child": "r_shoulder_rot_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.01345
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0049
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    -0.09845,
+    0.3699
+   ],
+   "axis_local": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "axis_world": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "lower": -0.3491,
+   "upper": 1.0472
+  },
+  {
+   "name": "l_shoulder_rot_joint",
+   "type": "revolute",
+   "parent": "l_shoulder_top_link",
+   "child": "l_shoulder_rot_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.01345
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0049
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.09845,
+    0.3699
+   ],
+   "axis_local": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "axis_world": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "lower": -0.3491,
+   "upper": 1.0472
+  },
+  {
+   "name": "head_to_camera",
+   "type": "fixed",
+   "parent": "head_tilt_link",
+   "child": "camera_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.00625
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.0195
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.04467
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    -0.0094,
+    -0.0023,
+    0.41792
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
+   "name": "r_shoulder_lift_joint",
+   "type": "revolute",
+   "parent": "r_shoulder_rot_link",
+   "child": "r_shoulder_lift_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.01345
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.05605
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.00465
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    -0.01345,
+    -0.1545,
+    0.37455
+   ],
+   "axis_local": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "lower": -0.3491,
+   "upper": 0.3491
+  },
+  {
+   "name": "l_shoulder_lift_joint",
+   "type": "revolute",
+   "parent": "l_shoulder_rot_link",
+   "child": "l_shoulder_lift_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     -0.01345
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.05605
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.00465
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    -0.01345,
+    0.1545,
+    0.37455
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": -0.3491,
+   "upper": 0.3491
+  },
+  {
+   "name": "r_arm_rot_joint",
+   "type": "revolute",
+   "parent": "r_shoulder_lift_link",
+   "child": "r_upper_arm_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.017
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.0511
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0199
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.00355,
+    -0.2056,
+    0.39445
+   ],
+   "axis_local": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "axis_world": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "lower": -0.9,
+   "upper": 0.9
+  },
+  {
+   "name": "l_arm_rot_joint",
+   "type": "revolute",
+   "parent": "l_shoulder_lift_link",
+   "child": "l_upper_arm_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.017
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0511
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0199
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.00355,
+    0.2056,
+    0.39445
+   ],
+   "axis_local": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "axis_world": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "lower": -0.9,
+   "upper": 0.9
+  },
+  {
+   "name": "r_bicep_joint",
+   "type": "revolute",
+   "parent": "r_upper_arm_link",
+   "child": "r_forearm_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.00045
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     -0.0129
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -0.13455
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.004,
+    -0.2185,
+    0.2599
+   ],
+   "axis_local": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "axis_world": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "lower": 0.0,
+   "upper": 1.5708
+  },
+  {
+   "name": "l_bicep_joint",
+   "type": "revolute",
+   "parent": "l_upper_arm_link",
+   "child": "l_forearm_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.00045
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0129
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     -0.13455
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.004,
+    0.2185,
+    0.2599
+   ],
+   "axis_local": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "axis_world": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "lower": 0.0,
+   "upper": 1.5708
+  }
+ ]
+}

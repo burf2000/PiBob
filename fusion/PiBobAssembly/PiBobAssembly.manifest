@@ -1,0 +1,11 @@
+{
+	"autodeskProduct": "Fusion",
+	"type": "script",
+	"author": "Burf Robotics",
+	"description": {
+		"": "Builds the PiBob assembly from ../pibob_fusion.json: one component per URDF link, STL mesh bodies, as-built revolute joints with URDF limits."
+	},
+	"version": "1.0.0",
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}
