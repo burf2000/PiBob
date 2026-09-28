@@ -14,6 +14,8 @@ What it proves:
     exactly where preview_pose.py (and therefore RViz) puts it;
   * the joint pivots/axes/sign handling reproduce the URDF motion, for BOTH possible
     Fusion sign conventions (the self-check must detect and fix the opposite one);
+  * the self-check really measures the axis: a deliberately wrong-axis joint
+    (the failure seen in real Fusion) must be reported WRONG;
   * the limits land in Fusion's sign convention.
 What it cannot prove: that real Fusion accepts each call (see README "uncertain API").
 """
@@ -31,6 +33,8 @@ sys.path.insert(0, FUSION_DIR)
 import preview_pose as pp  # noqa: E402
 
 FUSION_POSITIVE = [1]          # +1: Fusion + = right-hand about the axis entity; -1: opposite
+FORCE_WORLD_Z = [False]        # simulate the real-Fusion bug: revolute joints turn about world Z
+FORCE_ONLY_CURVE = [False]     # ...but only the createByCurve ("axis-line") joints (tests the fallback)
 MESH_CM = {"mm": 0.1, "cm": 1.0, "m": 100.0, "in": 2.54}
 
 
@@ -45,6 +49,13 @@ class Matrix3D:
 
     def setCell(self, r, c, v):
         self.m[r, c] = v
+
+    def getCell(self, r, c):
+        return float(self.m[r, c])
+
+    def invert(self):
+        self.m = np.linalg.inv(self.m)
+        return True
 
     def setToRotation(self, angle, axis, origin):
         self.m = pp.rot_about_line(origin.p, axis.v, angle)
@@ -167,6 +178,8 @@ class Component:
         self.yConstructionAxis = Entity(self, [0, 0, 0], np.array([0, 1.0, 0]))
         self.zConstructionAxis = Entity(self, [0, 0, 0], np.array([0, 0, 1.0]))
         self.xYConstructionPlane = object()
+        self.xZConstructionPlane = object()
+        self.yZConstructionPlane = object()
         self.meshes = []
         self.features = types.SimpleNamespace(baseFeatures=types.SimpleNamespace(add=BaseFeature))
         self.meshBodies = types.SimpleNamespace(add=self._add_mesh)
@@ -229,9 +242,10 @@ class JointInput:
     def __init__(self, o1, o2, geo):
         self.o1, self.o2, self.geo, self.kind, self.axis = o1, o2, geo, None, None
 
-    def setAsRevoluteJointMotion(self, direction, entity):
-        assert direction == "custom" and entity is not None
-        self.kind, self.axis = "revolute", entity
+    def setAsRevoluteJointMotion(self, direction, entity=None):
+        # The script must use the joint geometry's own axes, never a custom entity.
+        assert direction in ("xaxis", "yaxis", "zaxis") and entity is None
+        self.kind, self.direction = "revolute", direction
 
     def setAsRigidJointMotion(self):
         self.kind = "rigid"
@@ -249,6 +263,7 @@ class AsBuiltJoints:
         if inp.kind == "revolute":
             assert inp.geo is not None
         j = types.SimpleNamespace(inp=inp, name="", jointMotion=JointMotion(self.design))
+        j.deleteMe = lambda: self.design.joints.remove(j)
         self.design.joints.append(j)
         return j
 
@@ -276,10 +291,21 @@ class Design:
                     continue
                 D = o2.local @ np.linalg.inv(o2.zero)
                 if j.inp.kind == "revolute":
-                    ent = j.inp.axis.entity
-                    Z = j.inp.axis.occ.zero
-                    piv = Z[:3, :3] @ j.inp.geo.entity.point + Z[:3, 3]
-                    ax = Z[:3, :3] @ ent.direction
+                    ent, keypoint = j.inp.geo
+                    Z = ent.occ.zero
+                    piv = Z[:3, :3] @ ent.entity.point + Z[:3, 3]
+                    if keypoint == "start":
+                        # createByCurve(line, StartKeyPoint): origin = line start, joint Z = line direction
+                        assert j.inp.direction == "zaxis"
+                        ax = Z[:3, :3] @ ent.entity.direction
+                        broken = FORCE_WORLD_Z[0]
+                    else:
+                        # createByPoint: joint frame = the component's axes
+                        assert keypoint == "point"
+                        ax = Z[:3, :3] @ np.eye(3)["xyz".index(j.inp.direction[0])]
+                        broken = FORCE_WORLD_Z[0] and not FORCE_ONLY_CURVE[0]
+                    if broken:
+                        ax = np.array([0.0, 0.0, 1.0])
                     R = pp.rot_about_line(piv, ax, FUSION_POSITIVE[0] * j.jointMotion.rotationValue)
                 else:
                     R = np.eye(4)
@@ -293,7 +319,12 @@ class Design:
 class JointGeometry:
     @staticmethod
     def createByPoint(p):
-        return p
+        return (p, "point")
+
+    @staticmethod
+    def createByCurve(curve, keypoint):
+        assert curve.entity.direction is not None, "joint curve must be a line"
+        return (curve, keypoint)
 
 
 fusion = types.ModuleType("adsk.fusion")
@@ -302,7 +333,9 @@ fusion.DesignTypes = types.SimpleNamespace(ParametricDesignType=1)
 fusion.DistanceUnits = types.SimpleNamespace(MillimeterDistanceUnits=1)
 fusion.MeshUnits = types.SimpleNamespace(MillimeterMeshUnit="mm", CentimeterMeshUnit="cm",
                                          MeterMeshUnit="m", InchMeshUnit="in")
-fusion.JointDirections = types.SimpleNamespace(CustomJointDirection="custom")
+fusion.JointDirections = types.SimpleNamespace(CustomJointDirection="custom", XAxisJointDirection="xaxis",
+                                               YAxisJointDirection="yaxis", ZAxisJointDirection="zaxis")
+fusion.JointKeyPointTypes = types.SimpleNamespace(StartKeyPoint="start")
 fusion.JointGeometry = JointGeometry
 
 adsk = types.ModuleType("adsk")
@@ -379,7 +412,7 @@ def run_once(sign):
         flipped = abs(lim.maximumValue + s["lower"]) < 1e-9 and abs(lim.minimumValue + s["upper"]) < 1e-9
         straight = abs(lim.maximumValue - s["upper"]) < 1e-9 and abs(lim.minimumValue - s["lower"]) < 1e-9
         assert flipped or straight, f"{jt.name}: limits {lim.minimumValue},{lim.maximumValue} match neither sign"
-        assert lim.isMinimumValueEnabled and lim.isMaximumValueEnabled and lim.restValue == 0.0
+        assert lim.isMinimumValueEnabled and lim.isMaximumValueEnabled and not lim.isRestValueEnabled
         v = pose[jt.name] * mod.SIGNS[jt.name]
         assert (flipped if mod.SIGNS[jt.name] < 0 else straight), f"{jt.name}: limits disagree with sign"
         assert lim.minimumValue - 1e-9 <= v <= lim.maximumValue + 1e-9, f"{jt.name} test value outside limits"
@@ -393,7 +426,56 @@ def run_once(sign):
     return zero_err, pose_err
 
 
+def run_wrong_axis():
+    """Every joint forced about world Z (what Simon saw), for every strategy: the
+    self-check must flag every joint whose URDF axis is not vertical, pass the vertical
+    ones, and leave exactly one joint per URDF joint."""
+    FUSION_POSITIVE[0], FORCE_WORLD_Z[0], FORCE_ONLY_CURVE[0] = 1, True, False
+    App._inst = None
+    mod = load_script()
+    mod.run(None)
+    msg = App.get().userInterface.messages[-1]
+    FORCE_WORLD_Z[0] = False
+    data = pp.load()
+    print("--- mock Fusion with the wrong-axis bug injected ---")
+    print(msg)
+    for j in data["joints"]:
+        if j["type"] != "revolute":
+            continue
+        line = next(l for l in msg.splitlines() if l.startswith(j["name"] + " "))
+        vertical = abs(abs(j["axis_world"][2]) - 1) < 1e-9
+        assert ("OK " in line) == vertical, f"self-check missed the wrong axis on {j['name']}: {line}"
+    print("wrong-axis joints all flagged")
+    assert len(App.get().activeProduct.joints) == len(data["joints"])
+
+
+def run_fallback():
+    """Only the axis-line strategy is broken: every non-vertical joint must be rebuilt
+    with the point+XYZ strategy and then pass, and the final pose must match."""
+    FUSION_POSITIVE[0], FORCE_WORLD_Z[0], FORCE_ONLY_CURVE[0] = 1, True, True
+    App._inst = None
+    mod = load_script()
+    mod.run(None)
+    msg = App.get().userInterface.messages[-1]
+    design = App.get().activeProduct
+    print("--- mock Fusion where only createByCurve joints get the wrong axis ---")
+    print(msg)
+    data = pp.load()
+    assert "All joints OK" in msg, msg
+    assert len(design.joints) == len(data["joints"])
+    pose = {"r_shoulder_lift_joint": 0.3, "l_bicep_joint": 0.9, "head_tilt_joint": -0.4}
+    for jt in design.joints:
+        if jt.name in pose:
+            jt.jointMotion.rotationValue = pose[jt.name] * mod.SIGNS[jt.name]
+    err = compare(data, design, pose)
+    FORCE_WORLD_Z[0] = FORCE_ONLY_CURVE[0] = False
+    print(f"fallback pose: max vertex error vs preview_pose = {err:.6f} mm")
+    assert err < 1e-6
+
+
 if __name__ == "__main__":
     run_once(+1)
     run_once(-1)
-    print("\nMOCK RUN PASSED (both Fusion sign conventions)")
+    run_wrong_axis()
+    run_fallback()
+    print("\nMOCK RUN PASSED (both sign conventions, wrong-axis detection, fallback rebuild)")

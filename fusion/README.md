@@ -44,33 +44,57 @@ fusion/
   the visual `<origin>` and holds the STL as a mesh body, imported in mm inside a
   Base Feature. `upper_arm_link` has two sub-components, the bicep and the fixed
   elbow. The sub-components are *Ground to Parent*, so they move with their link.
-- **As-built joints**, so nothing jumps when they are created:
-  - 10 revolute joints about the URDF axis through the URDF pivot. Each has min/max
-    limits from the URDF and a rest value of 0. Use *Drive Joints* or
-    *Motion Study* to move them.
-  - 4 rigid joints for the URDF `fixed` joints.
-  - `base_link` is grounded.
-- **Joint geometry is construction geometry only.** The pivot is the child link
-  component's **origin point**. The axis is the child link component's X/Y/Z
-  **construction axis**, or, for a non-principal URDF axis (none today), a
-  construction sketch line inside the link component. No joint touches a mesh or
-  BRep face or edge.
+- **As-built joints** (nothing jumps when they're created):
+  - 10 revolute joints, each about the URDF axis through the URDF pivot. Each has
+    min/max limits from the URDF and **no rest value**, because a rest value makes
+    joints snap back after a drag. Drive them with *Drive Joints*, a *Motion Study*,
+    or by dragging.
+  - 4 rigid joints for the URDF `fixed` joints. `base_link` is the only grounded
+    occurrence.
+- **How a revolute joint is built.** Every link component gets a construction
+  sketch `<joint>_axis`. It holds a 20 mm construction line starting at the
+  component origin (the pivot) and running along the URDF axis, sign included, so
+  a −Y axis is drawn towards −Y. The joint is then
+  `JointGeometry.createByCurve(line, StartKeyPoint)` with `ZAxisJointDirection`.
+  The origin is the start of the line and the rotation axis runs along it. If the
+  self-check finds that axis wrong, the script deletes the joint and rebuilds it as
+  `createByPoint(child origin)` with `X/Y/ZAxisJointDirection`. It keeps whichever
+  version passes, and the report shows which one was used (`[axis-line]` or
+  `[point+XYZ]`).
+- **Joints use only sketch and construction geometry.** Nothing references a mesh
+  or a BRep face or edge.
 
 ### Joint self-check (runs automatically in Fusion)
 
-After building, the script drives each revolute joint to 0.3 rad and reads where
-the child occurrence moved. It checks that the pivot stayed within 0.1 mm and that
-a test point 100 mm from the pivot landed where the URDF says. Then it sets the
-joint back to 0. If Fusion's positive direction is opposite to the URDF's for a
-joint, the script notices, flips that joint's limits so the range of motion is
-still correct, and reports `Fusion + = URDF -`. Any line reading `CHECK` or
-`UNVERIFIED` means that joint needs a look.
+After building, the script drives each revolute joint to 0.3 rad and reads the
+child occurrence's world transform before and after. From that it works out the
+**real** rotation axis and angle, and checks:
 
-**Angle signs:** the URDF uses −Y / −X axes for `r_shoulder_rot`, `r_shoulder_lift`
-and both `bicep` joints. Fusion builds those joints on the +axis, so with Fusion's
-usual right-hand convention their **Fusion angle is the URDF/ROS angle negated**.
-The motion and limits are the same, only the displayed number's sign differs. The
-self-check report confirms this for each joint.
+- **Axis error:** the angle between the real axis and the URDF axis. Anything
+  over 5° is flagged `WRONG` and triggers the rebuild described above.
+- **Pivot drift:** must be within 0.1 mm.
+- **Angle turned:** must be 0.3 rad.
+
+It also checks the sign. If Fusion's positive direction is opposite to the URDF's,
+it flips that joint's limits and says `Fusion + = URDF -`. Every joint is then set
+back to 0. The report is saved as `fusion/fusion_check.txt`.
+
+`NO UPDATE` means Fusion didn't report the move through the API. The self-check
+can't judge that joint, so trust *Drive Joints* instead.
+
+## Troubleshooting (found in real Fusion)
+
+- **Joints turn about the wrong axis.** This happened on the first real run:
+  the elbow swung left–right instead of up–down, and the shoulder joint next to
+  the head did the same. The original build used `createByPoint` plus
+  `CustomJointDirection` with a construction-axis proxy. Fusion ignored the custom
+  direction and turned the joint about the point's default Z. It's fixed by the
+  axis-line construction above, with the point+XYZ fallback. The self-check now
+  measures the real axis, so this can't pass silently again. If a joint still
+  reports `WRONG` after both attempts, delete the joint and redo it by hand: pick
+  the start point of the link's `<joint>_axis` sketch line.
+- **Joints snap back after you drag them.** The first build enabled a rest value
+  of 0. Rest values are now off. Only the min/max limits are set.
 
 ## Editing / swapping a part
 
@@ -120,11 +144,19 @@ All of these come from the same `pibob_fusion.json` the Fusion script reads.
    nothing is mirrored.
 3. **Mock-Fusion dry run.** `verify/mock_fusion_run.py` runs `PiBobAssembly.py`
    against a small mock of the adsk API that includes an as-built-joint solver. It
-   checks that the script runs end to end and that every mesh vertex lands where
-   the preview puts it: **0.000000 mm** at zero and at the combined pose, driven
-   through the mock joints. It also checks the self-check and limit-sign logic under
-   **both** possible Fusion sign conventions. It proves our code and maths, not
-   that real Fusion accepts each call.
+   checks that:
+   - the script runs end to end;
+   - every mesh vertex lands where the preview puts it: **0.000000 mm** at zero and
+     at the combined pose, driven through the mock joints;
+   - the self-check and limit-sign logic work under **both** Fusion sign conventions;
+   - with the real-Fusion wrong-axis bug injected, the self-check flags every
+     non-vertical joint;
+   - when only the axis-line construction is broken, the fallback rebuild fixes
+     every joint and the pose matches to 0.000000 mm.
+
+   It proves our code and maths, not that real Fusion accepts each call. The
+   mock passed before the first real-Fusion run too, and that run still hit the
+   wrong-axis bug.
 4. **Pivot vs servo holder** (`preview_pose.py --pivot-check`). This is the distance
    from each joint pivot to the nearest surface of the parent-side and child-side
    meshes, plus how far the pivot is outside the part's bounding envelope (0 means
@@ -173,15 +205,15 @@ Fusion. Each of the following is wrapped or reported where possible:
 2. **`asBuiltJoints.createInput(child, parent, None)` for rigid joints.** The docs
    say geometry is optional for rigid joints. The script falls back to the child's
    origin point if Fusion rejects `None`.
-3. **`setAsRevoluteJointMotion(JointDirections.CustomJointDirection, <construction-axis proxy>)`.**
-   The axis is the child link's construction axis via `createForAssemblyContext`. If
-   Fusion rejects a construction-axis proxy here, a construction sketch line (the
-   script's non-principal fallback path) is the alternative.
-4. **Joint sign convention and `jointMotion.rotationValue` updating `occurrence.transform2`
-   immediately** during the self-check. The script calls `adsk.doEvents()` after
-   setting the value. If the transform doesn't update, every joint reports
-   `CHECK ... motion err` with ~0 pivot error. The joints are still fine; only the
-   check couldn't see the move. Verify one by hand with Drive Joints.
+3. **`JointGeometry.createByCurve(sketchLineProxy, StartKeyPoint)` plus
+   `ZAxisJointDirection`.** This assumes a straight curve's joint Z runs along the
+   line. The self-check verifies it, and if it's wrong the joint falls back to
+   `createByPoint` with `X/Y/ZAxisJointDirection`. (`CustomJointDirection` with a
+   construction-axis proxy was **proven not to work**; see Troubleshooting.)
+4. **`jointMotion.rotationValue` updating `occurrence.transform2` immediately**
+   during the self-check. The script calls `adsk.doEvents()` after setting the
+   value. If the transform doesn't update, the report says `NO UPDATE`. The joints
+   are probably still fine, so check them with Drive Joints.
 5. **`occurrence.isGroundToParent`** on the part sub-occurrences (wrapped in
    try/except, so it's cosmetic). Without it you could drag a part away from its
    link by hand.

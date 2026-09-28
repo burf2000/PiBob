@@ -14,16 +14,18 @@ parametric design:
     Base Feature, as a parametric design requires). The sub-component frame is the
     STL's own native frame, so a STEP/f3d export of the same part drops straight in;
   * one AS-BUILT joint per URDF joint (nothing jumps): revolute about the URDF axis
-    through the URDF pivot, with the URDF limits; rigid for fixed joints. Joint
-    geometry uses ONLY construction geometry of the child LINK component (its origin
-    point + a construction axis), never mesh/BRep geometry, so deleting or replacing
-    a part's body leaves every joint intact;
+    through the URDF pivot, with the URDF min/max limits (no rest value - that makes
+    joints snap back); rigid for fixed joints. Each revolute joint's geometry is a
+    construction sketch line in the child LINK component, from its origin (the pivot)
+    along the URDF axis: JointGeometry.createByCurve(line, StartKeyPoint) +
+    ZAxisJointDirection. Never mesh/BRep geometry, so deleting or replacing a part's
+    body leaves every joint intact;
   * base_link grounded.
 
-After building, the script drives every revolute joint to a test angle, checks the
-child moved exactly as the URDF says (pivot fixed, test point where expected),
-fixes the sign convention if Fusion's positive direction is opposite, puts the
-joint back to 0 and reports. The report is also written to fusion_check.txt next to
+After building, the script drives every revolute joint to a test angle, measures
+the child's actual rotation axis/angle and pivot drift from its world transform,
+compares with the URDF axis (flags > 5 deg), fixes the sign convention if Fusion's
+positive direction is opposite, puts the joint back to 0 and reports. The report is also written to fusion_check.txt next to
 the JSON.
 
 UNITS: the Fusion API works in CENTIMETRES (Matrix3D translations, Point3D) and
@@ -42,10 +44,13 @@ CM = 100.0                     # metres -> Fusion internal centimetres
 JSON_NAME = "pibob_fusion.json"
 TEST_ANGLE = 0.3               # rad, used by the post-build joint self-check
 TOL_CM = 0.01                  # 0.1 mm
+AXIS_TOL_DEG = 5.0             # self-check flags a joint whose real axis is further off than this
+AXIS_LINE_CM = 2.0             # length of the construction axis line drawn in each child link
 
 # joint name -> +1 if Fusion's positive angle == the URDF's positive angle, -1 if opposite.
-# (Filled by run(); for a -X/-Y/-Z URDF axis the joint is built on the +axis, so the
-# Fusion angle is the URDF angle negated unless Fusion's own convention flips it back.)
+# Filled by run() from the measured self-check. The axis line is drawn along the URDF
+# axis INCLUDING its sign, so +1 is expected everywhere; -1 would mean Fusion's joint Z
+# runs end->start of the line, and the limits are flipped to match.
 SIGNS = {}
 
 # URDF mesh scale -> Fusion mesh import unit (the STL numbers are in this unit).
@@ -71,22 +76,6 @@ def matrix_from_json(T):
                 v *= CM
             m.setCell(r, c, v)
     return m
-
-
-def principal_axis(axis, tol=1e-6):
-    """(index 0/1/2, sign +1/-1) if axis is +-X/Y/Z, else None."""
-    for i in range(3):
-        if abs(abs(axis[i]) - 1.0) < tol and all(abs(axis[k]) < tol for k in range(3) if k != i):
-            return i, (1 if axis[i] > 0 else -1)
-    return None
-
-
-def perpendicular(a):
-    """Some unit vector perpendicular to a (for the self-check test point)."""
-    ref = [1.0, 0.0, 0.0] if abs(a[0]) < 0.9 else [0.0, 1.0, 0.0]
-    p = [a[1] * ref[2] - a[2] * ref[1], a[2] * ref[0] - a[0] * ref[2], a[0] * ref[1] - a[1] * ref[0]]
-    n = math.sqrt(sum(x * x for x in p))
-    return [x / n for x in p]
 
 
 def occurrence_world(occ):
@@ -170,45 +159,85 @@ def build_links(root, data, json_dir):
     return occs
 
 
-def axis_entity_for(child_occ, axis_local, joint_name):
-    """Rotation-axis entity in the CHILD link component, proxied into the root, + sign.
+def axis_line_for(child_occ, axis_local, joint_name):
+    """Construction sketch line in the CHILD link component: from its origin (= the URDF
+    pivot) 2 cm along the URDF axis, SIGN INCLUDED (a -Y axis is drawn towards -Y).
 
-    Returns (entity, sign) where rotating +theta about the entity's positive direction
-    equals rotating sign*theta about the URDF axis. Construction geometry only."""
+    Returned as a proxy in the root (assembly) context. The joint is then built with
+    JointGeometry.createByCurve(line, StartKeyPoint) + ZAxisJointDirection: for a straight
+    curve the joint origin is the start point and the joint's primary (Z) axis runs
+    along the line, so the rotation axis is explicit geometry rather than a
+    CustomJointDirection entity (which real Fusion ignored - see README troubleshooting).
+    Sketch geometry is not mesh/BRep, so swapping a part body leaves it intact."""
     comp = child_occ.component
-    pa = principal_axis(axis_local)
-    if pa is not None:
-        idx, sign = pa
-        axis = (comp.xConstructionAxis, comp.yConstructionAxis, comp.zConstructionAxis)[idx]
-        return axis.createForAssemblyContext(child_occ), sign
-    # Non-principal axis (not used by PiBob today): a 1 cm construction sketch line from
-    # the component origin along the axis. Sketch geometry is not mesh/BRep, so it also
-    # survives swapping the part body. UNTESTED PATH - see README.
-    sk = comp.sketches.add(comp.xYConstructionPlane)
+    ax = [float(v) for v in axis_local]
+    # Put the sketch on a construction plane that CONTAINS the axis so the line is planar.
+    if abs(ax[2]) < 1e-9:
+        plane = comp.xYConstructionPlane
+    elif abs(ax[1]) < 1e-9:
+        plane = comp.xZConstructionPlane
+    elif abs(ax[0]) < 1e-9:
+        plane = comp.yZConstructionPlane
+    else:
+        plane = comp.xYConstructionPlane      # general axis: a 3D sketch line (untested path)
+    sk = comp.sketches.add(plane)
     sk.name = "{}_axis".format(joint_name)
+    # modelToSketchSpace takes the component's own coordinates (the sketch is not a proxy),
+    # which also absorbs the XZ-plane sketch's flipped Y.
     p0 = sk.modelToSketchSpace(adsk.core.Point3D.create(0, 0, 0))
-    p1 = sk.modelToSketchSpace(adsk.core.Point3D.create(*axis_local))
+    p1 = sk.modelToSketchSpace(adsk.core.Point3D.create(*[AXIS_LINE_CM * v for v in ax]))
     line = sk.sketchCurves.sketchLines.addByTwoPoints(p0, p1)
     line.isConstruction = True
-    return line.createForAssemblyContext(child_occ), 1
+    return line.createForAssemblyContext(child_occ)
+
+
+def principal_axis(axis, tol=1e-6):
+    """(index 0/1/2, sign +1/-1) if axis is +-X/Y/Z, else None."""
+    for i in range(3):
+        if abs(abs(axis[i]) - 1.0) < tol and all(abs(axis[k]) < tol for k in range(3) if k != i):
+            return i, (1 if axis[i] > 0 else -1)
+    return None
+
+
+# Ways of building a revolute joint, tried in order until the self-check passes:
+#   0  "axis-line": createByCurve(axis sketch line, StartKeyPoint) + ZAxisJointDirection
+#   1  "point+XYZ": createByPoint(child origin point) + X/Y/ZAxisJointDirection
+#      (only for axes along the link's X/Y/Z; relies on a point's joint frame being the
+#      component's axes - true for every PiBob link, which are all world-aligned)
+STRATEGIES = ("axis-line", "point+XYZ")
+
+
+def make_revolute(root, occs, j, strategy):
+    """Create one as-built revolute joint for URDF joint j. Returns the joint or None
+    if the strategy doesn't apply to this axis."""
+    child, parent = occs[j["child"]], occs[j["parent"]]
+    if strategy == 0:
+        line = axis_line_for(child, j["axis_local"], j["name"])
+        geo = adsk.fusion.JointGeometry.createByCurve(line, adsk.fusion.JointKeyPointTypes.StartKeyPoint)
+        direction = adsk.fusion.JointDirections.ZAxisJointDirection
+    else:
+        pa = principal_axis(j["axis_local"])
+        if pa is None:
+            return None
+        pivot = child.component.originConstructionPoint.createForAssemblyContext(child)
+        geo = adsk.fusion.JointGeometry.createByPoint(pivot)
+        direction = (adsk.fusion.JointDirections.XAxisJointDirection,
+                     adsk.fusion.JointDirections.YAxisJointDirection,
+                     adsk.fusion.JointDirections.ZAxisJointDirection)[pa[0]]
+    inp = root.asBuiltJoints.createInput(child, parent, geo)
+    inp.setAsRevoluteJointMotion(direction)
+    joint = root.asBuiltJoints.add(inp)
+    joint.name = j["name"]
+    return joint
 
 
 def build_joints(root, data, occs):
-    """As-built joints. Returns [(joint, spec, sign)] for the revolute ones."""
+    """As-built joints (revolute ones with strategy 0). Returns [[joint, spec]] for the revolute ones."""
     revs = []
     for j in data["joints"]:
         child, parent = occs[j["child"]], occs[j["parent"]]
-        # Pivot = the child link component's origin (URDF: child frame == joint frame).
-        pivot = child.component.originConstructionPoint.createForAssemblyContext(child)
-        geo = adsk.fusion.JointGeometry.createByPoint(pivot)
-
         if j["type"] in ("revolute", "continuous"):
-            inp = root.asBuiltJoints.createInput(child, parent, geo)
-            entity, sign = axis_entity_for(child, j["axis_local"], j["name"])
-            inp.setAsRevoluteJointMotion(adsk.fusion.JointDirections.CustomJointDirection, entity)
-            joint = root.asBuiltJoints.add(inp)
-            joint.name = j["name"]
-            revs.append((joint, j, sign))
+            revs.append([make_revolute(root, occs, j, 0), j])
         else:
             if j["type"] != "fixed":
                 print("joint {} type {} -> rigid".format(j["name"], j["type"]))
@@ -217,15 +246,49 @@ def build_joints(root, data, occs):
                 inp.setAsRigidJointMotion()
                 joint = root.asBuiltJoints.add(inp)
             except Exception:
-                inp = root.asBuiltJoints.createInput(child, parent, geo)
+                # Pivot = the child link component's origin (URDF: child frame == joint frame).
+                pivot = child.component.originConstructionPoint.createForAssemblyContext(child)
+                inp = root.asBuiltJoints.createInput(child, parent, adsk.fusion.JointGeometry.createByPoint(pivot))
                 inp.setAsRigidJointMotion()
                 joint = root.asBuiltJoints.add(inp)
             joint.name = j["name"]
     return revs
 
 
+def check_and_repair(root, occs, data, entry):
+    """Self-check the joint; if its real axis is wrong, rebuild it with the next strategy.
+    entry = [joint, spec] (joint replaced in place). Returns (sign, ok, message)."""
+    joint, j = entry
+    tried, first = [], None
+    for strategy in range(len(STRATEGIES)):
+        if strategy > 0:
+            new = make_revolute(root, occs, j, strategy)
+            if new is None:
+                continue
+            joint.deleteMe()            # delete the failed one only once a replacement exists
+            joint = new
+            entry[0] = joint
+        try:
+            sign, ok, msg = self_check(occs, data, joint, j)
+        except Exception as e:
+            sign, ok, msg = 1, False, "UNVERIFIED (self-check failed: {})".format(e)
+        tried.append(STRATEGIES[strategy])
+        if ok:
+            return sign, True, "{} [{}]".format(msg, STRATEGIES[strategy])
+        if first is None:
+            first = (sign, msg)
+    # Nothing passed: go back to strategy 0 and report its result.
+    if len(tried) > 1:
+        new = make_revolute(root, occs, j, 0)
+        entry[0].deleteMe()
+        entry[0] = new
+    sign, msg = first
+    return sign, False, "{} [tried {}]".format(msg, ", ".join(tried))
+
+
 def set_limits(joint, j, sign):
-    """URDF limits in the Fusion joint's own positive direction."""
+    """URDF limits in the Fusion joint's own positive direction. NO rest value: an
+    enabled rest value makes every joint spring back to it after a drag."""
     if j["type"] != "revolute":
         return
     lo, hi = (j["lower"], j["upper"]) if sign > 0 else (-j["upper"], -j["lower"])
@@ -234,56 +297,67 @@ def set_limits(joint, j, sign):
     lim.minimumValue = lo
     lim.isMaximumValueEnabled = True
     lim.maximumValue = hi
-    lim.isRestValueEnabled = True
-    lim.restValue = 0.0
+    lim.isRestValueEnabled = False
 
 
-def self_check(occs, data, joint, j, sign):
-    """Drive the joint to TEST_ANGLE and compare the child's motion with the URDF.
+def _rot3(M):
+    return [[M.getCell(r, c) for c in range(3)] for r in range(3)]
 
-    Returns (sign_to_use, message). Expected motion: rotate the child's zero-pose
-    frame by (sign * TEST_ANGLE) about the URDF world axis through the URDF world pivot.
-    If Fusion instead moved it by the opposite angle, its positive direction is the
-    other way round for this joint -> flip the sign (limits follow)."""
+
+def rotation_axis_angle(A, B):
+    """Axis (unit list) + angle (rad, 0..pi) of the rotation taking frame A to frame B
+    (Matrix3D world transforms): R = B.rot * A.rot^T."""
+    a, b = _rot3(A), _rot3(B)
+    R = [[sum(b[r][k] * a[c][k] for k in range(3)) for c in range(3)] for r in range(3)]
+    tr = R[0][0] + R[1][1] + R[2][2]
+    ang = math.acos(max(-1.0, min(1.0, (tr - 1.0) / 2.0)))
+    v = [R[2][1] - R[1][2], R[0][2] - R[2][0], R[1][0] - R[0][1]]
+    n = math.sqrt(sum(x * x for x in v))
+    if n < 1e-12:
+        return None, ang
+    return [x / n for x in v], ang
+
+
+def self_check(occs, data, joint, j):
+    """Drive the joint to TEST_ANGLE and measure what the child ACTUALLY did.
+
+    Reads the child occurrence's world transform before/after and extracts the real
+    rotation axis + angle, then compares with the URDF: axis error (deg, flagged > 5),
+    pivot drift (mm), and whether Fusion's + is the URDF's + (sign). Returns
+    (sign, ok, message). If the transform does not change at all, the API did not
+    report the move; the joint may still be fine - check it with Drive Joints."""
     child = occs[j["child"]]
-    link = next(l for l in data["links"] if l["name"] == j["child"])
-    T0 = matrix_from_json(link["world"])
     pivot = adsk.core.Point3D.create(*[v * CM for v in j["origin_world"]])
-    axis = adsk.core.Vector3D.create(*j["axis_world"])
-    perp = perpendicular(j["axis_local"])
-    local = adsk.core.Point3D.create(*[10.0 * v for v in perp])     # 10 cm from the pivot, in the child frame
-
-    def expected(theta_urdf):
-        R = adsk.core.Matrix3D.create()
-        R.setToRotation(theta_urdf, axis, pivot)
-        p = local.copy()
-        p.transformBy(T0)
-        p.transformBy(R)
-        return p
-
     motion = joint.jointMotion
+    before = occurrence_world(child).copy()
     try:
         motion.rotationValue = TEST_ANGLE
         adsk.doEvents()
-        M = occurrence_world(child)
-        got = local.copy()
-        got.transformBy(M)
-        org = adsk.core.Point3D.create(0, 0, 0)
-        org.transformBy(M)
-        pivot_err = org.distanceTo(pivot)
-        e_same = got.distanceTo(expected(sign * TEST_ANGLE))
-        e_flip = got.distanceTo(expected(-sign * TEST_ANGLE))
+        after = occurrence_world(child).copy()
     finally:
         motion.rotationValue = 0.0
         adsk.doEvents()
 
-    if pivot_err < TOL_CM and e_same < TOL_CM:
-        return sign, "OK   pivot err {:.3f} mm, motion err {:.3f} mm".format(pivot_err * 10, e_same * 10)
-    if pivot_err < TOL_CM and e_flip < TOL_CM:
-        return -sign, "OK   pivot err {:.3f} mm, motion err {:.3f} mm (sign corrected)".format(
-            pivot_err * 10, e_flip * 10)
-    return sign, ("CHECK pivot err {:.2f} mm, motion err {:.2f} / {:.2f} mm (same/flipped) - "
-                  "joint did not move as the URDF says".format(pivot_err * 10, e_same * 10, e_flip * 10))
+    axis, ang = rotation_axis_angle(before, after)
+    if axis is None or ang < 0.01:
+        return 1, False, ("NO UPDATE - transform2 didn't change when the joint was driven; "
+                          "can't self-check, use Drive Joints to eyeball it")
+    urdf = j["axis_world"]
+    dot = sum(axis[k] * urdf[k] for k in range(3))
+    sign = 1 if dot >= 0 else -1
+    axis_err = math.degrees(math.acos(min(1.0, abs(dot))))
+    # pivot drift: where the zero-pose pivot ends up after the move
+    p = pivot.copy()
+    inv = before.copy()
+    inv.invert()
+    p.transformBy(inv)
+    p.transformBy(after)
+    drift_mm = p.distanceTo(pivot) * 10
+    ok = axis_err <= AXIS_TOL_DEG and drift_mm <= TOL_CM * 10 and abs(ang - TEST_ANGLE) < 0.01
+    msg = "{}  axis err {:.2f} deg, pivot drift {:.3f} mm, turned {:.3f} rad{}".format(
+        "OK   " if ok else "WRONG", axis_err, drift_mm, ang,
+        "" if sign > 0 else " (Fusion + = URDF -, limits flipped)")
+    return sign, ok, msg
 
 
 # ---------------------------------------------------------------- entry point
@@ -323,20 +397,21 @@ def run(context):
         occs[data["root_link"]].isGrounded = True
         revs = build_joints(root, data, occs)
 
-        report = []
-        for joint, j, sign in revs:
-            try:
-                sign, msg = self_check(occs, data, joint, j, sign)
-            except Exception as e:
-                msg = "UNVERIFIED (self-check failed: {})".format(e)
-            set_limits(joint, j, sign)
+        report, bad = [], 0
+        for entry in revs:
+            j = entry[1]
+            sign, ok, msg = check_and_repair(root, occs, data, entry)
+            set_limits(entry[0], j, sign)
             SIGNS[j["name"]] = sign
-            report.append("{:24s} {}  [Fusion + = URDF {}]".format(j["name"], msg, "+" if sign > 0 else "-"))
+            bad += 0 if ok else 1
+            report.append("{:24s} {}".format(j["name"], msg))
 
         text = ("PiBob built: {} links, {} joints ({} revolute).\n\n"
-                "Joint self-check (drive to {:.2f} rad, compare with URDF):\n{}\n\n"
+                "Joint self-check (drive to {:.2f} rad, measure the real axis vs the URDF):\n{}\n\n{}"
                 "File > Save as to keep it (.f3d via File > Export).").format(
-            len(data["links"]), len(data["joints"]), len(revs), TEST_ANGLE, "\n".join(report))
+            len(data["links"]), len(data["joints"]), len(revs), TEST_ANGLE, "\n".join(report),
+            "All joints OK.\n\n" if bad == 0 else
+            "{} joint(s) need a look - see fusion/README.md troubleshooting.\n\n".format(bad))
         try:
             with open(os.path.join(json_dir, "fusion_check.txt"), "w") as f:
                 f.write(text + "\n")
