@@ -4,7 +4,7 @@
     uv run --with numpy --with trimesh ros2/pibob_description/scripts/make_servo_stl.py
 
 Frame (so the visual's <origin> in the URDF IS the servo's output shaft):
-  origin = on the output-shaft axis, at the body's top (mounting / horn) face
+  origin = on the output-shaft axis, at the horn face (top of the gear boss)
   +z     = along the shaft, out of the servo
   +x     = along the body length, from the shaft end towards the far end
   y      = z cross x... i.e. right-handed; the body is centred in y
@@ -15,7 +15,12 @@ standard SG90/MG90S datasheet values:
   shaft offset    5.85 from the shaft-end face  (Head-BottomServoHolder: pocket end x=-1.75,
                                                  coaxial pivot pin at x=4.10 -> 5.85)
   mounting tabs   32.2 span x 12.2 x 2.5, underside 16.0 above the body bottom
-  output spline   dia 4.8, 4.0 proud of the top face
+  gear boss       dia 11.8 x 4.0 on the case top, centred on the shaft (SG90 / MG90S
+                  overall height ~28.5-31 incl. spline; without it the horn face sat 4 mm
+                  too low and the head's middle holder collided with its base holder)
+  output spline   dia 4.8, 3.0 proud of the boss
+
+The origin (and so every servo joint pivot) is the horn face = top of the gear boss.
 """
 import os
 
@@ -25,7 +30,8 @@ import trimesh
 L, W, H = 22.8, 12.2, 22.7
 SHAFT_OFF = 5.85
 TAB_SPAN, TAB_T, TAB_Z = 32.2, 2.5, 16.0
-SPLINE_D, SPLINE_H = 4.8, 4.0
+BOSS_D, BOSS_H = 11.8, 4.0
+SPLINE_D, SPLINE_H = 4.8, 3.0
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -38,10 +44,14 @@ def main():
     x0 = -SHAFT_OFF                      # shaft-end face
     x1 = x0 + L
     tab_over = (TAB_SPAN - L) / 2
+    top = -BOSS_H                        # case top; the origin is the boss (horn) face
     parts = [
-        box(x0, x1, -W / 2, W / 2, -H, 0.0),                                              # body
-        box(x0 - tab_over, x1 + tab_over, -W / 2, W / 2, -H + TAB_Z, -H + TAB_Z + TAB_T),  # tabs
+        box(x0, x1, -W / 2, W / 2, top - H, top),                                                # body
+        box(x0 - tab_over, x1 + tab_over, -W / 2, W / 2, top - H + TAB_Z, top - H + TAB_Z + TAB_T),  # tabs
     ]
+    boss = trimesh.creation.cylinder(radius=BOSS_D / 2, height=BOSS_H, sections=48)
+    boss.apply_translation([0, 0, -BOSS_H / 2])
+    parts.append(boss)
     spline = trimesh.creation.cylinder(radius=SPLINE_D / 2, height=SPLINE_H, sections=32)
     spline.apply_translation([0, 0, SPLINE_H / 2])
     parts.append(spline)

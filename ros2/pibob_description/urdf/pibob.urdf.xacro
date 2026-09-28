@@ -72,16 +72,19 @@
   <!--
     Seated from the holder STL geometry (see fusion/README.md "Head"), not by eye:
       Head-BottomServoHolder = 9 g servo pocket (23.0 x 12.2, 17.25 deep) open at its +y
-        face, with a dia-4.7 pivot pin on the opposite face coaxial with the servo shaft.
-        Pocket UP: the pan servo stands in it, tabs on the holder top, shaft vertical; the
-        holder sits on the beam top with the pin in the beam's 20 x 20 head hole.
+        face, a 14.5 mm square peg on its -x end, a dia-4.7 pin on its -y face.
+        PEG DOWN into the beam's 20 x 20 head hole (as in Images/), pocket facing FORWARD.
+        The pan servo stands upright in the pocket (23 mm tall = the servo's case height),
+        shaft up; it is pushed in until its gear boss meets the holder's top plate, so its
+        shaft end sits 5.9 mm proud of the holder face - the pan axis is 15.9 mm in front
+        of the beam hole. Chosen by fusion/verify/head_search.py (every axis-aligned
+        orientation of every head part, scored for interpenetration + the photo cues).
       Head-MiddleServoHolder = horn groove + dia-7 hub hole in its floor (rides the pan
         horn) and a second 9 g pocket (23.0 x 12.1, 18 deep) open to the robot's left
         (+y) for the tilt servo.
       Head-CameraHolder = camera U-frame whose side arm has a dia-7 hub hole + horn
         groove on its outer face: it rides the tilt servo's horn.
-    Each revolute joint origin is on its servo's output-shaft axis at the servo's top
-    (horn / mounting) face.
+    Each revolute joint origin is on its servo's output-shaft axis at the horn face.
   -->
   <joint name="beam_to_head_base" type="fixed">
     <parent link="shoulder_beam"/>
@@ -92,18 +95,18 @@
   <!-- fixed to the beam: the bottom holder + the pan servo standing in it -->
   <link name="head_base_link">
     <visual>
-      <origin xyz="0 -0.0041 0.0075" rpy="${pi/2} 0 ${pi/2}"/>
+      <origin xyz="-0.0025 0 0.00975" rpy="0 ${-pi/2} ${-pi/2}"/>   <!-- peg down, pocket forward -->
       <geometry><mesh filename="${mesh_pkg}/Head-BottomServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="white"/>
     </visual>
-    <xacro:servo_9g xyz="0 0 0.0267" rpy="0 0 ${pi/2}"/>    <!-- pan servo (CH2) -->
+    <xacro:servo_9g xyz="0.0159 0 0.03485" rpy="0 0 ${pi}"/>    <!-- pan servo (CH2), shaft up -->
   </link>
 
   <joint name="head_pan_joint" type="revolute">
     <parent link="shoulder_beam"/>
     <child  link="head_pan_link"/>
-    <!-- pan servo shaft axis, at its top face: beam top 35.5 + holder/servo stack 26.7 mm -->
-    <origin xyz="0 0 0.0622" rpy="0 0 0"/>
+    <!-- pan servo shaft axis, at its horn face (top of the gear boss) -->
+    <origin xyz="0.0159 0 0.07035" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <!-- safe range CH2: 0..180 deg => -pi/2..+pi/2 about home (90 deg) -->
     <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="3.14"/>
@@ -116,14 +119,14 @@
       <geometry><mesh filename="${mesh_pkg}/Head-MiddleServoHolder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="white"/>
     </visual>
-    <xacro:servo_9g xyz="-0.00315 0.0172 0.01105" rpy="${-pi/2} 0 0"/>    <!-- tilt servo (CH3) -->
+    <xacro:servo_9g xyz="-0.00315 0.0212 0.01105" rpy="${-pi/2} 0 0"/>    <!-- tilt servo (CH3) -->
   </link>
 
   <joint name="head_tilt_joint" type="revolute">
     <parent link="head_pan_link"/>
     <child  link="head_tilt_link"/>
-    <!-- tilt servo shaft axis, at its top face (where the camera arm sits on the horn) -->
-    <origin xyz="-0.00315 0.0172 0.01105" rpy="0 0 0"/>
+    <!-- tilt servo shaft axis, at its horn face (where the camera arm sits on the horn) -->
+    <origin xyz="-0.00315 0.0212 0.01105" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <!-- safe range CH3: 50..140 deg => -40..+50 deg around home -->
     <limit lower="-0.6981" upper="0.8727" effort="1.0" velocity="3.14"/>
@@ -240,7 +243,7 @@
         <material name="grey"/>
       </visual>
       <!-- elbow servo (CH4/CH8) in the elbow holder's pocket; its shaft is the bicep axis -->
-      <xacro:servo_9g xyz="0.00045 ${-0.0138*reflect} -0.13455" rpy="${pi/2} ${pi/2} ${(1-reflect)/2*pi}"/>
+      <xacro:servo_9g xyz="0.00045 ${-0.0178*reflect} -0.13455" rpy="${pi/2} ${pi/2} ${(1-reflect)/2*pi}"/>
       </xacro:if>
     </link>
 

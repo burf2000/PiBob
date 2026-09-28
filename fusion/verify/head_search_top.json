@@ -1,0 +1,2342 @@
+[
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 0
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt +X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt -X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt +X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt -X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt +X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt -X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt +X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt -X",
+   "True",
+   "False",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt +Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt -Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "pin down",
+   "pocket +Z",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 4,
+  "peg_in_beam": false,
+  "pin_down": true,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "pin down",
+   "pocket +Z",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 4,
+  "peg_in_beam": false,
+  "pin_down": true,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan -X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 3.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 6.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan -X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 11.0,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 3.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 6.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt -Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 149.5,
+  "ov_total": 149.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +Z",
+   "tilt +Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 149.5,
+  "ov_total": 149.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt +Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 351.2,
+  "ov_total": 354.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan +Z",
+   "tilt -Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 351.2,
+  "ov_total": 354.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt +Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 351.2,
+  "ov_total": 354.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan +Z",
+   "tilt -Y",
+   "False",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 351.2,
+  "ov_total": 354.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan -X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.2,
+  "ov_mh": 665.0,
+  "ov_tilt": 36.0,
+  "ov_cam": 0.0,
+  "ov_total": 703.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.2,
+  "ov_mh": 665.0,
+  "ov_tilt": 36.0,
+  "ov_cam": 0.0,
+  "ov_total": 703.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan -X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 16.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.2,
+  "ov_mh": 665.0,
+  "ov_tilt": 94.0,
+  "ov_cam": 57.5,
+  "ov_total": 818.7,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan +X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 16.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.2,
+  "ov_mh": 665.0,
+  "ov_tilt": 94.0,
+  "ov_cam": 57.5,
+  "ov_total": 818.7,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket +X",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 18,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 837.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -X",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 19,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 837.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket +Y",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 22,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 840.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Y",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 23,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 3.0,
+  "ov_cam": 0.0,
+  "ov_total": 840.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket +Y",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 22,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 3.0,
+  "ov_cam": 187.5,
+  "ov_total": 1027.7,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Y",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 23,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 3.0,
+  "ov_cam": 187.5,
+  "ov_total": 1027.7,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket +X",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 18,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 16.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 1.8,
+  "ov_cam": 218.8,
+  "ov_total": 1057.8,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -X",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 19,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 16.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 837.2,
+  "ov_tilt": 1.8,
+  "ov_cam": 218.8,
+  "ov_total": 1057.8,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Z",
+   "pan +Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 13,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 1408.5,
+  "ov_mh": 665.0,
+  "ov_tilt": 108.0,
+  "ov_cam": 0.0,
+  "ov_total": 2181.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Z",
+   "pan +Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 15,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 12.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 1408.5,
+  "ov_mh": 665.0,
+  "ov_tilt": 108.0,
+  "ov_cam": 0.0,
+  "ov_total": 2181.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan -Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2992.5,
+  "ov_tilt": 3.0,
+  "ov_cam": 457.0,
+  "ov_total": 3452.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan -Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2992.5,
+  "ov_tilt": 3.0,
+  "ov_cam": 457.0,
+  "ov_total": 3452.5,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan -Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2991.8,
+  "ov_tilt": 3.0,
+  "ov_cam": 740.2,
+  "ov_total": 3735.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan -Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2991.8,
+  "ov_tilt": 3.0,
+  "ov_cam": 740.2,
+  "ov_total": 3735.0,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +Y",
+   "pan -Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 20,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2801.8,
+  "ov_tilt": 37.5,
+  "ov_cam": 987.8,
+  "ov_total": 3827.1000000000004,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -Y",
+   "pan -Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 21,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 4.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 2801.8,
+  "ov_tilt": 37.5,
+  "ov_cam": 987.8,
+  "ov_total": 3827.1000000000004,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan -Z",
+   "tilt +Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 15.0,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.0,
+  "ov_mh": 2979.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 893.2,
+  "ov_total": 3877.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket -X",
+   "pan -Z",
+   "tilt -Y",
+   "True",
+   "True",
+   "False"
+  ],
+  "bh": 17,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   -1.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 15.0,
+  "tilt_servo_out_mm": 15.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 2.0,
+  "ov_mh": 2979.0,
+  "ov_tilt": 3.0,
+  "ov_cam": 893.2,
+  "ov_total": 3877.2,
+  "failed_checks": 1
+ },
+ {
+  "key": [
+   "other",
+   "pocket +Y",
+   "pan +X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 0,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Y",
+   "pan +X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 1,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "other",
+   "pocket +Y",
+   "pan -X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 2,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "other",
+   "pocket -Y",
+   "pan -X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 3,
+  "peg_in_beam": false,
+  "pin_down": false,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "pin down",
+   "pocket +Z",
+   "pan +X",
+   "tilt +Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 4,
+  "peg_in_beam": false,
+  "pin_down": true,
+  "pan_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "pin down",
+   "pocket +Z",
+   "pan -X",
+   "tilt -Y",
+   "True",
+   "True",
+   "True"
+  ],
+  "bh": 6,
+  "peg_in_beam": false,
+  "pin_down": true,
+  "pan_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "tilt_axis": [
+   0.0,
+   -1.0,
+   0.0
+  ],
+  "pan_vertical": false,
+  "pan_up": false,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": true,
+  "camera_frame_up": true,
+  "camera_faces_fwd": true,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt +X",
+   "False",
+   "False",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ },
+ {
+  "key": [
+   "peg down",
+   "pocket +X",
+   "pan +Z",
+   "tilt -X",
+   "False",
+   "False",
+   "False"
+  ],
+  "bh": 16,
+  "peg_in_beam": true,
+  "pin_down": false,
+  "pan_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tilt_axis": [
+   -1.0,
+   0.0,
+   0.0
+  ],
+  "pan_vertical": true,
+  "pan_up": true,
+  "tilt_horizontal": true,
+  "tilt_servo_upright": false,
+  "camera_frame_up": false,
+  "camera_faces_fwd": false,
+  "pan_servo_out_mm": 6.5,
+  "tilt_servo_out_mm": 18.0,
+  "ov_bh_beam": 0.0,
+  "ov_pan": 0.0,
+  "ov_mh": 0.0,
+  "ov_tilt": 0.0,
+  "ov_cam": 0.0,
+  "ov_total": 0.0,
+  "failed_checks": 2
+ }
+]

@@ -147,8 +147,10 @@ These are part-placement errors, not pivot errors. The joints now turn about the
 pins, but the bracket (shoulder_rot) and the servo holder (shoulder_lift) were seated
 by eye 5.6 mm and 9.5 mm away from where their holes meet the pins. No 180° flip
 of either part fixes it; I tested all three. Re-seating them means translating the
-part perpendicular to the axis, which *does* move geometry at zero pose, so it isn't
-applied here:
+part perpendicular to the axis, which *does* move geometry at zero pose. **Not yet
+applied:** the approval reached this branch second-hand, through the coordinating
+agent, and the permission system blocked the edit. It needs Simon's go-ahead
+directly. The exact moves:
 
 - bracket visual only (in `*_shoulder_rot_link`): +5.6 mm Z;
 - shoulder servo holder and everything below it (`*_shoulder_lift_link` subtree):
@@ -192,63 +194,92 @@ were already right and no arm joint moved. The elbow servos drop in because the
 elbow holder is the same part: the elbow servo shaft lies on the bicep axis to
 0.1 mm.
 
-**How the head stacks** (derived from the mating features, and matching the photos
-in `Images/`):
+**How the head stacks: an exhaustive orientation search, not a guess.**
+`verify/head_search.py` builds every assembly from the 24 axis-aligned rotations of
+each part: 24 for the head base × 24 for the pan servo in its pocket × 24 for the
+middle holder on the pan spline × 24 for the tilt servo in its pocket × 24 for the
+camera holder on the tilt spline, 24,576 complete heads. Each servo is pushed into its
+pocket as deep as it goes without penetrating. Every head is scored on:
 
-1. `head_base_link` (new, fixed to the beam) holds Head-BottomServoHolder with
-   its **pocket facing up**. Its bottom face sits on the beam top, and its pivot
-   pin drops into the beam's 20 × 20 mm head hole. The **pan servo** stands in the
-   pocket with its tabs on the holder's top face.
-2. `head_pan_joint` is on the pan servo's shaft axis at its top face, 62.2 mm above
-   the beam centre (was 45 mm, a guess).
-3. `head_pan_link` holds Head-MiddleServoHolder. The floor's hub hole is on the pan
-   shaft, and its underside sits on the pan servo's top face. The **tilt servo**
-   sits in its side pocket with the shaft pointing to the robot's left. This link
-   used to carry the bottom holder, which doesn't turn with pan.
-4. `head_tilt_joint` is on the tilt servo's shaft axis at its top face:
-   (−3.15, 17.2, 11.05) mm from the pan pivot (was (0, 0, 30) mm, a guess).
-5. `head_tilt_link` holds Head-CameraHolder. The side arm's hub hole is on the
-   tilt shaft and its inner face sits on the tilt servo's top face. `camera_link`
-   is a fixed frame at the centre of the camera board. Before, the camera holder
-   was the only part on the tilt side and the middle holder turned with tilt.
+- interpenetration between all parts, using 0.5 mm voxels (parts that only touch
+  score zero);
+- the photo cues: base peg down into the beam's head hole, pan axis vertical and up,
+  tilt axis horizontal, camera U-frame opening up, camera board facing forward.
 
-Checks (`preview_pose.py --servo-check / --contact-check / --pivot-check`, also in
-`verify/results.json`):
+Best candidates per distinct layout (`verify/head_search_top.json`; the full run
+writes `head_search_all.json`, which isn't committed):
 
-- Pan and tilt pivots are **0.000 mm off their servo's shaft axis, 0.000 mm from its
-  top face, 0.000° axis error**. Each also sits in the Ø7 hub hole of the part it
-  drives, 3.5 mm from the part's surface (the hole radius).
-- These contact pairs all have a **0.0 mm gap** (the last is 0.002 mm): beam ↔
-  bottom holder, bottom holder ↔ pan servo, pan servo ↔ middle holder, middle
-  holder ↔ tilt servo, tilt servo ↔ camera holder.
-- The camera holder clears the middle holder by more than 6 mm across the whole
-  tilt range (−40° to +50°).
+| # | base holder | its pocket faces | pan axis | tilt axis | frame up | faces fwd | tilt servo upright | pan servo pushed in | interpenetration mm³ (base-beam/pan/mid/tilt/cam) | photo-cue fails |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **1 ✔ chosen** | peg down | +X (front) | +Z | +Y | y | y | n | to its boss (sticks out 12 mm) | 0.0 (0/0/0/0/0) | 0 |
+| 2 | peg down | +X | +Z | −Y (horn on the right) | y | y | n | same | 0.0 | 0 |
+| 3–4 | peg down | −X (back) | +Z | ±Y | y | y | n | same | 0.0 | 0 |
+| 5–8 | peg down | ±Y (side) | +Z | ±Y | y | y | n | same | 0.0 | 0 |
+| 9–14 | peg down | any | +Z | ±X | y | **n** | n | same | 0.0 | 1 |
+| previous | pin down, pocket up, peg sideways | — | +Z | +Y | y | y | n | tabs on the holder | 3.0 | **1 (peg not in beam)** |
+| (old servo model) | peg down | +X | +Z | +Y | y | y | n | — | **247.5**: the middle holder hits the base holder by 243 | 0 |
 
-**Head vs the photos (checked again, from a Fusion user's viewpoint).** Nothing
-floats and nothing interpenetrates by more than 0.2 mm at zero, pan ±90° or the
-tilt limits. Every head contact is 0.0 mm. There are two visible differences from
-`Images/Front.JPG`, `Back.JPG` and `Head.JPG`, and **neither can be fixed from the
-repo STLs**:
+What the search shows:
 
-1. The printed head base has a peg going down into the beam. This STL's peg is on
-   the end face at a right angle to its servo pocket, so with the pan shaft
-   vertical the peg points sideways.
-2. The photos suggest the printed middle holder is taller than wide, with the
-   tilt servo standing upright. The STL is a 38 × 20 × 20 box whose pocket runs
-   front-to-back under its Ø7 top hole.
+- **Peg down with a vertical pan axis only works with a real servo height.** The
+  first servo model had no gear boss (22.7 mm to the horn face). With it, every
+  peg-down, pan-up head collides: the middle holder sinks 3.3 mm into the base
+  holder's top plate. An SG90 / MG90S has a Ø11.8 × 4 mm gear boss on top (overall
+  28.5–31 mm with the spline), and `Servo-9g.stl` now includes it. The collision
+  then disappears.
+- **In a peg-down base holder the pan servo stands upright**: its 22.7 mm case fills
+  the 23 mm pocket height. It goes in until its gear boss meets the holder's top
+  plate, and at that point **12 mm of it, including the shaft, sticks out of the
+  pocket face**. So the pan axis is 15.9 mm in front of the beam's head hole, not
+  on it.
+- **"Tilt servo standing upright" is impossible with a vertical pan.** No layout
+  among all 24,576 has both. The middle holder's hub holes (on its pan axis) and its
+  servo pocket are at right angles, so with pan vertical the tilt servo always lies
+  flat, shaft side-to-side. Tall-and-narrow middle holder: same reason (it's 38 × 20 × 20).
+- Candidates 1–8 tie on the geometry. They differ only in which way the pan servo
+  sticks out and which side the tilt horn is on. **#1 was chosen**: the tilt horn
+  is on the robot's left as in every photo, the camera is centred left-right
+  (Y ≈ +1.7 mm), and the pan servo points forward, so the head stays on the
+  robot's centreline. The price is that the whole head sits 16 mm forward.
 
-The printed head parts look like a different revision from the STLs in
-`STL/` and `meshes/`. Export the current head parts and they can be dropped in
-(see *Editing / swapping a part*); the pivots follow their hub holes.
+**Resulting chain** (world mm at zero pose):
 
-**One thing to check on the robot.** In this orientation, Head-BottomServoHolder's
-square peg (the end that, on the elbow, plugs into the bicep) sticks out
-**sideways**, to the robot's right, just above the beam. The photos show the printed
-head base with a peg going *down* into the beam, which this STL can't do while its
-pocket faces up. Either the head-base STL in the repo differs from the printed one,
-or the peg is unused on the head. The pivots don't depend on it: they come from the
-servo and hub features, which all agree. If the printed part differs, export it
-and swap it in (see below).
+1. `head_base_link` (fixed): Head-BottomServoHolder, **peg down in the beam's head
+   hole**, pocket facing forward, Ø4.7 pin pointing back. The pan servo stands in
+   the pocket, tabs inside, shaft end 5.9 mm proud of the face.
+2. `head_pan_joint` at (15.9, 0, 370.35), axis +Z: the pan spline at the horn face
+   (top of the gear boss).
+3. `head_pan_link`: Head-MiddleServoHolder, floor hub hole on the pan spline,
+   0.85 mm clear of the base holder's top. The tilt servo lies in its pocket, shaft
+   to the robot's left.
+4. `head_tilt_joint` at (12.75, 21.2, 381.4), axis +Y: the tilt spline at its horn
+   face.
+5. `head_tilt_link`: Head-CameraHolder, arm hub hole on the tilt spline, U-frame
+   up, board facing forward. `camera_link` is at the board centre.
+
+Checks (`preview_pose.py --servo-check / --contact-check`, `verify/pin_check.py`,
+and an interpenetration test at zero, pan ±90°, the tilt limits, and pan +90° with
+tilt +50° together):
+
+- Pan and tilt pivots are **0.000 mm** off their servo splines, with 0.000° axis
+  error.
+- Hub-hole drift over the sweep is **0.001 mm (pan) and 0.000 mm (tilt)**.
+- Contacts are **0.0–0.002 mm**: beam ↔ base holder, base holder ↔ pan servo, pan
+  servo ↔ middle holder, middle holder ↔ tilt servo, tilt servo ↔ camera holder.
+- **No interpenetration > 0.2 mm in any of those poses.**
+
+**Side by side with the photos**: `verify/head_vs_photos.png`. It still doesn't
+match every photo. The photos show the pan servo's tabs level on top of a narrow
+block, with the middle holder centred over that block. With these STLs that needs
+the base-holder pocket to open *upwards*, and then its peg can't point down. The
+search ranks that layout ("previous") only because its peg misses the beam. If
+Simon can confirm how the pan servo sits in the printed base holder, the search
+can be re-scored in minutes.
+
+**Knock-on for the arms:** the elbow servos use the same `Servo-9g.stl`. Their
+origins moved 4 mm along the shaft, so the case stays exactly where it was. The
+new gear boss now touches the forearm's hub-hole arm and **overlaps it by 0.7 mm**.
+The forearm is also 1.1 mm off its pin; the pending re-seat (see *Arm pivots*) fixes both.
 
 ![head close-up](verify/head_closeup.png)
 

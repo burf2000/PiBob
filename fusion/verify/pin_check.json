@@ -7,9 +7,9 @@
     "part": "Servo-9g",
     "dia_mm": 4.8,
     "root_mm": [
+     15.9,
      0.0,
-     -0.0,
-     362.2
+     370.35
     ]
    },
    "origin_to_pin_axis_mm": 0.0,
@@ -17,13 +17,13 @@
    "on_axis": [
     {
      "link": "head_base_link",
-     "part": "Head-BottomServoHolder",
+     "part": "Servo-9g",
      "kind": "BOSS",
-     "dia_mm": 4.7,
+     "dia_mm": 11.8,
      "centre_mm": [
-      0.0,
+      15.9,
       -0.0,
-      335.5
+      366.35
      ],
      "off_pin_axis_mm": 0.0
     },
@@ -33,9 +33,9 @@
      "kind": "HOLE",
      "dia_mm": 7.01,
      "centre_mm": [
+      15.9,
       -0.0,
-      -0.0,
-      379.3
+      387.45
      ],
      "off_pin_axis_mm": 0.0
     },
@@ -45,9 +45,9 @@
      "kind": "HOLE",
      "dia_mm": 7.01,
      "centre_mm": [
+      15.9,
       -0.0,
-      -0.0,
-      364.82
+      372.97
      ],
      "off_pin_axis_mm": 0.0
     }
@@ -56,9 +56,9 @@
    "child_feature_centre": {
     "link": "head_pan_link",
     "p": [
-     -3.723332904311404e-08,
+     0.01589996276667096,
      -1.0002572198631633e-06,
-     0.3793030006408692
+     0.3874530006408692
     ]
    },
    "sweep_deg": [
@@ -74,23 +74,35 @@
     "part": "Servo-9g",
     "dia_mm": 4.8,
     "root_mm": [
-     -3.15,
-     17.2,
-     373.25
+     12.75,
+     21.2,
+     381.4
     ]
    },
    "origin_to_pin_axis_mm": 0.0,
    "axis_angle_deg": 0.0,
    "on_axis": [
     {
+     "link": "head_pan_link",
+     "part": "Servo-9g",
+     "kind": "BOSS",
+     "dia_mm": 11.8,
+     "centre_mm": [
+      12.75,
+      17.2,
+      381.4
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
      "link": "head_tilt_link",
      "part": "Head-CameraHolder",
      "kind": "HOLE",
      "dia_mm": 7.01,
      "centre_mm": [
-      -3.15,
-      17.2,
-      373.25
+      12.75,
+      21.2,
+      381.4
      ],
      "off_pin_axis_mm": 0.0
     }
@@ -99,9 +111,9 @@
    "child_feature_centre": {
     "link": "head_tilt_link",
     "p": [
-     -0.003149958285947588,
-     0.01720199890136719,
-     0.3732505369194124
+     0.012750041714052411,
+     0.02120199890136719,
+     0.3814005369194124
     ]
    },
    "sweep_deg": [
@@ -555,10 +567,22 @@
      "link": "r_upper_arm_link",
      "part": "Servo-9g",
      "kind": "BOSS",
-     "dia_mm": 4.8,
+     "dia_mm": 11.8,
      "centre_mm": [
       4.0,
       -191.8,
+      259.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "r_upper_arm_link",
+     "part": "Servo-9g",
+     "kind": "BOSS",
+     "dia_mm": 4.8,
+     "centre_mm": [
+      4.0,
+      -187.8,
       259.9
      ],
      "off_pin_axis_mm": 0.0
@@ -622,10 +646,22 @@
      "link": "l_upper_arm_link",
      "part": "Servo-9g",
      "kind": "BOSS",
-     "dia_mm": 4.8,
+     "dia_mm": 11.8,
      "centre_mm": [
       4.0,
       191.8,
+      259.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "l_upper_arm_link",
+     "part": "Servo-9g",
+     "kind": "BOSS",
+     "dia_mm": 4.8,
+     "centre_mm": [
+      4.0,
+      187.8,
       259.9
      ],
      "off_pin_axis_mm": 0.0
@@ -670,6 +706,5 @@
    ],
    "child_feature_drift_mm": 0.842
   }
- ],
- "zero_pose_max_vertex_displacement_mm": 0.0
+ ]
 }

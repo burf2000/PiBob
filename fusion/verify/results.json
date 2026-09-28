@@ -68,7 +68,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.995,
-    "front_right": 0.9955,
+    "front_right": 0.9954,
     "head_front": 0.9978,
     "head_side": 0.9979
    }
@@ -143,9 +143,9 @@
    },
    "silhouette_iou": {
     "front_left": 0.9949,
-    "front_right": 0.9956,
-    "head_front": 0.9976,
-    "head_side": 0.9978
+    "front_right": 0.9958,
+    "head_front": 0.9977,
+    "head_side": 0.9979
    }
   },
   "head_tilt_joint_45deg": {
@@ -218,9 +218,9 @@
    },
    "silhouette_iou": {
     "front_left": 0.995,
-    "front_right": 0.9957,
-    "head_front": 0.9978,
-    "head_side": 0.9973
+    "front_right": 0.9956,
+    "head_front": 0.9974,
+    "head_side": 0.9969
    }
   },
   "r_shoulder_rot_joint_45deg": {
@@ -292,8 +292,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9944,
-    "front_right": 0.9962
+    "front_left": 0.9945,
+    "front_right": 0.9961
    }
   },
   "l_shoulder_rot_joint_45deg": {
@@ -366,7 +366,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.9955,
-    "front_right": 0.9959
+    "front_right": 0.9957
    }
   },
   "r_shoulder_lift_joint_20deg": {
@@ -438,7 +438,7 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9947,
+    "front_left": 0.9948,
     "front_right": 0.9939
    }
   },
@@ -511,8 +511,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9963,
-    "front_right": 0.9958
+    "front_left": 0.9964,
+    "front_right": 0.9957
    }
   },
   "r_arm_rot_joint_45deg": {
@@ -584,8 +584,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9946,
-    "front_right": 0.9957
+    "front_left": 0.9947,
+    "front_right": 0.9956
    }
   },
   "l_arm_rot_joint_45deg": {
@@ -657,8 +657,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9949,
-    "front_right": 0.9956
+    "front_left": 0.995,
+    "front_right": 0.9955
    }
   },
   "r_bicep_joint_45deg": {
@@ -730,7 +730,7 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9946,
+    "front_left": 0.9947,
     "front_right": 0.9956
    }
   },
@@ -804,7 +804,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.9947,
-    "front_right": 0.9956
+    "front_right": 0.9955
    }
   },
   "combined": {
@@ -885,8 +885,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9922,
-    "front_right": 0.996
+    "front_left": 0.992,
+    "front_right": 0.9962
    }
   }
  },
@@ -1085,14 +1085,14 @@
    "joint": "r_bicep_joint",
    "servo_in": "r_upper_arm_link",
    "radial_mm": 0.0,
-   "axial_mm": -26.7,
+   "axial_mm": -30.7,
    "angle_deg": 0.0
   },
   {
    "joint": "l_bicep_joint",
    "servo_in": "l_upper_arm_link",
    "radial_mm": 0.0,
-   "axial_mm": -26.7,
+   "axial_mm": -30.7,
    "angle_deg": 0.0
   }
  ],
@@ -1100,7 +1100,7 @@
   {
    "a": "shoulder_beam/Shoulder-Beam",
    "b": "head_base_link/Head-BottomServoHolder",
-   "gap_mm": 0.0
+   "gap_mm": 0.002
   },
   {
    "a": "head_base_link/Head-BottomServoHolder",
