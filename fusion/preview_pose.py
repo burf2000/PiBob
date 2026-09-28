@@ -184,7 +184,7 @@ def _rasterise(img, zbuf, s, z, cols):
 
 
 def render(data, W, view, w=850, h=790, highlight=(), pivots=(), out=None, title=None,
-           grid=True, bg=(1, 1, 1), links=None):
+           grid=True, bg=(1, 1, 1), links=None, marks=()):
     """Render posed meshes (z-buffered). highlight = links tinted orange; pivots = [(point, axis)] in red.
     Returns an HxWx3 uint8 image (and saves it to `out` if given)."""
     from PIL import Image, ImageDraw
@@ -221,6 +221,10 @@ def render(data, W, view, w=850, h=790, highlight=(), pivots=(), out=None, title
         d.line([tuple(sp[0]), tuple(sp[1])], fill=(230, 0, 0), width=3)
         x, y = sp[2]
         d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=(230, 0, 0))
+    for p, col in marks:  # extra coloured dots (e.g. a hole centre)
+        sp, _ = project(np.asarray([p], float), view, w, h)
+        x, y = sp[0]
+        d.ellipse([x - 5, y - 5, x + 5, y + 5], outline=col, width=3)
     if title:
         d.text((10, 10), title, fill=(0, 0, 0) if sum(bg) > 1.5 else (255, 255, 255))
     if out:

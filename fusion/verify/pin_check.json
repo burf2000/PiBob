@@ -1,0 +1,675 @@
+{
+ "joints": [
+  {
+   "joint": "head_pan_joint",
+   "pin": {
+    "link": "head_base_link",
+    "part": "Servo-9g",
+    "dia_mm": 4.8,
+    "root_mm": [
+     0.0,
+     -0.0,
+     362.2
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "head_base_link",
+     "part": "Head-BottomServoHolder",
+     "kind": "BOSS",
+     "dia_mm": 4.7,
+     "centre_mm": [
+      0.0,
+      -0.0,
+      335.5
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "head_pan_link",
+     "part": "Head-MiddleServoHolder",
+     "kind": "HOLE",
+     "dia_mm": 7.01,
+     "centre_mm": [
+      -0.0,
+      -0.0,
+      379.3
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "head_pan_link",
+     "part": "Head-MiddleServoHolder",
+     "kind": "HOLE",
+     "dia_mm": 7.01,
+     "centre_mm": [
+      -0.0,
+      -0.0,
+      364.82
+     ],
+     "off_pin_axis_mm": 0.0
+    }
+   ],
+   "child_feature": "Head-MiddleServoHolder hole dia 7.01",
+   "child_feature_centre": {
+    "link": "head_pan_link",
+    "p": [
+     -3.723332904311404e-08,
+     -1.0002572198631633e-06,
+     0.3793030006408692
+    ]
+   },
+   "sweep_deg": [
+    -45.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.001
+  },
+  {
+   "joint": "head_tilt_joint",
+   "pin": {
+    "link": "head_pan_link",
+    "part": "Servo-9g",
+    "dia_mm": 4.8,
+    "root_mm": [
+     -3.15,
+     17.2,
+     373.25
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "head_tilt_link",
+     "part": "Head-CameraHolder",
+     "kind": "HOLE",
+     "dia_mm": 7.01,
+     "centre_mm": [
+      -3.15,
+      17.2,
+      373.25
+     ],
+     "off_pin_axis_mm": 0.0
+    }
+   ],
+   "child_feature": "Head-CameraHolder hole dia 7.01",
+   "child_feature_centre": {
+    "link": "head_tilt_link",
+    "p": [
+     -0.003149958285947588,
+     0.01720199890136719,
+     0.3732505369194124
+    ]
+   },
+   "sweep_deg": [
+    -40.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.0
+  },
+  {
+   "joint": "r_shoulder_rot_joint",
+   "pin": {
+    "link": "r_shoulder_top_link",
+    "part": "Shoulder-Top-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     -0.0,
+     -98.45,
+     369.9
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "l_shoulder_top_link",
+     "part": "Shoulder-Top-ServoHolder",
+     "kind": "BOSS",
+     "dia_mm": 5.8,
+     "centre_mm": [
+      0.0,
+      98.45,
+      369.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      -0.1,
+      -53.5,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    },
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      -0.0,
+      -102.5,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    },
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 21.01,
+     "centre_mm": [
+      -0.1,
+      -49.8,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    }
+   ],
+   "child_feature": "Shoulder-Right-Bracket hole dia 6.0",
+   "child_feature_centre": {
+    "link": "r_shoulder_rot_link",
+    "p": [
+     -3.532968430692807e-08,
+     -0.10249999999989864,
+     0.36430004174551356
+    ]
+   },
+   "sweep_deg": [
+    -20.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 4.286
+  },
+  {
+   "joint": "l_shoulder_rot_joint",
+   "pin": {
+    "link": "l_shoulder_top_link",
+    "part": "Shoulder-Top-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     0.0,
+     98.45,
+     369.9
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "r_shoulder_top_link",
+     "part": "Shoulder-Top-ServoHolder",
+     "kind": "BOSS",
+     "dia_mm": 5.8,
+     "centre_mm": [
+      -0.0,
+      -98.45,
+      369.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      -0.1,
+      53.5,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    },
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 21.01,
+     "centre_mm": [
+      -0.1,
+      49.8,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    },
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      -0.0,
+      102.5,
+      364.3
+     ],
+     "off_pin_axis_mm": 5.6
+    }
+   ],
+   "child_feature": "Shoulder-Left-Bracket hole dia 6.0",
+   "child_feature_centre": {
+    "link": "l_shoulder_rot_link",
+    "p": [
+     -4.1963659308070096e-08,
+     0.1025,
+     0.36430004174551356
+    ]
+   },
+   "sweep_deg": [
+    -20.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 4.286
+  },
+  {
+   "joint": "r_shoulder_lift_joint",
+   "pin": {
+    "link": "r_shoulder_lift_link",
+    "part": "Shoulder-Right-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     -13.45,
+     -154.5,
+     374.55
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 21.0,
+     "centre_mm": [
+      -28.2,
+      -151.2,
+      365.6
+     ],
+     "off_pin_axis_mm": 9.54
+    },
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      24.5,
+      -151.2,
+      365.5
+     ],
+     "off_pin_axis_mm": 9.63
+    },
+    {
+     "link": "r_shoulder_rot_link",
+     "part": "Shoulder-Right-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      -24.5,
+      -151.2,
+      365.6
+     ],
+     "off_pin_axis_mm": 9.54
+    }
+   ],
+   "child_feature": "Shoulder-Right-ServoHolder boss dia 5.8",
+   "child_feature_centre": {
+    "link": "r_shoulder_lift_link",
+    "p": [
+     -0.013449909168654394,
+     -0.15449996430937302,
+     0.3745500478192607
+    ]
+   },
+   "sweep_deg": [
+    -20.0,
+    20.0
+   ],
+   "child_feature_drift_mm": 0.0
+  },
+  {
+   "joint": "l_shoulder_lift_joint",
+   "pin": {
+    "link": "l_shoulder_lift_link",
+    "part": "Shoulder-Left-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     -13.45,
+     154.5,
+     374.55
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      -24.5,
+      151.2,
+      365.6
+     ],
+     "off_pin_axis_mm": 9.54
+    },
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 21.0,
+     "centre_mm": [
+      -28.2,
+      151.2,
+      365.6
+     ],
+     "off_pin_axis_mm": 9.54
+    },
+    {
+     "link": "l_shoulder_rot_link",
+     "part": "Shoulder-Left-Bracket",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      24.5,
+      151.2,
+      365.5
+     ],
+     "off_pin_axis_mm": 9.63
+    }
+   ],
+   "child_feature": "Shoulder-Left-ServoHolder boss dia 5.8",
+   "child_feature_centre": {
+    "link": "l_shoulder_lift_link",
+    "p": [
+     -0.013450055116104392,
+     0.15450003569084697,
+     0.3745500478192608
+    ]
+   },
+   "sweep_deg": [
+    -20.0,
+    20.0
+   ],
+   "child_feature_drift_mm": 0.0
+  },
+  {
+   "joint": "r_arm_rot_joint",
+   "pin": {
+    "link": "r_shoulder_lift_link",
+    "part": "Shoulder-Right-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     3.55,
+     -205.6,
+     394.45
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "r_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      4.1,
+      -206.3,
+      399.5
+     ],
+     "off_pin_axis_mm": 0.89
+    },
+    {
+     "link": "r_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      4.0,
+      -206.3,
+      344.5
+     ],
+     "off_pin_axis_mm": 0.83
+    },
+    {
+     "link": "r_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 21.0,
+     "centre_mm": [
+      4.1,
+      -206.3,
+      403.2
+     ],
+     "off_pin_axis_mm": 0.89
+    }
+   ],
+   "child_feature": "Arm-Bicep hole dia 6.0",
+   "child_feature_centre": {
+    "link": "r_upper_arm_link",
+    "p": [
+     0.004000058214889425,
+     -0.2062999572954902,
+     0.3444999999998154
+    ]
+   },
+   "sweep_deg": [
+    -45.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.637
+  },
+  {
+   "joint": "l_arm_rot_joint",
+   "pin": {
+    "link": "l_shoulder_lift_link",
+    "part": "Shoulder-Left-ServoHolder",
+    "dia_mm": 5.8,
+    "root_mm": [
+     3.55,
+     205.6,
+     394.45
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "l_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 9.0,
+     "centre_mm": [
+      3.9,
+      206.3,
+      399.5
+     ],
+     "off_pin_axis_mm": 0.78
+    },
+    {
+     "link": "l_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 6.0,
+     "centre_mm": [
+      4.0,
+      206.3,
+      344.5
+     ],
+     "off_pin_axis_mm": 0.83
+    },
+    {
+     "link": "l_upper_arm_link",
+     "part": "Arm-Bicep",
+     "kind": "HOLE",
+     "dia_mm": 21.0,
+     "centre_mm": [
+      3.9,
+      206.3,
+      403.2
+     ],
+     "off_pin_axis_mm": 0.78
+    }
+   ],
+   "child_feature": "Arm-Bicep hole dia 6.0",
+   "child_feature_centre": {
+    "link": "l_upper_arm_link",
+    "p": [
+     0.003999892162864256,
+     0.2062999572957206,
+     0.3444999999998154
+    ]
+   },
+   "sweep_deg": [
+    -45.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.637
+  },
+  {
+   "joint": "r_bicep_joint",
+   "pin": {
+    "link": "r_upper_arm_link",
+    "part": "Arm-Elbow",
+    "dia_mm": 4.7,
+    "root_mm": [
+     4.0,
+     -218.5,
+     259.9
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "r_upper_arm_link",
+     "part": "Servo-9g",
+     "kind": "BOSS",
+     "dia_mm": 4.8,
+     "centre_mm": [
+      4.0,
+      -191.8,
+      259.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "r_forearm_link",
+     "part": "Arm-Forearm",
+     "kind": "HOLE",
+     "dia_mm": 5.0,
+     "centre_mm": [
+      4.0,
+      -222.5,
+      261.0
+     ],
+     "off_pin_axis_mm": 1.1
+    },
+    {
+     "link": "r_forearm_link",
+     "part": "Arm-Forearm",
+     "kind": "HOLE",
+     "dia_mm": 7.01,
+     "centre_mm": [
+      4.0,
+      -188.5,
+      261.0
+     ],
+     "off_pin_axis_mm": 1.1
+    }
+   ],
+   "child_feature": "Arm-Forearm hole dia 5.0",
+   "child_feature_centre": {
+    "link": "r_forearm_link",
+    "p": [
+     0.004000137219786798,
+     -0.22250300598204156,
+     0.2610000416483386
+    ]
+   },
+   "sweep_deg": [
+    0.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.842
+  },
+  {
+   "joint": "l_bicep_joint",
+   "pin": {
+    "link": "l_upper_arm_link",
+    "part": "Arm-Elbow",
+    "dia_mm": 4.7,
+    "root_mm": [
+     4.0,
+     218.5,
+     259.9
+    ]
+   },
+   "origin_to_pin_axis_mm": 0.0,
+   "axis_angle_deg": 0.0,
+   "on_axis": [
+    {
+     "link": "l_upper_arm_link",
+     "part": "Servo-9g",
+     "kind": "BOSS",
+     "dia_mm": 4.8,
+     "centre_mm": [
+      4.0,
+      191.8,
+      259.9
+     ],
+     "off_pin_axis_mm": 0.0
+    },
+    {
+     "link": "l_forearm_link",
+     "part": "Arm-Forearm",
+     "kind": "HOLE",
+     "dia_mm": 5.0,
+     "centre_mm": [
+      4.0,
+      222.5,
+      261.0
+     ],
+     "off_pin_axis_mm": 1.1
+    },
+    {
+     "link": "l_forearm_link",
+     "part": "Arm-Forearm",
+     "kind": "HOLE",
+     "dia_mm": 7.01,
+     "centre_mm": [
+      4.0,
+      188.5,
+      261.0
+     ],
+     "off_pin_axis_mm": 1.1
+    }
+   ],
+   "child_feature": "Arm-Forearm hole dia 5.0",
+   "child_feature_centre": {
+    "link": "l_forearm_link",
+    "p": [
+     0.00399973419595503,
+     0.22250300598060402,
+     0.2610000416483386
+    ]
+   },
+   "sweep_deg": [
+    0.0,
+    45.0
+   ],
+   "child_feature_drift_mm": 0.842
+  }
+ ],
+ "zero_pose_max_vertex_displacement_mm": 0.0
+}

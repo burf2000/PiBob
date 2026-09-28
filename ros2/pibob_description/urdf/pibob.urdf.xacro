@@ -12,11 +12,13 @@
 
   <xacro:property name="mesh_pkg" value="package://pibob_description/meshes"/>
 
-  <!-- move the shoulder-lift PIVOT without moving the arm (holder + arm auto-compensated).
-       lift_pivot_in: POSITIVE = toward body centre, NEGATIVE = OUTWARD toward the connector/red dot.
-       lift_pivot_up: upward to the connector. -->
-  <xacro:property name="lift_pivot_in" value="-0.06"/>
-  <xacro:property name="lift_pivot_up" value="0.05"/>
+  <!-- Arm joint pivots are ON the servo shaft axes, located from the mesh geometry: each
+       DS3218 holder carries a dia-5.8 pin coaxial with its servo shaft, and each driven
+       U-bracket has a dia-21 horn seat + dia-9 hub hole on one arm and a dia-6 pin hole on
+       the other. Each joint origin is the centre of that pin where it leaves its holder
+       (elbow: the dia-4.7 pin of the 9 g elbow holder). Every visual / child-joint origin
+       was re-expressed so the parts did NOT move (see fusion/README.md "Arm pivots").
+       The old lift_pivot_in / lift_pivot_up knobs are gone: the pin fixes the pivot. -->
 
   <!-- ===== arm-part debug toggles: flip a part to false to hide it while seating another.
        All default true, so the full arm renders normally. ===== -->
@@ -177,7 +179,8 @@
     <joint name="${side}_shoulder_rot_joint" type="revolute">
       <parent link="${side}_shoulder_top_link"/>
       <child  link="${side}_shoulder_rot_link"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <!-- on the top holder's dia-5.8 pin (= CH7/CH11 shaft axis), at the pin root -->
+      <origin xyz="0 ${0.01345*reflect} 0.0049" rpy="0 0 0"/>
       <axis xyz="0 ${reflect} 0"/>
       <limit lower="-0.3491" upper="1.0472" effort="1.0" velocity="3.14"/>
     </joint>
@@ -185,7 +188,7 @@
       <xacro:if value="${show_bracket}">
       <visual>
         <!-- per-side yaw: invert the our-left (reflect=-1) bracket 180 to mirror -->
-        <origin xyz="0.0 ${0.02*reflect} 0.018" rpy="0 0 ${(1-reflect)/2*3.14159}"/>
+        <origin xyz="0.0 ${0.00655*reflect} 0.0131" rpy="0 0 ${(1-reflect)/2*3.14159}"/>
         <geometry><mesh filename="${mesh_pkg}/${bracket_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
@@ -195,8 +198,8 @@
     <joint name="${side}_shoulder_lift_joint" type="revolute">
       <parent link="${side}_shoulder_rot_link"/>
       <child  link="${side}_shoulder_lift_link"/>
-      <!-- this origin IS the lift pivot: move Y toward the head to pivot from the inner edge -->
-      <origin xyz="0 ${-lift_pivot_in*reflect} ${-0.03+lift_pivot_up}" rpy="0 0 0"/>
+      <!-- on the shoulder servo holder's dia-5.8 X pin (= CH6/CH10 shaft axis), at the pin root -->
+      <origin xyz="-0.01345 ${0.05605*reflect} 0.00465" rpy="0 0 0"/>
       <axis xyz="${reflect} 0 0"/>   <!-- mirror per side so both arms wing out symmetrically -->
       <!-- CH6/CH10 safe 70..110 -->
       <limit lower="-0.3491" upper="0.3491" effort="1.0" velocity="3.14"/>
@@ -204,7 +207,7 @@
     <link name="${side}_shoulder_lift_link">
       <xacro:if value="${show_holder}">
       <visual>
-        <origin xyz="0 ${(0.097+lift_pivot_in)*reflect} ${0.035-lift_pivot_up}" rpy="0 -1.5708 3.14159"/>
+        <origin xyz="0.01345 ${0.0275*reflect} -0.00455" rpy="0 -1.5708 3.14159"/>
         <geometry><mesh filename="${mesh_pkg}/${holder_mesh}" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
@@ -214,8 +217,8 @@
     <joint name="${side}_arm_rot_joint" type="revolute">
       <parent link="${side}_shoulder_lift_link"/>
       <child  link="${side}_upper_arm_link"/>
-      <!-- arm sits further out along the bracket (outward in Y), then drops -->
-      <origin xyz="0.004 ${(0.14+lift_pivot_in)*reflect} ${0.005-lift_pivot_up}" rpy="0 0 0"/>
+      <!-- on the shoulder servo holder's dia-5.8 Z pin (= CH5/CH9 shaft axis), at the pin root -->
+      <origin xyz="0.017 ${0.0511*reflect} 0.0199" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <!-- CH5/CH9: opened to ~+/-51deg (was +/-20 "safe 70..110") — widen/narrow as needed -->
       <limit lower="-0.9" upper="0.9" effort="1.0" velocity="3.14"/>
@@ -224,27 +227,28 @@
       <xacro:if value="${show_bicep}">
       <visual>
         <!-- bicep: right (reflect=+1) = pi; left gets -180 to mirror -->
-        <origin xyz="0 0 0" rpy="0 1.5708 ${3.14159 - (1-reflect)/2*3.14159}"/>
+        <origin xyz="0.00045 ${0.0194*reflect} -0.05445" rpy="0 1.5708 ${3.14159 - (1-reflect)/2*3.14159}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Bicep.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>
       </xacro:if>
-      <!-- elbow: FIXED to the bicep (houses CH4 servo) — does NOT move with the joint. Tune xyz to seat it. -->
+      <!-- elbow: FIXED to the bicep (houses CH4 servo) — does NOT move with the joint. -->
       <xacro:if value="${show_forearm}">
       <visual>
-        <origin xyz="0 ${-0.014*reflect} -0.076" rpy="-1.5708 0 ${1.5708*reflect}"/>
+        <origin xyz="0.00045 ${0.0054*reflect} -0.13045" rpy="-1.5708 0 ${1.5708*reflect}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Elbow.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="grey"/>
       </visual>
       <!-- elbow servo (CH4/CH8) in the elbow holder's pocket; its shaft is the bicep axis -->
-      <xacro:servo_9g xyz="0 ${-0.0332*reflect} -0.0801" rpy="${pi/2} ${pi/2} ${(1-reflect)/2*pi}"/>
+      <xacro:servo_9g xyz="0.00045 ${-0.0138*reflect} -0.13455" rpy="${pi/2} ${pi/2} ${(1-reflect)/2*pi}"/>
       </xacro:if>
     </link>
 
     <joint name="${side}_bicep_joint" type="revolute">
       <parent link="${side}_upper_arm_link"/>
       <child  link="${side}_forearm_link"/>
-      <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+      <!-- on the elbow holder's dia-4.7 pin (= CH4/CH8 9 g servo shaft axis), at the pin root -->
+      <origin xyz="0.00045 ${0.0129*reflect} -0.13455" rpy="0 0 0"/>
       <axis xyz="0 -1 0"/>   <!-- flipped: elbow bends forward, not back -->
       <!-- CH4/CH8 safe 90..180 => 0..+pi/2 (cannot go below straight) -->
       <limit lower="0.0" upper="1.5708" effort="1.0" velocity="3.14"/>
@@ -253,7 +257,7 @@
       <xacro:if value="${show_forearm_mesh}">
       <!-- only the FOREARM swings with the elbow joint; per-side +/-90 yaw mirrors the single mesh -->
       <visual>
-        <origin xyz="0 ${-0.02*reflect} -0.0425" rpy="-1.5708 0 ${1.5708*reflect}"/>
+        <origin xyz="0 ${-0.0135*reflect} -0.0424" rpy="-1.5708 0 ${1.5708*reflect}"/>
         <geometry><mesh filename="${mesh_pkg}/Arm-Forearm.stl" scale="0.001 0.001 0.001"/></geometry>
         <material name="white"/>
       </visual>

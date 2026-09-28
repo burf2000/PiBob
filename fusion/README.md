@@ -96,6 +96,73 @@ can't judge that joint, so trust *Drive Joints* instead.
 - **Joints snap back after you drag them.** The first build enabled a rest value
   of 0. Rest values are now off. Only the min/max limits are set.
 
+## Arm pivots: on the pins, from the meshes
+
+Every arm joint origin used to be a hand-tuned guess. `shoulder_lift` was 14 mm off
+its pin and `arm_rot` was 19 mm off, so parts swung about empty space. Each joint
+origin now sits **on the physical rotation feature found in the STLs**, and the
+parts have **not moved**: every visual and child-joint origin was re-expressed
+against the new joint frame. Zero-pose vertex displacement vs the previous URDF is
+**0.0 mm** (`verify/pin_check.py --ref <old json>`).
+
+**What the meshes contain.** `verify/pin_check.py` fits circles to the curved facets
+of every STL and classifies each as a boss or a hole from the facet normals:
+
+- **DS3218 holders** (Shoulder-Top-ServoHolder, Shoulder-L/R-ServoHolder) each carry
+  a **Ø5.8 × 6.1 mm pin coaxial with the servo shaft**. On the top holder the pin is
+  9.5 mm from the end of the 40.2 × 20.5 mm DS3218 pocket, which is the DS3218
+  shaft offset.
+- **Driven U-brackets** (Shoulder-L/R-Bracket, Arm-Bicep) have, all coaxial: a
+  **Ø21 × 2.3 mm horn seat plus a Ø9 hub hole** on one arm, and a **Ø6 pin hole** on
+  the other.
+- **The 9 g elbow** has a Ø4.7 pin on Arm-Elbow, coaxial with the modelled
+  servo's Ø4.8 spline. Arm-Forearm has a Ø7 hub hole and a Ø5 pin hole.
+
+Each joint origin is the pin's root centre (where it leaves its holder). The axis
+is the pin axis, **0.000° from the URDF axis in every case**, so the axis signs and
+limits are unchanged.
+
+| joint (L = R mirrored) | pin | old → new origin, world mm | moved by, mm | origin → pin axis |
+|---|---|---|---|---|
+| shoulder_rot | Shoulder-Top-ServoHolder Ø5.8 | (0, ±85, 365) → (0, ±98.45, 369.9) | 14.3 | 0.000 mm |
+| shoulder_lift | Shoulder-ServoHolder Ø5.8 (X) | (0, ±145, 385) → (−13.45, ±154.5, 374.55) | 19.5 | 0.000 mm |
+| arm_rot | Shoulder-ServoHolder Ø5.8 (Z) | (4, ±225, 340) → (3.55, ±205.6, 394.45) | 57.8 | 0.000 mm |
+| bicep | Arm-Elbow Ø4.7 (+ servo spline) | (4, ±225, 260) → (4, ±218.5, 259.9) | 6.5 | 0.000 mm |
+| head_pan / head_tilt | 9 g servo spline Ø4.8 | unchanged | 0 | 0.000 mm |
+
+**The mating part's hole is not always on the pin: seating errors in the URDF.**
+Holding the pin still, `pin_check.py` sweeps each joint (up to ±45° within limits)
+and measures how far the other part's pin hole moves. It also measures how far that
+hole sits off the pin axis at zero pose:
+
+| joint | hole off pin axis at zero pose | hole drift over the sweep | what that means |
+|---|---|---|---|
+| head_pan, head_tilt | 0.00 mm | 0.00 mm | concentric ✔ |
+| shoulder_lift | bracket's Ø6 / Ø9 / Ø21 are 9.5 mm off the holder pin | 0.0 mm (the child owns the pin) | the pin sits inside the bracket wall |
+| shoulder_rot | bracket's Ø6 / Ø9 / Ø21 are 5.6 mm below the top-holder pin | 4.3 mm | bracket seated 5.6 mm too low |
+| arm_rot | bicep's Ø6 / Ø9 / Ø21 are 0.8–0.9 mm off | 0.64 mm | small |
+| bicep | forearm's Ø5 / Ø7 are 1.1 mm above the elbow pin | 0.84 mm | small |
+
+These are part-placement errors, not pivot errors. The joints now turn about the
+pins, but the bracket (shoulder_rot) and the servo holder (shoulder_lift) were seated
+by eye 5.6 mm and 9.5 mm away from where their holes meet the pins. No 180° flip
+of either part fixes it; I tested all three. Re-seating them means translating the
+part perpendicular to the axis, which *does* move geometry at zero pose, so it isn't
+applied here:
+
+- bracket visual only (in `*_shoulder_rot_link`): +5.6 mm Z;
+- shoulder servo holder and everything below it (`*_shoulder_lift_link` subtree):
+  3.3 mm towards the body centre and −3.45 mm Z, onto the bracket's (re-seated)
+  holes;
+- bicep, elbow and forearm (`*_upper_arm_link` subtree): about (0.5, 0.7, 0) mm onto
+  the holder pin;
+- forearm (`*_forearm_link`): −1.1 mm Z.
+
+Close-ups: `verify/pins/<joint>.png` shows lower limit / 0 / upper, only the two
+parts at the joint, looking down the pin. The red dot and line mark the pin axis
+through the joint origin. The green ring is the child's pin hole, slid into the
+pin's plane. Numbers are in `verify/pin_check.json`.
+
 ## The head: servos and where the pivots come from
 
 The original head joint origins were rough guesses, and the three head parts
@@ -156,6 +223,23 @@ Checks (`preview_pose.py --servo-check / --contact-check / --pivot-check`, also 
   holder ↔ tilt servo, tilt servo ↔ camera holder.
 - The camera holder clears the middle holder by more than 6 mm across the whole
   tilt range (−40° to +50°).
+
+**Head vs the photos (checked again, from a Fusion user's viewpoint).** Nothing
+floats and nothing interpenetrates by more than 0.2 mm at zero, pan ±90° or the
+tilt limits. Every head contact is 0.0 mm. There are two visible differences from
+`Images/Front.JPG`, `Back.JPG` and `Head.JPG`, and **neither can be fixed from the
+repo STLs**:
+
+1. The printed head base has a peg going down into the beam. This STL's peg is on
+   the end face at a right angle to its servo pocket, so with the pan shaft
+   vertical the peg points sideways.
+2. The photos suggest the printed middle holder is taller than wide, with the
+   tilt servo standing upright. The STL is a 38 × 20 × 20 box whose pocket runs
+   front-to-back under its Ø7 top hole.
+
+The printed head parts look like a different revision from the STLs in
+`STL/` and `meshes/`. Export the current head parts and they can be dropped in
+(see *Editing / swapping a part*); the pivots follow their hub holes.
 
 **One thing to check on the robot.** In this orientation, Head-BottomServoHolder's
 square peg (the end that, on the elbow, plugs into the bicep) sticks out
@@ -243,17 +327,14 @@ All of these come from the same `pibob_fusion.json` the Fusion script reads.
    |---|---|---|
    | head_pan | beam + bottom holder + **pan servo** 0.0 / 0 mm | Head-MiddleServoHolder 3.5 / 0 mm (in its hub hole) |
    | head_tilt | middle holder + **tilt servo** 0.0 / 0 mm | Head-CameraHolder 3.5 / 0 mm (in its hub hole) |
-   | shoulder_rot (L & R) | Shoulder-Top-ServoHolder 8.4 / 0 mm | Bracket 17.6 / 0 mm |
-   | shoulder_lift (L & R) | Bracket 25.5 / 0 mm | Shoulder-ServoHolder 0.9 / 0 mm |
-   | arm_rot (L & R) | Shoulder-ServoHolder 21.4 / 0 mm | Bicep+Elbow 4.5 / 0 mm |
-   | bicep (L & R) | Bicep+Elbow 1.5 / 0 mm | Forearm 1.5 / 0 mm |
+   | shoulder_rot / lift / arm_rot / bicep | see *Arm pivots* above: each origin is on its pin, 0.000 mm | |
 
    The "parent part" now counts every link fixed to the parent. For example, the pan
-   servo lives in `head_base_link`, which is fixed to the beam. Every pivot is inside
-   the envelope of the part that carries its servo. The head pivots sit on their
-   servo's top face. The 20–25 mm "surface" figures for `shoulder_lift` and
-   `arm_rot` are distances into hollow holder or bracket interiors, not pivots
-   floating outside the part. The arm pivots are unchanged.
+   servo lives in `head_base_link`, which is fixed to the beam. The head pivots sit
+   on their servo's top face. The arm pivots now sit on their pins.
+   (Correction: an earlier version of this README called the 20–25 mm
+   `shoulder_lift` / `arm_rot` distances "servo pockets". They were real pivot
+   errors.)
 
 Re-run everything:
 
@@ -264,6 +345,8 @@ uv run --with numpy --with trimesh --with pillow fusion/verify/mock_fusion_run.p
 uv run --with numpy --with trimesh --with pillow fusion/preview_pose.py --pivot-check
 uv run --with numpy --with trimesh --with pillow fusion/preview_pose.py --servo-check
 uv run --with numpy --with trimesh --with pillow fusion/preview_pose.py --contact-check
+git show <old-commit>:fusion/pibob_fusion.json > fusion/verify/_ref.json   # optional, for the zero-pose diff
+uv run --with numpy --with trimesh --with pillow fusion/verify/pin_check.py --ref fusion/verify/_ref.json
 ```
 
 The container must include the current URDF and `Servo-9g.stl`. After changing

@@ -293,7 +293,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.9944,
-    "front_right": 0.9961
+    "front_right": 0.9962
    }
   },
   "l_shoulder_rot_joint_45deg": {
@@ -366,7 +366,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.9955,
-    "front_right": 0.9962
+    "front_right": 0.9959
    }
   },
   "r_shoulder_lift_joint_20deg": {
@@ -439,7 +439,7 @@
    },
    "silhouette_iou": {
     "front_left": 0.9947,
-    "front_right": 0.9938
+    "front_right": 0.9939
    }
   },
   "l_shoulder_lift_joint_20deg": {
@@ -584,7 +584,7 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9947,
+    "front_left": 0.9946,
     "front_right": 0.9957
    }
   },
@@ -657,8 +657,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.995,
-    "front_right": 0.9955
+    "front_left": 0.9949,
+    "front_right": 0.9956
    }
   },
   "r_bicep_joint_45deg": {
@@ -730,7 +730,7 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9947,
+    "front_left": 0.9946,
     "front_right": 0.9956
    }
   },
@@ -803,8 +803,8 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9946,
-    "front_right": 0.9957
+    "front_left": 0.9947,
+    "front_right": 0.9956
    }
   },
   "combined": {
@@ -885,7 +885,7 @@
     ]
    },
    "silhouette_iou": {
-    "front_left": 0.9925,
+    "front_left": 0.9922,
     "front_right": 0.996
    }
   }
@@ -925,13 +925,13 @@
    "joint": "r_shoulder_rot_joint",
    "parent": {
     "link": "r_shoulder_top_link",
-    "surface_mm": 8.45,
-    "inside_material": false,
+    "surface_mm": 2.89,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "r_shoulder_rot_link",
-    "surface_mm": 17.65,
+    "surface_mm": 4.05,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -940,13 +940,13 @@
    "joint": "l_shoulder_rot_joint",
    "parent": {
     "link": "l_shoulder_top_link",
-    "surface_mm": 8.45,
-    "inside_material": false,
+    "surface_mm": 2.89,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "l_shoulder_rot_link",
-    "surface_mm": 17.65,
+    "surface_mm": 4.05,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -955,13 +955,13 @@
    "joint": "r_shoulder_lift_joint",
    "parent": {
     "link": "r_shoulder_rot_link",
-    "surface_mm": 25.48,
+    "surface_mm": 11.05,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "r_shoulder_lift_link",
-    "surface_mm": 0.95,
+    "surface_mm": 2.89,
     "inside_material": true,
     "outside_envelope_mm": 0.0
    }
@@ -970,13 +970,13 @@
    "joint": "l_shoulder_lift_joint",
    "parent": {
     "link": "l_shoulder_rot_link",
-    "surface_mm": 25.48,
+    "surface_mm": 11.05,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "l_shoulder_lift_link",
-    "surface_mm": 0.95,
+    "surface_mm": 2.89,
     "inside_material": true,
     "outside_envelope_mm": 0.0
    }
@@ -985,13 +985,13 @@
    "joint": "r_arm_rot_joint",
    "parent": {
     "link": "r_shoulder_lift_link",
-    "surface_mm": 21.45,
-    "inside_material": false,
+    "surface_mm": 2.89,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "r_upper_arm_link",
-    "surface_mm": 4.5,
+    "surface_mm": 6.2,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -1000,13 +1000,13 @@
    "joint": "l_arm_rot_joint",
    "parent": {
     "link": "l_shoulder_lift_link",
-    "surface_mm": 21.45,
-    "inside_material": false,
+    "surface_mm": 2.89,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "l_upper_arm_link",
-    "surface_mm": 4.5,
+    "surface_mm": 6.27,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -1015,13 +1015,13 @@
    "joint": "r_bicep_joint",
    "parent": {
     "link": "r_upper_arm_link",
-    "surface_mm": 1.5,
-    "inside_material": false,
+    "surface_mm": 2.0,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "r_forearm_link",
-    "surface_mm": 1.5,
+    "surface_mm": 4.24,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -1030,13 +1030,13 @@
    "joint": "l_bicep_joint",
    "parent": {
     "link": "l_upper_arm_link",
-    "surface_mm": 1.5,
-    "inside_material": false,
+    "surface_mm": 2.0,
+    "inside_material": true,
     "outside_envelope_mm": 0.0
    },
    "child": {
     "link": "l_forearm_link",
-    "surface_mm": 1.5,
+    "surface_mm": 4.24,
     "inside_material": false,
     "outside_envelope_mm": 0.0
    }
@@ -1084,15 +1084,15 @@
   {
    "joint": "r_bicep_joint",
    "servo_in": "r_upper_arm_link",
-   "radial_mm": 0.1,
-   "axial_mm": -33.2,
+   "radial_mm": 0.0,
+   "axial_mm": -26.7,
    "angle_deg": 0.0
   },
   {
    "joint": "l_bicep_joint",
    "servo_in": "l_upper_arm_link",
-   "radial_mm": 0.1,
-   "axial_mm": -33.2,
+   "radial_mm": 0.0,
+   "axial_mm": -26.7,
    "angle_deg": 0.0
   }
  ],
