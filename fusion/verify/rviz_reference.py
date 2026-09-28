@@ -23,7 +23,7 @@ from sensor_msgs.msg import JointState
 POSE = "/tmp/pose.json"
 JOINTS = ["head_pan_joint", "head_tilt_joint"] + [
     f"{s}_{j}_joint" for s in ("r", "l") for j in ("shoulder_rot", "shoulder_lift", "arm_rot", "bicep")]
-LINKS = ["shoulder_beam", "head_pan_link", "head_tilt_link", "camera_link"] + [
+LINKS = ["shoulder_beam", "head_base_link", "head_pan_link", "head_tilt_link", "camera_link"] + [
     f"{s}_{l}" for s in ("r", "l") for l in (
         "shoulder_top_link", "shoulder_rot_link", "shoulder_lift_link", "upper_arm_link", "forearm_link")]
 

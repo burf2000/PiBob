@@ -156,6 +156,121 @@
    ]
   },
   {
+   "name": "head_base_link",
+   "parent_joint": "beam_to_head_base",
+   "parent_link": "shoulder_beam",
+   "world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.3355
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "visuals": [
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
+     "origin": [
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      [
+       1.0,
+       0.0,
+       0.0,
+       -0.0041
+      ],
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0075
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.95,
+      0.95,
+      0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.0
+      ],
+      [
+       1.0,
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0267
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
    "name": "head_pan_link",
    "parent_joint": "head_pan_joint",
    "parent_link": "shoulder_beam",
@@ -176,7 +291,7 @@
      0.0,
      0.0,
      1.0,
-     0.345
+     0.3622
     ],
     [
      0.0,
@@ -187,26 +302,26 @@
    ],
    "visuals": [
     {
-     "stl_repo": "ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
-     "stl": "../ros2/pibob_description/meshes/Head-BottomServoHolder.stl",
+     "stl_repo": "ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
      "origin": [
       [
-       -3.673205e-06,
+       1.0,
        0.0,
-       -0.999999999993,
+       0.0,
        0.0
       ],
       [
        0.0,
        1.0,
        0.0,
-       0.0
+       0.0005
       ],
       [
-       0.999999999993,
        0.0,
-       -3.673205e-06,
-       0.0
+       0.0,
+       1.0,
+       0.01
       ],
       [
        0.0,
@@ -224,6 +339,47 @@
       0.95,
       0.95,
       0.95,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       1.0,
+       0.0,
+       0.0,
+       -0.00315
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0172
+      ],
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.01105
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
       1.0
      ]
     }
@@ -386,19 +542,19 @@
      1.0,
      0.0,
      0.0,
-     0.0
+     -0.00315
     ],
     [
      0.0,
      1.0,
      0.0,
-     0.0
+     0.0172
     ],
     [
      0.0,
      0.0,
      1.0,
-     0.375
+     0.37325
     ],
     [
      0.0,
@@ -409,26 +565,26 @@
    ],
    "visuals": [
     {
-     "stl_repo": "ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
-     "stl": "../ros2/pibob_description/meshes/Head-MiddleServoHolder.stl",
+     "stl_repo": "ros2/pibob_description/meshes/Head-CameraHolder.stl",
+     "stl": "../ros2/pibob_description/meshes/Head-CameraHolder.stl",
      "origin": [
       [
-       -3.673205e-06,
        0.0,
-       -0.999999999993,
+       0.0,
+       1.0,
        0.0
       ],
       [
        0.0,
        1.0,
        0.0,
-       0.0
+       -0.01775
       ],
       [
-       0.999999999993,
+       -1.0,
        0.0,
-       -3.673205e-06,
-       0.0
+       0.0,
+       0.02867
       ],
       [
        0.0,
@@ -443,9 +599,9 @@
       0.001
      ],
      "rgba": [
-      0.95,
-      0.95,
-      0.95,
+      0.4,
+      0.4,
+      0.4,
       1.0
      ]
     }
@@ -608,19 +764,19 @@
      1.0,
      0.0,
      0.0,
-     0.0
+     -0.0094
     ],
     [
      0.0,
      1.0,
      0.0,
-     0.0
+     -0.0023
     ],
     [
      0.0,
      0.0,
      1.0,
-     0.405
+     0.41792
     ],
     [
      0.0,
@@ -629,49 +785,7 @@
      1.0
     ]
    ],
-   "visuals": [
-    {
-     "stl_repo": "ros2/pibob_description/meshes/Head-CameraHolder.stl",
-     "stl": "../ros2/pibob_description/meshes/Head-CameraHolder.stl",
-     "origin": [
-      [
-       1.3e-11,
-       0.0,
-       1.0,
-       0.0
-      ],
-      [
-       -3.673205e-06,
-       0.999999999993,
-       0.0,
-       0.0
-      ],
-      [
-       -0.999999999993,
-       -3.673205e-06,
-       1.3e-11,
-       0.0
-      ],
-      [
-       0.0,
-       0.0,
-       0.0,
-       1.0
-      ]
-     ],
-     "scale": [
-      0.001,
-      0.001,
-      0.001
-     ],
-     "rgba": [
-      0.4,
-      0.4,
-      0.4,
-      1.0
-     ]
-    }
-   ]
+   "visuals": []
   },
   {
    "name": "r_shoulder_lift_link",
@@ -933,6 +1047,47 @@
       0.4,
       1.0
      ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       -1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       1.0,
+       0.0332
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0,
+       -0.0801
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
+      1.0
+     ]
     }
    ]
   },
@@ -1046,6 +1201,47 @@
       0.4,
       0.4,
       0.4,
+      1.0
+     ]
+    },
+    {
+     "stl_repo": "ros2/pibob_description/meshes/Servo-9g.stl",
+     "stl": "../ros2/pibob_description/meshes/Servo-9g.stl",
+     "origin": [
+      [
+       0.0,
+       1.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       -1.0,
+       -0.0332
+      ],
+      [
+       -1.0,
+       0.0,
+       0.0,
+       -0.0801
+      ],
+      [
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     ],
+     "scale": [
+      0.001,
+      0.001,
+      0.001
+     ],
+     "rgba": [
+      0.2,
+      0.2,
+      0.2,
       1.0
      ]
     }
@@ -1251,6 +1447,55 @@
    "upper": null
   },
   {
+   "name": "beam_to_head_base",
+   "type": "fixed",
+   "parent": "shoulder_beam",
+   "child": "head_base_link",
+   "origin_local": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0355
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "origin_world": [
+    0.0,
+    0.0,
+    0.3355
+   ],
+   "axis_local": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "axis_world": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "lower": null,
+   "upper": null
+  },
+  {
    "name": "head_pan_joint",
    "type": "revolute",
    "parent": "shoulder_beam",
@@ -1272,7 +1517,7 @@
      0.0,
      0.0,
      1.0,
-     0.045
+     0.0622
     ],
     [
      0.0,
@@ -1284,7 +1529,7 @@
    "origin_world": [
     0.0,
     0.0,
-    0.345
+    0.3622
    ],
    "axis_local": [
     0.0,
@@ -1407,19 +1652,19 @@
      1.0,
      0.0,
      0.0,
-     0.0
+     -0.00315
     ],
     [
      0.0,
      1.0,
      0.0,
-     0.0
+     0.0172
     ],
     [
      0.0,
      0.0,
      1.0,
-     0.03
+     0.01105
     ],
     [
      0.0,
@@ -1429,9 +1674,9 @@
     ]
    ],
    "origin_world": [
-    0.0,
-    0.0,
-    0.375
+    -0.00315,
+    0.0172,
+    0.37325
    ],
    "axis_local": [
     0.0,
@@ -1554,19 +1799,19 @@
      1.0,
      0.0,
      0.0,
-     0.0
+     -0.00625
     ],
     [
      0.0,
      1.0,
      0.0,
-     0.0
+     -0.0195
     ],
     [
      0.0,
      0.0,
      1.0,
-     0.03
+     0.04467
     ],
     [
      0.0,
@@ -1576,9 +1821,9 @@
     ]
    ],
    "origin_world": [
-    0.0,
-    0.0,
-    0.405
+    -0.0094,
+    -0.0023,
+    0.41792
    ],
    "axis_local": [
     1.0,

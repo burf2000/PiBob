@@ -31,8 +31,19 @@ VIEWS = {
     "front_left":  dict(yaw=0.70, pitch=0.30, distance=0.75, focal=(0.0, 0.0, 0.29)),
     "front_right": dict(yaw=-0.70, pitch=0.30, distance=0.75, focal=(0.0, 0.0, 0.29)),
     "left_side":   dict(yaw=1.5708, pitch=0.15, distance=0.75, focal=(0.0, 0.0, 0.29)),
+    # head close-ups (focal on the head, ~0.2 m away)
+    "head_front":  dict(yaw=0.0, pitch=0.10, distance=0.24, focal=(0.0, 0.0, 0.378)),
+    "head_side":   dict(yaw=1.5708, pitch=0.60, distance=0.24, focal=(0.0, 0.0, 0.378)),   # looks over the left shoulder
+    "head_3q":     dict(yaw=0.75, pitch=0.35, distance=0.24, focal=(0.0, 0.0, 0.378)),
+    "head_3q_back": dict(yaw=2.4, pitch=0.35, distance=0.24, focal=(0.0, 0.0, 0.378)),
+    # tighter, level close-ups for the head-only sheet (verify/head_closeup.png)
+    "close_front": dict(yaw=0.0, pitch=0.05, distance=0.17, focal=(0.0, 0.0, 0.385)),
+    "close_left":  dict(yaw=1.5708, pitch=0.05, distance=0.17, focal=(0.0, 0.0, 0.385)),
+    "close_3q":    dict(yaw=0.75, pitch=0.30, distance=0.17, focal=(0.0, 0.0, 0.380)),
+    "close_3q_back": dict(yaw=2.4, pitch=0.30, distance=0.17, focal=(0.0, 0.0, 0.380)),
 }
 FOVY = math.pi / 4          # RViz/Ogre default camera vertical field of view
+HEAD_LINKS = ("shoulder_beam", "head_base_link", "head_pan_link", "head_tilt_link", "camera_link")
 
 
 # ---------------------------------------------------------------- data
@@ -108,10 +119,12 @@ def pose_world(data, angles):
     return W
 
 
-def posed_meshes(data, W):
-    """[(link, verts_world, faces, rgba)] at the posed transforms."""
+def posed_meshes(data, W, links=None):
+    """[(link, verts_world, faces, rgba)] at the posed transforms (optionally only `links`)."""
     out = []
     for l in data["links"]:
+        if links is not None and l["name"] not in links:
+            continue
         for vis in l["visuals"]:
             v, f = load_mesh(data, vis)
             T = W[l["name"]]
@@ -171,7 +184,7 @@ def _rasterise(img, zbuf, s, z, cols):
 
 
 def render(data, W, view, w=850, h=790, highlight=(), pivots=(), out=None, title=None,
-           grid=True, bg=(1, 1, 1)):
+           grid=True, bg=(1, 1, 1), links=None):
     """Render posed meshes (z-buffered). highlight = links tinted orange; pivots = [(point, axis)] in red.
     Returns an HxWx3 uint8 image (and saves it to `out` if given)."""
     from PIL import Image, ImageDraw
@@ -190,7 +203,7 @@ def render(data, W, view, w=850, h=790, highlight=(), pivots=(), out=None, title
                 d.line([tuple(sp[0]), tuple(sp[1])], fill=(180, 180, 180), width=1)
         img = np.asarray(g, float) / 255.0
 
-    for link, v, f, rgba in posed_meshes(data, W):
+    for link, v, f, rgba in posed_meshes(data, W, links):
         tri = v[f]                                           # M x 3 x 3
         n = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
         n /= np.linalg.norm(n, axis=1, keepdims=True) + 1e-12
@@ -269,6 +282,23 @@ def pivot_check(data):
     meshes = {}
     for link, v, f, _ in posed_meshes(data, W):
         meshes.setdefault(link, []).append(v[f])
+    # A joint's "parent side" is every link rigidly attached to its parent (fixed joints),
+    # e.g. head_pan's servo lives in head_base_link, fixed to shoulder_beam.
+    adj = {}
+    for fj in data["joints"]:
+        if fj["type"] == "fixed":
+            adj.setdefault(fj["parent"], []).append(fj["child"])
+            adj.setdefault(fj["child"], []).append(fj["parent"])
+
+    def rigid_group(link):
+        seen, stack = {link}, [link]
+        while stack:
+            for n in adj.get(stack.pop(), []):
+                if n not in seen:
+                    seen.add(n)
+                    stack.append(n)
+        return seen
+
     rows = []
     for j in data["joints"]:
         if j["type"] == "fixed":
@@ -276,18 +306,104 @@ def pivot_check(data):
         p = np.asarray(j["origin_world"])
         row = {"joint": j["name"]}
         for side in ("parent", "child"):
-            tris = np.concatenate(meshes.get(j[side], [np.zeros((0, 3, 3))]))
+            group = [m for n in rigid_group(j[side]) for m in meshes.get(n, [])]
+            tris = np.concatenate(group or [np.zeros((0, 3, 3))])
             if len(tris) == 0:
                 row[side] = None
                 continue
             dist = float(_point_tri_dist(p, tris).min()) * 1000
-            ins = any(_inside(p, t) for t in meshes[j[side]])
+            ins = any(_inside(p, t) for t in group)
             lo, hi = tris.reshape(-1, 3).min(0), tris.reshape(-1, 3).max(0)
             # how far outside the part's axis-aligned envelope (0 = within it, e.g. in the servo pocket)
             out_bb = float(np.linalg.norm(np.maximum(0, np.maximum(lo - p, p - hi)))) * 1000
             row[side] = {"link": j[side], "surface_mm": round(dist, 2), "inside_material": ins,
                          "outside_envelope_mm": round(out_bb, 2)}
         rows.append(row)
+    return rows
+
+
+# ---------------------------------------------------------------- servo + contact checks
+SERVO_TAG = "Servo-9g"
+# Parts that should physically touch, as (link, part, link, part). Gaps are reported.
+HEAD_CONTACTS = [
+    ("shoulder_beam", "Shoulder-Beam", "head_base_link", "Head-BottomServoHolder"),
+    ("head_base_link", "Head-BottomServoHolder", "head_base_link", SERVO_TAG),
+    ("head_base_link", SERVO_TAG, "head_pan_link", "Head-MiddleServoHolder"),
+    ("head_pan_link", "Head-MiddleServoHolder", "head_pan_link", SERVO_TAG),
+    ("head_pan_link", SERVO_TAG, "head_tilt_link", "Head-CameraHolder"),
+]
+
+
+def _visual_world(data, W):
+    """[(link, part name, 4x4 world of the visual frame, tris)]"""
+    out = []
+    for l in data["links"]:
+        for vis in l["visuals"]:
+            v, f = load_mesh(data, vis)
+            T = W[l["name"]]
+            part = os.path.splitext(os.path.basename(vis["stl"]))[0]
+            out.append((l["name"], part, T @ np.asarray(vis["origin"]),
+                        ((T[:3, :3] @ v.T).T + T[:3, 3])[f]))
+    return out
+
+
+def servo_check(data):
+    """For each revolute joint, the 9 g servo whose output shaft it should sit on:
+    distance pivot->shaft axis (mm), pivot offset along the shaft from the servo's top
+    face (mm, + = out of the servo), and angle between shaft and joint axis (deg)."""
+    vw = _visual_world(data, pose_world(data, {}))
+    servos = [(l, T) for l, part, T, _ in vw if part == SERVO_TAG]
+    rows = []
+    for j in data["joints"]:
+        if j["type"] == "fixed":
+            continue
+        p, a = np.asarray(j["origin_world"]), np.asarray(j["axis_world"])
+        best = None
+        for link, T in servos:
+            o, z = T[:3, 3], T[:3, 2]
+            ang = math.degrees(math.acos(min(1.0, abs(float(z @ a)))))
+            d = p - o
+            radial = float(np.linalg.norm(d - (d @ z) * z)) * 1000
+            key = (round(ang, 3), round(radial, 3), abs(float(d @ z)))
+            if best is None or key < best["_key"]:
+                best = {"servo_in": link, "radial_mm": round(radial, 3),
+                        "axial_mm": round(float(d @ z) * 1000, 3), "angle_deg": round(ang, 3), "_key": key}
+        if best and best["angle_deg"] < 1 and best["radial_mm"] < 1:
+            best.pop("_key")
+            rows.append({"joint": j["name"], **best})
+        else:
+            rows.append({"joint": j["name"], "servo_in": None})
+    return rows
+
+
+def _mesh_gap(ta, tb):
+    """Min distance (mm) between two triangle soups, sampled at vertices/centroids/edge midpoints."""
+    def samples(t):
+        return np.concatenate([t.reshape(-1, 3), t.mean(1), (t[:, 0] + t[:, 1]) / 2,
+                               (t[:, 1] + t[:, 2]) / 2, (t[:, 2] + t[:, 0]) / 2])
+    best = np.inf
+    for s, t in ((samples(ta), tb), (samples(tb), ta)):
+        s = np.unique(s.round(7), axis=0)
+        lo, hi = t.reshape(-1, 3).min(0) - 0.01, t.reshape(-1, 3).max(0) + 0.01
+        near = s[np.all((s > lo) & (s < hi), axis=1)] if best > 0.01 else s
+        for q in (near if len(near) else s[:200]):
+            best = min(best, float(_point_tri_dist(q, t).min()))
+    return best * 1000
+
+
+def contact_check(data, pairs=HEAD_CONTACTS):
+    vw = _visual_world(data, pose_world(data, {}))
+    get = {}
+    for link, part, _, tris in vw:
+        get.setdefault((link, part), []).append(tris)
+    rows = []
+    for la, pa, lb, pb in pairs:
+        ta, tb = get.get((la, pa)), get.get((lb, pb))
+        if not ta or not tb:
+            rows.append({"a": f"{la}/{pa}", "b": f"{lb}/{pb}", "gap_mm": None})
+            continue
+        rows.append({"a": f"{la}/{pa}", "b": f"{lb}/{pb}",
+                     "gap_mm": round(min(_mesh_gap(x, y) for x in ta for y in tb), 3)})
     return rows
 
 
@@ -299,6 +415,9 @@ def main():
     ap.add_argument("--view", default="front_left", choices=sorted(VIEWS))
     ap.add_argument("--out", default="preview.png")
     ap.add_argument("--pivot-check", action="store_true")
+    ap.add_argument("--head-only", action="store_true", help="render only the beam + head links")
+    ap.add_argument("--servo-check", action="store_true", help="each joint pivot vs its servo's shaft")
+    ap.add_argument("--contact-check", action="store_true", help="gaps between head parts that should touch")
     a = ap.parse_args()
     data = load(a.json)
     if a.pivot_check:
@@ -308,9 +427,22 @@ def main():
                                               f"env+{s['outside_envelope_mm']:4.1f}mm")
             print(f"{r['joint']:24s} parent: {fmt(r['parent'])} | child: {fmt(r['child'])}")
         return
+    if a.servo_check:
+        for r in servo_check(data):
+            if r["servo_in"] is None:
+                print(f"{r['joint']:24s} no 9 g servo on this axis (DS3218 arm joints are not modelled)")
+            else:
+                print(f"{r['joint']:24s} servo in {r['servo_in']:18s} off-axis {r['radial_mm']:.3f} mm, "
+                      f"{r['axial_mm']:+.3f} mm from its top face, axis angle {r['angle_deg']:.3f} deg")
+        return
+    if a.contact_check:
+        for r in contact_check(data):
+            print(f"{r['a']:42s} <-> {r['b']:42s} gap {r['gap_mm']} mm")
+        return
     angles = {k: float(v) for k, v in (p.split("=") for p in a.pose)}
     W = pose_world(data, angles)
-    render(data, W, VIEWS[a.view], out=a.out, title=" ".join(a.pose) or "zero pose")
+    render(data, W, VIEWS[a.view], out=a.out, title=" ".join(a.pose) or "zero pose",
+           links=HEAD_LINKS if a.head_only else None, grid=not a.head_only)
     print("wrote", a.out)
 
 
